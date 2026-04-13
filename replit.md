@@ -16,6 +16,11 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **API codegen**: Orval (from OpenAPI spec)
 - **Build**: esbuild (CJS bundle)
 
+## Artifacts
+
+### Réparetontel (`artifacts/reparetontel`)
+French one-page landing page for a solo mobile phone repair/sales business in Marseille (service à domicile). Frontend-only React + Vite app. Sections: Navbar, Hero, À propos, Services (4 cards), Réservation (form + WhatsApp CTA), Map (OpenStreetMap embed), Footer. Uses framer-motion for animations, lucide-react for icons, Plus Jakarta Sans font. WhatsApp links use placeholder "#whatsapp". No backend needed.
+
 ## Key Commands
 
 - `pnpm run typecheck` — full typecheck across all packages

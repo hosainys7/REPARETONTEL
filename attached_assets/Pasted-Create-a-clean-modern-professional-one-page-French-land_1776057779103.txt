@@ -1,0 +1,206 @@
+Create a clean, modern, professional one-page French landing page / site vitrine for a personal mobile phone service business called “Réparetontel”.
+
+GENERAL GOAL
+The website is for a solo business in Marseille that offers mobile phone services at home (service à domicile). The main goal is fast booking and clear presentation of services. The site must feel trustworthy, simple, modern, mobile-first, and conversion-focused.
+
+LANGUAGE
+- Entire website in French only.
+
+BUSINESS CONTEXT
+- Brand name: Réparetontel
+- Service area: Marseille only
+- Service model: à domicile
+- Tone: professional, simple, trustworthy
+- Key positioning: confiance, service à domicile, intervention rapide
+- Main focus: fast booking and showcasing services
+
+SERVICES TO SHOW
+Display these 4 services clearly:
+1. Réparation
+2. Vente
+3. Rachat
+4. Accessoires
+
+SERVICE DETAILS
+- Réparation: mobile phones only
+- Vente: new and used phones
+- Rachat: phones only
+- Accessoires: phone accessories only
+
+DESIGN DIRECTION
+- Clean white overall background
+- Light gray section backgrounds where needed for contrast
+- Strong modern blue CTA buttons inspired by the sample reference
+- Professional and elegant layout
+- Minimal, not crowded
+- Mobile-first responsive design
+- Clear spacing, soft shadows, rounded buttons/cards
+- Modern sans-serif typography
+- The visual style should feel close to a modern repair-service landing page:
+  - hero image background
+  - white content sections
+  - blue primary buttons
+  - clean icon cards for services
+
+HEADER / NAVBAR
+- Sticky or clean top navbar
+- Show the provided current logo in the navbar only
+- Do not place the logo inside the hero section
+- Brand name text can appear beside the logo if it looks good
+- Navigation items:
+  - Accueil
+  - À propos
+  - Services
+  - Réservation
+  - Contact
+- Add a prominent CTA button in navbar:
+  - “Réserver”
+
+HERO SECTION
+Create a visually strong hero section with:
+- A background image related to mobile phone repair (clean, professional, high-quality placeholder image)
+- Dark subtle overlay for readability
+- Main heading focused only on phone repair at home
+- One short supporting sentence only
+- Primary CTA button for booking immediately
+- Secondary CTA button can link to services
+
+Suggested French copy:
+- Title: “Réparation de téléphone à domicile à Marseille”
+- Subtitle: “Intervention rapide, service fiable et prise de rendez-vous simple.”
+- Primary button: “Réserver maintenant”
+- Secondary button: “Voir les services”
+
+The hero text must be white and highly readable.
+The hero should look modern and premium, inspired by professional landing pages for repair services.
+
+À PROPOS SECTION
+Replace “Pourquoi nous” with “À propos”.
+This section must describe the business as a solo personal service.
+
+Content direction:
+- emphasize trust
+- emphasize at-home service
+- emphasize speed and professionalism
+- simple and short paragraph
+- write in first person singular or a neutral professional tone suitable for a solo business
+
+Suggested copy idea:
+“Réparetontel propose un service de proximité à Marseille pour la réparation, la vente, le rachat et les accessoires de téléphones. Le service se fait à domicile avec un accompagnement sérieux, rapide et professionnel.”
+
+Add 2 or 3 short trust highlights as mini badges or small points such as:
+- Service à domicile
+- Intervention rapide
+- Relation de confiance
+
+SERVICES SECTION
+Create a services section with 4 clean cards using icons instead of photos.
+Each card must have:
+- icon
+- service title
+- short description
+- optional small CTA
+
+The four cards:
+1. Réparation
+   Description: “Réparation de téléphones à domicile, rapide et fiable.”
+2. Vente
+   Description: “Téléphones neufs et d’occasion selon disponibilité.”
+3. Rachat
+   Description: “Rachat de téléphones avec estimation simple.”
+4. Accessoires
+   Description: “Accessoires de téléphone : chargeurs, câbles, coques et plus.”
+
+Include a CTA button below the cards:
+- “Réserver un service”
+
+BOOKING / RÉSERVATION SECTION
+This is one of the most important sections.
+Create a clean split layout or centered booking block.
+
+Include:
+- short heading
+- one short text line
+- WhatsApp booking button
+- booking form
+
+Suggested heading:
+- “Réservez rapidement”
+Suggested text:
+- “Contactez-nous directement sur WhatsApp ou envoyez une demande via le formulaire.”
+
+FORM FIELDS
+- Nom
+- Téléphone
+- Message
+
+FORM BEHAVIOR
+- The form should be built to send an email
+- For now use a placeholder email configuration / placeholder backend action
+- Keep the form visually clean and simple
+
+WHATSAPP
+- Include clear WhatsApp CTA buttons in:
+  - navbar
+  - hero
+  - services section
+  - réservation section
+  - footer
+- For now use a placeholder WhatsApp link that can be replaced later
+
+MAP SECTION
+Add a simple Google Maps section for Marseille only.
+- This is a general map for Marseille, not a precise shop location
+- Add a short line above the map:
+  - “Déplacement sur tout Marseille”
+- Use an embedded map placeholder if needed
+
+CONTACT SECTION / FOOTER
+Create a clean footer with:
+- logo or brand name
+- phone number: +33 6 05 55 78 12
+- TikTok placeholder link
+- Snapchat placeholder link
+- service area: Marseille
+- quick navigation links
+- CTA to book
+- placeholder link for mentions légales
+
+Use this brand name exactly:
+- Réparetontel
+
+VISUAL CONTENT
+- Use temporary clean professional placeholder images for phone repair
+- Hero image should show an opened phone / technician repairing a phone
+- Service cards should use icons, not images
+
+COLORS
+- Main background: white
+- Secondary backgrounds: very light gray
+- Primary buttons: bright modern blue
+- Text: dark gray / black in content sections
+- Hero text: white
+- Buttons should feel premium and highly visible
+
+UX / RESPONSIVE
+- Design must be fully responsive and optimized primarily for mobile users
+- Strong CTA visibility on mobile
+- Sections should stack cleanly
+- Navbar should work well on mobile with hamburger menu if needed
+- Avoid clutter
+- Make loading feel light and modern
+
+SEO / BASIC META
+Add basic French SEO structure:
+- Title tag
+- Meta description
+- Proper heading hierarchy
+- Alt text placeholders for images
+
+IMPORTANT
+Do not make the website look generic or outdated.
+Do not make it too corporate.
+It should feel like a modern local service business site focused on quick conversion, trust, and simplicity.
+
+OUTPUT
+Provide the complete landing page structure and design implementation, with clean HTML/CSS/JS or a modern equivalent, ready to customize later with real WhatsApp link, email form backend, TikTok, Snapchat, and Google Maps embed.

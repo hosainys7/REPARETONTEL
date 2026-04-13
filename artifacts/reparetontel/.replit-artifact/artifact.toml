@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Réparetontel"
+version = "1.0.0"
+id = "artifacts/reparetontel"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24298
+
+[services.development]
+run = "pnpm --filter @workspace/reparetontel run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/reparetontel", "run", "build" ]
+publicDir = "artifacts/reparetontel/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24298"
+BASE_PATH = "/"
