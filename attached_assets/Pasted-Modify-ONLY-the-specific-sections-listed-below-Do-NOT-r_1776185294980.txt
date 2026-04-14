@@ -1,0 +1,297 @@
+Modify ONLY the specific sections listed below. Do NOT redesign the whole website and do NOT rewrite the entire app.
+
+GOAL
+The website should not use a separate heavy “services section” as the main user flow.
+Instead:
+- the new model search / selection section
+- and the “Réparations populaires” cards
+will guide the user journey.
+
+Also add a LIGHT services overview section only for presentation and reassurance, not as the main booking flow.
+
+The site must remain:
+- premium
+- clean
+- mobile-first
+- white / light grey
+- blue accent
+- Apple-like minimalism
+- easy to scan on mobile
+
+The business is:
+- smartphone repair at home
+- Marseille and surroundings
+- booking-first
+- WhatsApp-first
+
+-----------------------------------
+1. ADD A NEW MODEL SEARCH / SELECTION SECTION
+-----------------------------------
+Add a new section directly below the Hero.
+
+This section should look like a clean guided selection area for smartphone repair.
+It should feel like a simple repair configurator, not a complex ecommerce filter.
+
+VISUAL CONCEPT
+Create a section with:
+- a search bar at the top
+- a simple 3-step progress indicator below it
+- a main title asking the user which phone model they have
+- helper text
+- a grid of clickable phone-brand cards
+
+This section is ONLY for smartphones.
+Do NOT include laptops, tablets, watches, consoles, or other device types.
+
+TOP AREA
+Add a search bar with:
+- rounded shape
+- white background
+- soft border or soft shadow
+- search icon button on the right
+
+Placeholder text:
+"Ex: iPhone 13, Samsung S23, Redmi Note"
+
+Below the search bar, add a simple horizontal step indicator with 3 steps:
+1. Marque
+2. Réparation
+3. Réservation
+
+The first step should appear active by default.
+The other two should appear inactive or muted.
+
+MAIN TITLE
+"Quel modèle avez-vous ?"
+
+HELPER TEXT
+"Saisissez votre marque ou choisissez ci-dessous"
+
+BRAND CARDS
+Under the title and helper text, add a grid of clickable cards for phone brands only:
+
+- iPhone
+- Samsung
+- Huawei
+- Google Pixel
+- Xiaomi
+- Redmi
+
+CARD DESIGN
+Each card should:
+- be white
+- have rounded corners
+- have soft shadow
+- include a minimal icon or simple smartphone graphic
+- show the brand name clearly
+- have clean spacing
+- feel premium and modern
+
+LAYOUT
+- 2 cards per row on mobile
+- 3 cards per row on larger screens if it fits well, otherwise 2
+- balanced spacing
+- no clutter
+
+BEHAVIOR
+When a user clicks a brand card:
+- scroll to the “Réparations populaires” section
+- optionally highlight related repair cards visually
+This can be visual only. No backend logic is required.
+
+-----------------------------------
+2. PRODUCTS SECTION = MAIN REPAIR SERVICES
+-----------------------------------
+Keep the section title:
+"Réparations populaires"
+
+This section is the MAIN service selection section.
+The cards should represent repair offers, not a normal product store.
+
+REPAIR CARDS EXAMPLES
+Use repair cards like:
+- Remplacement écran iPhone — 49€
+- Remplacement écran Samsung — 59€
+- Batterie iPhone — 30€
+- Batterie Samsung / Xiaomi — 35€
+- Connecteur de charge — 35€
+- Caméra — 39€
+
+CARD STRUCTURE
+Each repair card should contain:
+- image on top
+- repair title
+- short description
+- price badge
+- subtle hover animation
+
+Design the cards like premium ecommerce cards:
+- white card
+- rounded corners
+- soft shadow
+- clean spacing
+- image clearly visible at top
+- professional typography
+
+CARD CLICK BEHAVIOR
+When a user clicks a repair card:
+open a modal / quick-view popup.
+
+MODAL DESIGN
+The popup must NOT be an image-only lightbox.
+It must be a clean quick-view modal containing:
+- a smaller image at the top
+- title
+- short summary
+- price
+- WhatsApp booking button
+
+The image should be smaller than the current version so there is enough visible space for text and CTA.
+
+Example summary text:
+"Nous réparons tous les écrans iPhone, Samsung, Huawei et autres modèles avec des pièces de qualité."
+
+Button:
+"Réserver sur WhatsApp"
+
+The modal should feel:
+- premium
+- compact
+- useful
+- conversion-focused
+
+-----------------------------------
+3. ADD A LIGHT SERVICES OVERVIEW SECTION
+-----------------------------------
+Add a smaller presentation-only section AFTER the products section.
+
+PURPOSE
+This is not the main user flow.
+It is only there to reassure visitors quickly by showing the business categories in a simple and visual way.
+
+VISUAL STYLE
+Create a section made of 3 or 4 large white cards stacked vertically on mobile.
+Each card should:
+- have rounded corners
+- have soft shadow
+- contain a title
+- contain a short bullet-style list
+- have a small action button underneath or inside the card
+- use simple icons or plus icons if needed
+- feel modern, premium, and easy to scan
+
+This section should visually resemble a service overview used by local repair websites:
+large clean category cards with a title and a short list of what is included.
+
+Use the following cards:
+
+CARD 1
+Title:
+"Réparation"
+Items:
+- Téléphone
+- Tablette
+- Console
+Button:
+"Faire un devis"
+
+CARD 2
+Title:
+"Rachat"
+Items:
+- iPhone
+- Samsung
+Button:
+"Estimer mon appareil"
+
+CARD 3
+Title:
+"Vente"
+Items:
+- Téléphones reconditionnés
+- iPhone
+- Samsung
+Button:
+"Voir les offres"
+
+CARD 4
+Title:
+"Accessoires"
+Items:
+- Chargeurs
+- Câbles
+- Protection
+Button:
+"Voir les accessoires"
+
+DESIGN NOTES
+This section should be informative and visual only.
+It should not overpower the search section or the products section.
+Make it simpler and cleaner than a typical repair shop page.
+
+-----------------------------------
+4. ADD A BUSINESS HOURS / HORAIRES SECTION
+-----------------------------------
+Add a section below “À propos”.
+
+SECTION TITLE
+"Horaires d’ouverture"
+
+STATUS BADGE
+Add a green pill badge:
+"Ouvert 6j/7"
+
+VISUAL CONCEPT
+This section should be a clean local-business opening-hours card.
+It should look like a trustworthy business information panel.
+
+SCHEDULE
+Display:
+
+Lundi: 10:00 – 19:00
+Mardi: 10:00 – 19:00
+Mercredi: 10:00 – 19:00
+Jeudi: 10:00 – 19:00
+Vendredi: 10:00 – 19:00
+Samedi: 10:00 – 18:15
+Dimanche: Fermé
+
+STYLE
+- white or very light grey card
+- rounded corners
+- soft shadow
+- thin separators between rows
+- bold readable times
+- premium typography
+- clean spacing
+
+-----------------------------------
+5. KEEP DESIGN CONSISTENCY
+-----------------------------------
+Do NOT change:
+- navbar
+- hero layout
+- footer
+- global colors
+- overall page identity
+
+Keep:
+- white / light grey interface
+- blue accent color
+- Apple-like clean design
+- mobile-first layout
+- soft shadows
+- rounded cards
+- subtle Framer Motion animation only where helpful
+
+-----------------------------------
+6. OUTPUT
+-----------------------------------
+Return ONLY the modified / new parts needed for:
+- the new model search / selection section
+- the updated products modal behavior
+- the light services overview section
+- the horaires section
+
+Do NOT regenerate the whole website.
+Do NOT rewrite unrelated files.

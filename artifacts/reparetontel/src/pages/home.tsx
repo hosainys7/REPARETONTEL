@@ -1,8 +1,10 @@
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
+import { ModelSearch } from "@/components/model-search";
 import { Products } from "@/components/products";
 import { Services } from "@/components/services";
 import { About } from "@/components/about";
+import { Horaires } from "@/components/horaires";
 import { Booking } from "@/components/booking";
 import { MapSection } from "@/components/map";
 import { Footer } from "@/components/footer";
@@ -13,9 +15,11 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <Hero />
+        <ModelSearch />
         <Products />
         <Services />
         <About />
+        <Horaires />
         <Booking />
         <MapSection />
       </main>
