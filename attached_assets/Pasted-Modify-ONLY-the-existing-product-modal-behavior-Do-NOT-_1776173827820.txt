@@ -1,0 +1,76 @@
+Modify ONLY the existing product modal behavior. Do NOT change the rest of the website.
+
+Current issue:
+When a product card is clicked, the modal shows only a large image. This must be changed.
+
+Required change:
+Turn the product modal into a clean Apple-inspired quick-view modal that includes both image and product information.
+
+Modal layout:
+- centered popup
+- white background
+- rounded-2xl
+- soft shadow
+- blurred dark overlay behind
+- close button top-right
+
+Inside the modal:
+1. Product image at the top, but noticeably smaller than now
+   - image should not take the full modal height
+   - image should fit in a medium-height container
+   - rounded corners
+   - object-cover
+   - enough space left below for text and CTA
+
+2. Below the image, show:
+   - product/service title
+   - short professional summary
+   - price badge
+   - primary booking button
+
+Text content example:
+- For screen replacement:
+  Title: "Remplacement écran iPhone"
+  Summary: "Nous réparons tous types d’écrans de téléphones : iPhone, Samsung, Huawei et plus, avec intervention rapide à domicile."
+  Price: "49€"
+
+Button:
+- text: "Réserver sur WhatsApp"
+- full width
+- premium blue style
+- rounded
+- hover effect
+
+Design intent:
+- modal should feel like a premium service quick-view, not an image-only lightbox
+- the image must be reduced in height so the text summary and booking button are visible without the modal becoming too tall
+- maintain a clean Apple-like look with elegant spacing and typography
+Product summaries (use different text per product):
+
+1. Remplacement écran iPhone
+"Nous réparons tous types d’écrans iPhone avec des pièces de qualité. Intervention rapide à domicile à Marseille."
+
+2. Remplacement écran Samsung
+"Réparation d’écrans Samsung toutes gammes Galaxy. Service fiable et rapide directement chez vous."
+
+3. Batterie iPhone
+"Remplacement de batterie iPhone pour améliorer l’autonomie. Intervention à domicile en moins de 30 minutes."
+
+4. Batterie Samsung / Xiaomi
+"Changement de batterie pour Samsung et Xiaomi avec pièces performantes et installation rapide."
+
+5. Connecteur de charge
+"Réparation des problèmes de charge (port USB / Lightning). Solution rapide pour tous types de smartphones."
+
+6. Caméra arrière
+"Remplacement caméra pour retrouver une qualité photo optimale sur iPhone, Samsung et autres modèles." 
+
+Animation:
+- smooth fade + scale in
+- subtle overlay blur
+- clean close interaction
+
+Technical requirement:
+Modify only the product modal component / product card click result.
+Do not redesign hero, navbar, services, about, form, map, or footer.
+Return only the updated modal-related code.

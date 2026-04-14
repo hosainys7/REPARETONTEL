@@ -9,7 +9,7 @@ const PRODUCTS = [
     title: "Remplacement écran iPhone",
     desc: "Remplacement de dalle tactile et LCD",
     price: "49€",
-    fullDesc: "Votre écran d'iPhone est fissuré, rayé ou ne répond plus ? Nous remplaçons le bloc complet (vitre + LCD) par une pièce de haute qualité. Intervention garantie sans perte de données et réalisée directement chez vous en moins de 30 minutes.",
+    summary: "Nous réparons tous types d'écrans iPhone avec des pièces de qualité. Intervention rapide à domicile à Marseille.",
     img: "/product-1.png",
   },
   {
@@ -17,7 +17,7 @@ const PRODUCTS = [
     title: "Remplacement écran Samsung",
     desc: "Compatible toutes gammes Galaxy",
     price: "59€",
-    fullDesc: "Remplacement professionnel de l'écran de votre smartphone Samsung. Nous utilisons des dalles premium pour retrouver les couleurs éclatantes et la réactivité d'origine de votre appareil.",
+    summary: "Réparation d'écrans Samsung toutes gammes Galaxy. Service fiable et rapide directement chez vous.",
     img: "/product-2.png",
   },
   {
@@ -25,7 +25,7 @@ const PRODUCTS = [
     title: "Batterie iPhone",
     desc: "Retrouvez une autonomie optimale",
     price: "30€",
-    fullDesc: "Si votre iPhone se décharge trop vite ou s'éteint subitement, un changement de batterie est nécessaire. Nous installons une batterie neuve certifiée, redonnant une seconde jeunesse à votre appareil.",
+    summary: "Remplacement de batterie iPhone pour améliorer l'autonomie. Intervention à domicile en moins de 30 minutes.",
     img: "/product-3.png",
   },
   {
@@ -33,7 +33,7 @@ const PRODUCTS = [
     title: "Batterie Samsung / Xiaomi",
     desc: "Remplacement rapide et fiable",
     price: "35€",
-    fullDesc: "Retrouvez 100% de l'autonomie de votre smartphone Android. Remplacement effectué avec soin et calibration de la nouvelle batterie pour des performances durables.",
+    summary: "Changement de batterie pour Samsung et Xiaomi avec pièces performantes et installation rapide.",
     img: "/product-4.png",
   },
   {
@@ -41,7 +41,7 @@ const PRODUCTS = [
     title: "Connecteur de charge",
     desc: "Réparation du port USB-C ou Lightning",
     price: "35€",
-    fullDesc: "Votre téléphone ne charge plus ou le câble ne tient pas ? Nous nettoyons ou remplaçons le connecteur de charge endommagé pour que vous puissiez à nouveau recharger sans faux contacts.",
+    summary: "Réparation des problèmes de charge (port USB / Lightning). Solution rapide pour tous types de smartphones.",
     img: "/product-5.png",
   },
   {
@@ -49,7 +49,7 @@ const PRODUCTS = [
     title: "Caméra arrière",
     desc: "Remplacement module photo haute définition",
     price: "39€",
-    fullDesc: "Vos photos sont floues, tremblent, ou l'appareil photo affiche un écran noir ? Nous remplaçons le module caméra défectueux par une pièce de qualité pour des clichés de nouveau parfaits.",
+    summary: "Remplacement caméra pour retrouver une qualité photo optimale sur iPhone, Samsung et autres modèles.",
     img: "/product-6.png",
   },
 ];
@@ -141,7 +141,7 @@ export function Products() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.94, y: 16 }}
               transition={{ type: "spring", damping: 28, stiffness: 380, mass: 0.9 }}
-              className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[90vh]"
+              className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden z-10 flex flex-col"
             >
               <button
                 onClick={() => setSelectedProduct(null)}
@@ -150,7 +150,7 @@ export function Products() {
                 <X className="w-5 h-5" />
               </button>
               
-              <div className="aspect-video w-full bg-gray-100 relative shrink-0">
+              <div className="h-52 w-full bg-gray-100 shrink-0 overflow-hidden">
                 <img
                   src={selectedProduct.img}
                   alt={selectedProduct.title}
@@ -158,22 +158,22 @@ export function Products() {
                 />
               </div>
               
-              <div className="p-6 md:p-8 overflow-y-auto">
-                <div className="flex items-start justify-between gap-4 mb-4">
-                  <h3 className="text-2xl font-bold tracking-tight text-foreground">
+              <div className="p-6 md:p-7">
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <h3 className="text-xl font-bold tracking-tight text-foreground leading-snug">
                     {selectedProduct.title}
                   </h3>
-                  <span className="inline-flex shrink-0 items-center justify-center px-4 py-1.5 rounded-full bg-primary/10 text-primary font-bold text-lg">
+                  <span className="inline-flex shrink-0 items-center justify-center px-3.5 py-1 rounded-full bg-primary text-white font-bold text-base shadow-sm">
                     {selectedProduct.price}
                   </span>
                 </div>
                 
-                <p className="text-muted-foreground leading-relaxed mb-8">
-                  {selectedProduct.fullDesc}
+                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                  {selectedProduct.summary}
                 </p>
                 
-                <Button asChild size="lg" className="w-full rounded-full font-semibold bg-[#25D366] hover:bg-[#20bd5a] text-white h-14">
-                  <a href={`#whatsapp`}>
+                <Button asChild size="lg" className="w-full rounded-full font-semibold bg-primary hover:bg-primary/90 text-white h-12 text-sm">
+                  <a href="#whatsapp">
                     Réserver sur WhatsApp
                   </a>
                 </Button>
