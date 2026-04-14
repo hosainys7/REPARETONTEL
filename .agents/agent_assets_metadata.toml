@@ -6,3 +6,57 @@ id = "ZbZtWFEbzj5IrMXtrhD1C"
 uri = "file://artifacts/reparetontel/public/hero-repair.png"
 type = "image"
 title = "Phone repair technician at work"
+
+[[generated]]
+id = "305_4REOUHAS3ra6OMK-N"
+uri = "file://artifacts/reparetontel/public/slider-1.png"
+type = "image"
+title = "Technician fixing iPhone screen"
+
+[[generated]]
+id = "3rE6URalPOuEC9u6eMcPn"
+uri = "file://artifacts/reparetontel/public/slider-2.png"
+type = "image"
+title = "Replacing smartphone battery with tools"
+
+[[generated]]
+id = "qh8CSPrPh5v4XTzmg0HdO"
+uri = "file://artifacts/reparetontel/public/slider-3.png"
+type = "image"
+title = "Fixing USB charging port"
+
+[[generated]]
+id = "QmK9RnEC4FM_5VqyhNoSd"
+uri = "file://artifacts/reparetontel/public/product-1.png"
+type = "image"
+title = "Cracked iPhone screen replacement"
+
+[[generated]]
+id = "SJbEi-JJctjUE-sTwQk9a"
+uri = "file://artifacts/reparetontel/public/product-2.png"
+type = "image"
+title = "Samsung screen replacement"
+
+[[generated]]
+id = "eFYqyCTD39uSZaraCWmOX"
+uri = "file://artifacts/reparetontel/public/product-3.png"
+type = "image"
+title = "iPhone battery component"
+
+[[generated]]
+id = "sRVEnqRr1D2vEpTfcydvA"
+uri = "file://artifacts/reparetontel/public/product-4.png"
+type = "image"
+title = "Samsung battery component"
+
+[[generated]]
+id = "CAnDdxoN3_KZ6RCLKyhzA"
+uri = "file://artifacts/reparetontel/public/product-5.png"
+type = "image"
+title = "USB-C charging port"
+
+[[generated]]
+id = "v-Ktp3vyPguuVkgoeXdo4"
+uri = "file://artifacts/reparetontel/public/product-6.png"
+type = "image"
+title = "Smartphone rear camera module"

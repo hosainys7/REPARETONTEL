@@ -1,0 +1,182 @@
+Design and build a premium, modern, Apple-inspired one-page website for a mobile phone repair business called “Réparetontel”, based in Marseille, France.
+
+GENERAL GOAL
+The website must feel like a high-end Apple-style product + service experience, but focused on mobile phone repair at home. The main goal is conversion: booking a repair via WhatsApp.
+
+STYLE (VERY IMPORTANT)
+- Apple-like clean premium design
+- White background + light grey sections
+- Blue accent color (around 20–30%)
+- Minimal, spacious layout
+- Smooth transitions and animations
+- Soft shadows, rounded cards
+- Modern typography
+- Mobile-first design
+- Elegant hover and scroll animations
+- No clutter
+
+LAYOUT STRUCTURE (TOP TO BOTTOM)
+1. Hero (with slider)
+2. Products (Réparations populaires)
+3. Services
+4. À propos
+5. Contact / Booking form
+6. Map
+7. Footer
+
+-----------------------------------
+HERO SECTION (SLIDER STYLE)
+-----------------------------------
+- Full-width background image slider (3 slides)
+- Dark overlay for readability
+- Centered content
+
+Slides:
+1. Screen repair (open phone)
+2. Battery replacement
+3. Charging port repair
+
+Headline:
+“Écran, batterie, connecteur : intervention rapide à Marseille”
+
+Subtext:
+“Service à domicile, rapide et professionnel.”
+
+Promo badge:
+“Déplacement sur tout Marseille gratuitement”
+
+Buttons:
+- Primary: “Réserver maintenant”
+- Secondary: “Voir les réparations”
+
+Add subtle slide transition animation (fade or smooth horizontal)
+
+-----------------------------------
+PRODUCTS SECTION (MAIN FEATURE)
+-----------------------------------
+Title:
+“Réparations populaires”
+
+Subtitle:
+“Les interventions les plus demandées, avec des prix transparents.”
+
+This section MUST look like an e-commerce grid.
+
+GRID:
+- 2 cards per row on mobile
+- 4 cards per row on desktop
+
+Each card contains:
+- high-quality product-style image (screen, battery, internal phone, etc.)
+- title
+- short description
+- price
+- hover effect
+
+CARDS (use these):
+1. Remplacement écran iPhone — 49€
+2. Remplacement écran Samsung — 59€
+3. Batterie iPhone — 30€
+4. Batterie Samsung / Xiaomi — 35€
+5. Connecteur de charge — 35€
+6. Caméra arrière — 39€
+
+Each card interaction:
+- On click → open a clean product detail modal OR expand inline
+- Show:
+  - larger image
+  - short description
+  - price
+  - button: “Réserver sur WhatsApp”
+
+-----------------------------------
+SERVICES SECTION
+-----------------------------------
+Keep simple icon cards:
+- Réparation
+- Vente
+- Rachat
+- Accessoires
+
+But smaller and secondary compared to products.
+
+-----------------------------------
+À PROPOS SECTION
+-----------------------------------
+Short, trust-focused text:
+
+“Réparetontel propose un service de réparation de téléphones à domicile à Marseille. Intervention rapide, service fiable et accompagnement professionnel.”
+
+Add 3 trust points:
+- Service à domicile
+- Intervention rapide
+- Relation de confiance
+
+-----------------------------------
+BOOKING / CONTACT SECTION
+-----------------------------------
+Heading:
+“Réservez rapidement”
+
+Include:
+- WhatsApp button (primary CTA)
+- Simple form:
+  - Nom
+  - Téléphone
+  - Message
+
+Form can be placeholder (no backend needed yet)
+
+-----------------------------------
+MAP SECTION
+-----------------------------------
+- Embed Marseille map
+- Text above:
+“Déplacement sur tout Marseille”
+
+-----------------------------------
+NAVBAR
+-----------------------------------
+Sticky navbar:
+- Accueil
+- Produits
+- Services
+- À propos
+- Réservation
+- Contact
+
+CTA button:
+“Réserver”
+
+-----------------------------------
+INTERACTIONS & ANIMATIONS
+-----------------------------------
+- Cards lift on hover (translateY + shadow)
+- Slight scale on hover
+- Smooth scrolling
+- Framer Motion animations on scroll
+- Modal animation smooth (fade + scale)
+
+-----------------------------------
+VISUAL CONTENT
+-----------------------------------
+Use high-quality placeholder images:
+- open smartphone repair
+- battery replacement
+- internal components
+- cables / connectors
+
+-----------------------------------
+UX PRIORITY
+-----------------------------------
+- Fast booking (WhatsApp)
+- Clear pricing
+- Clean product-like experience
+- Trust + simplicity
+
+-----------------------------------
+OUTPUT
+-----------------------------------
+Generate a complete responsive React + Tailwind + Framer Motion implementation.
+
+Ensure clean code, reusable components, and clear section separation.

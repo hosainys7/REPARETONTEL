@@ -1,73 +1,66 @@
-import { FaTiktok, FaSnapchatGhost } from "react-icons/fa";
-import { Phone, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FaTiktok, FaWhatsapp } from "react-icons/fa6";
+import { FaSnapchat } from "react-icons/fa";
+import { Phone } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-slate-950 text-slate-300 pt-16 pb-8">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+    <footer className="bg-[#0f172a] text-white pt-20 pb-10">
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 max-w-5xl mx-auto">
           
-          <div className="lg:col-span-1">
-            <a href="#" className="text-2xl font-bold tracking-tight text-white mb-4 block">
-              Réparetontel<span className="text-primary text-3xl leading-none">.</span>
+          <div>
+            <a href="#" className="text-2xl font-bold tracking-tight mb-4 block">
+              Réparetontel<span className="text-primary">.</span>
             </a>
-            <p className="text-sm text-slate-400 mb-6 leading-relaxed">
-              Votre expert réparation de téléphone à domicile à Marseille. Intervention rapide, service fiable.
+            <div className="flex items-center gap-3 text-slate-300 font-medium mb-6">
+              <Phone className="w-5 h-5 text-primary" />
+              <a href="tel:+33605557812" className="hover:text-white transition-colors">+33 6 05 55 78 12</a>
+            </div>
+            <p className="text-sm text-slate-400 leading-relaxed">
+              Le service premium de réparation de téléphone à domicile à Marseille. Rapide, fiable et garanti.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                <FaTiktok className="w-4 h-4" />
-                <span className="sr-only">TikTok</span>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-lg mb-6">Liens rapides</h4>
+            <ul className="space-y-4 text-sm text-slate-400">
+              <li><a href="#products" className="hover:text-white transition-colors">Réparations</a></li>
+              <li><a href="#services" className="hover:text-white transition-colors">Services</a></li>
+              <li><a href="#about" className="hover:text-white transition-colors">À propos</a></li>
+              <li><a href="#booking" className="hover:text-white transition-colors">Réserver</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-lg mb-6">Réseaux sociaux</h4>
+            <div className="flex flex-col gap-4">
+              <a href="#whatsapp" className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors">
+                <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-[#25D366]">
+                  <FaWhatsapp className="w-4 h-4" />
+                </div>
+                WhatsApp
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-[#FFFC00] hover:text-slate-900 transition-colors">
-                <FaSnapchatGhost className="w-4 h-4" />
-                <span className="sr-only">Snapchat</span>
+              <a href="#tiktok" className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors">
+                <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
+                  <FaTiktok className="w-4 h-4" />
+                </div>
+                TikTok
+              </a>
+              <a href="#snapchat" className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors">
+                <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-[#FFFC00]">
+                  <FaSnapchat className="w-4 h-4 text-black" />
+                </div>
+                Snapchat
               </a>
             </div>
           </div>
 
-          <div>
-            <h4 className="text-white font-semibold mb-6">Liens rapides</h4>
-            <ul className="space-y-3 text-sm">
-              <li><a href="#" className="hover:text-primary transition-colors">Accueil</a></li>
-              <li><a href="#about" className="hover:text-primary transition-colors">À propos</a></li>
-              <li><a href="#services" className="hover:text-primary transition-colors">Services</a></li>
-              <li><a href="#booking" className="hover:text-primary transition-colors">Réservation</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-6">Contact</h4>
-            <ul className="space-y-4 text-sm">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-primary shrink-0" />
-                <span>Marseille, France<br/>(Service à domicile uniquement)</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-primary shrink-0" />
-                <a href="tel:+33605557812" className="hover:text-white transition-colors">+33 6 05 55 78 12</a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-6">Besoin d'une réparation ?</h4>
-            <p className="text-sm mb-4">Contactez-nous directement pour obtenir un devis rapide.</p>
-            <Button asChild className="w-full bg-primary hover:bg-primary/90 text-white">
-              <a href="#whatsapp">
-                Réserver maintenant
-              </a>
-            </Button>
-          </div>
-
         </div>
 
-        <div className="pt-8 border-t border-slate-800 text-sm text-slate-500 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="max-w-5xl mx-auto pt-8 border-t border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
           <p>© {new Date().getFullYear()} Réparetontel. Tous droits réservés.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Mentions légales</a>
-            <a href="#" className="hover:text-white transition-colors">Politique de confidentialité</a>
+            <a href="#legal" className="hover:text-slate-300 transition-colors">Mentions légales</a>
           </div>
         </div>
       </div>
