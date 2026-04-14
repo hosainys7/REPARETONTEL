@@ -20,13 +20,13 @@ export function Hero() {
 
   return (
     <section className="relative h-[100dvh] w-full overflow-hidden bg-black">
-      <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="sync">
         <motion.div
           key={currentSlide}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 1.4, ease: "easeInOut" }}
           className="absolute inset-0 z-0"
         >
           <div className="absolute inset-0 bg-black/55 z-10" />
@@ -45,7 +45,15 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="inline-block py-1.5 px-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium text-white mb-8 tracking-wide">
+            <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-sm font-medium text-white mb-8 tracking-wide">
+              <span className="relative flex h-2.5 w-2.5 shrink-0">
+                <motion.span
+                  animate={{ scale: [1, 1.8, 1], opacity: [0.8, 0, 0.8] }}
+                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+                />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_6px_2px_rgba(74,222,128,0.6)]" />
+              </span>
               Déplacement sur tout Marseille gratuitement
             </span>
           </motion.div>

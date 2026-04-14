@@ -1,0 +1,119 @@
+Modify ONLY the following parts of the existing React + Tailwind + Framer Motion website. DO NOT redesign the entire website. Keep all current structure, styles, and sections unchanged except where specified.
+
+-----------------------------------
+1. PRODUCTS SECTION (IMPORTANT)
+-----------------------------------
+Transform the existing product cards into a modern Apple-style e-commerce layout.
+
+Keep:
+- grid layout (2 per row mobile, 4 desktop)
+
+Modify each card to:
+- Image on top (full width, rounded corners)
+- Below:
+  - Title (bold)
+  - Short description
+  - Price (blue badge style like screenshot)
+
+Card style:
+- white background
+- soft shadow
+- rounded-xl
+- hover:
+  - slight scale (1.02)
+  - stronger shadow
+  - smooth transition
+
+-----------------------------------
+2. PRODUCT MODAL (NEW FEATURE)
+-----------------------------------
+When clicking a product card:
+- Open a centered modal (popup)
+
+Modal design:
+- large image on top
+- white card container
+- rounded-2xl
+- shadow-xl
+- close button (top-right, circular, minimal)
+
+Background:
+- dark overlay with blur effect
+
+Inside modal:
+- product title
+- short description
+- price
+- button:
+  "Réserver sur WhatsApp"
+
+Button style:
+- blue
+- full width
+- rounded
+- hover effect
+
+Animation:
+- smooth fade + scale in (framer motion)
+- overlay fade in
+
+-----------------------------------
+3. HERO BADGE (IMPORTANT)
+-----------------------------------
+Modify the badge:
+"Déplacement sur tout Marseille gratuitement"
+
+Style:
+- pill shape
+- semi-transparent dark background
+- white text
+- small green dot BEFORE text
+
+Green dot animation:
+- blinking / pulsing
+- soft glow
+- continuous animation
+
+Example behavior:
+- scale up and down slightly
+- opacity fade loop
+
+-----------------------------------
+4. HERO SECTION (KEEP STRUCTURE)
+-----------------------------------
+Do NOT change layout.
+
+Only improve:
+- slider transition (smooth fade or slide)
+- ensure text remains centered
+- keep buttons as is
+
+-----------------------------------
+5. DO NOT TOUCH
+-----------------------------------
+- navbar
+- services section
+- about section
+- form
+- map
+- footer
+- routing
+- global styles
+
+-----------------------------------
+6. TECH REQUIREMENTS
+-----------------------------------
+- Use Framer Motion for animations
+- Use Tailwind classes only
+- Keep code clean and component-based
+- Modal should be reusable component
+
+-----------------------------------
+OUTPUT
+-----------------------------------
+Return only modified components:
+- Products component
+- Modal component
+- Hero badge modification
+
+Do not regenerate full project.

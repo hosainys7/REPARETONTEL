@@ -114,10 +114,11 @@ export function Products() {
               <div className="p-5 flex-1 flex flex-col">
                 <h3 className="font-bold text-foreground mb-1 leading-tight">{prod.title}</h3>
                 <p className="text-sm text-muted-foreground line-clamp-1 mb-4 flex-1">{prod.desc}</p>
-                <div className="mt-auto">
-                  <span className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold text-sm">
+                <div className="mt-auto flex items-center justify-between">
+                  <span className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-primary text-white font-bold text-sm shadow-sm">
                     {prod.price}
                   </span>
+                  <span className="text-xs text-muted-foreground font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">Voir →</span>
                 </div>
               </div>
             </motion.div>
@@ -136,9 +137,10 @@ export function Products() {
               className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             />
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.92, y: 24 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              exit={{ opacity: 0, scale: 0.94, y: 16 }}
+              transition={{ type: "spring", damping: 28, stiffness: 380, mass: 0.9 }}
               className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl overflow-hidden z-10 flex flex-col max-h-[90vh]"
             >
               <button
