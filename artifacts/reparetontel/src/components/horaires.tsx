@@ -25,16 +25,16 @@ export function Horaires() {
           viewport={{ once: true }}
           transition={{ duration: 0.55 }}
         >
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                 <Clock className="w-5 h-5 text-primary" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground uppercase">
                 Horaires d'ouverture
               </h2>
             </div>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-700 text-xs font-semibold">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-700 text-xs font-bold uppercase tracking-wide">
               <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
               Ouvert 6j/7
             </span>
@@ -60,7 +60,7 @@ export function Horaires() {
                       {entry.day}
                     </span>
                     {isToday && (
-                      <span className="text-[10px] font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                      <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full uppercase tracking-wide">
                         Aujourd'hui
                       </span>
                     )}
@@ -68,7 +68,7 @@ export function Horaires() {
                   <span
                     className={`text-sm font-semibold tabular-nums ${
                       isClosed
-                        ? "text-muted-foreground/60"
+                        ? "text-muted-foreground/50"
                         : isToday
                         ? "text-primary"
                         : "text-foreground"

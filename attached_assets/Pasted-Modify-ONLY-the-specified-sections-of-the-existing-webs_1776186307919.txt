@@ -1,0 +1,399 @@
+Modify ONLY the specified sections of the existing website. Do NOT redesign the whole website and do NOT rewrite unrelated files.
+
+GOAL
+Improve the current Réparetontel website so it behaves more like a premium smartphone-repair ecommerce experience:
+- better search behavior
+- clearer user flow
+- more complete repair catalog by model
+- horizontal product browsing like an ecommerce store
+- service overview cards with buttons under each block
+- cleaner local-business repair UX
+
+Keep the current website identity:
+- white / light grey premium UI
+- blue accent
+- mobile-first
+- rounded cards
+- soft shadows
+- clean typography
+- Apple-like minimalism
+
+Do NOT change:
+- navbar structure
+- footer
+- global theme
+- overall app structure unless needed for these sections
+
+-----------------------------------
+1. FIX AND IMPROVE THE HERO SECTION
+-----------------------------------
+Keep the current hero layout, but modify the text style.
+
+Requirements:
+- Main hero title must be in FULL UPPERCASE
+- It should remain centered and bold
+- Keep the current CTA buttons
+- Keep the dark image / premium hero style
+- Keep the Marseille home-service positioning
+
+Example hero title style:
+"ÉCRAN, BATTERIE, CONNECTEUR : INTERVENTION RAPIDE À MARSEILLE"
+
+Also keep the top badge, but make it premium:
+- pill shape
+- dark semi-transparent background
+- white text
+- small blinking green dot before text
+
+Badge text:
+"DÉPLACEMENT SUR TOUT MARSEILLE & ALENTOURS"
+
+-----------------------------------
+2. REPLACE THE CURRENT SEARCH / STEP FLOW WITH A MORE LOGICAL FLOW
+-----------------------------------
+The current steps:
+1. Marque
+2. Réparation
+3. Réservation
+are not logical enough.
+
+Replace them with a clearer user flow for a repair journey.
+
+New steps:
+1. Modèle
+2. Réparation
+3. Réserver
+
+The new model search / selection section should appear below the Hero.
+
+This section should feel like a smartphone repair finder:
+- search bar
+- visual progress steps
+- brand/model shortcuts
+- premium clean card-based layout
+
+TOP AREA
+Add:
+- rounded search bar
+- search icon button
+- placeholder text:
+  "Ex: iPhone 13, iPhone 11, Samsung S25, Samsung A15"
+
+TITLE
+"QUEL MODÈLE AVEZ-VOUS ?"
+
+HELPER TEXT
+"Saisissez un modèle ou choisissez une marque ci-dessous"
+
+STEP INDICATOR
+Show 3 visual steps:
+1. Modèle
+2. Réparation
+3. Réserver
+
+The first step should be active when the user is searching.
+The step styling should be premium, simple, and clean.
+
+-----------------------------------
+3. FIX SEARCH BEHAVIOR COMPLETELY
+-----------------------------------
+The search currently filters products, but when the user deletes the typed word, the full product list disappears and does not return.
+
+This must be fixed.
+
+Required behavior:
+- When the user types, show matching products
+- When the user clears the input, restore the FULL original product list
+- Search must be case-insensitive
+- Search should work for:
+  - brand
+  - model
+  - repair type
+
+Examples:
+- typing "iphone" shows all iPhone repair products
+- typing "13" shows iPhone 13 products
+- typing "samsung" shows Samsung products
+- deleting all text restores the complete catalog
+
+Use proper state handling so the original list is preserved and the filtered list is recalculated from the original source data.
+
+-----------------------------------
+4. USE OFFICIAL BRAND LOGOS / VISUAL BRAND IDENTIFIERS
+-----------------------------------
+In the model / brand selection cards, use official smartphone brand logos or clean recognizable brand wordmarks where possible.
+
+Brands to include:
+- Apple / iPhone
+- Samsung
+- Huawei
+- Google Pixel
+- Xiaomi
+- Redmi
+
+Brand cards should be:
+- clean white cards
+- rounded
+- soft shadow
+- logo centered or near top
+- brand name underneath
+- 2 per row on mobile
+- 3 per row on larger screens if spacing allows
+
+If official logos are not available locally, use clean branded wordmarks or minimal placeholder logo treatment that clearly matches the brand.
+
+-----------------------------------
+5. MAKE PRODUCTS SECTION WORK LIKE AN ECOMMERCE CATALOG
+-----------------------------------
+The “Réparations populaires” section should become a richer repair catalog.
+
+IMPORTANT:
+These are not generic products.
+They are repair offers organized like ecommerce items.
+
+The section should feel like a phone-repair store shelf.
+
+REQUIRED PRODUCT LOGIC
+Include repair products for multiple real phone models and repair types.
+
+Examples of models:
+- iPhone 13
+- iPhone 11
+- iPhone 12 Pro Max
+- Samsung S25
+- Samsung A15
+- Samsung S23
+- Xiaomi Redmi Note
+- Huawei P series
+
+For EACH model, show repair types such as:
+- Écran
+- Batterie
+- Caméra
+- Connecteur de charge
+- Diagnostic
+- Back glass if relevant
+
+Examples of product titles:
+- Remplacement écran iPhone 13
+- Batterie iPhone 11
+- Caméra arrière iPhone 12 Pro Max
+- Remplacement écran Samsung S25
+- Batterie Samsung A15
+- Connecteur de charge Samsung S23
+
+CARD DESIGN
+Each product card should contain:
+- image on top
+- product title
+- short description
+- price badge
+- premium clean spacing
+- hover elevation
+
+Examples of short descriptions:
+- "Remplacement de dalle tactile et LCD"
+- "Batterie neuve avec installation rapide"
+- "Réparation du port de charge"
+
+PRICE BADGE
+Use a blue rounded price badge like:
+- 49€
+- 59€
+- 35€
+
+-----------------------------------
+6. DISPLAY PRODUCTS IN HORIZONTAL SCROLLABLE ROWS
+-----------------------------------
+Do NOT show the repair catalog as one long static grid only.
+
+It should feel more like an ecommerce store with rows the user can browse horizontally.
+
+Required behavior:
+- Use horizontal scroll / carousel-like rows
+- The user should be able to swipe left and right on mobile
+- Keep all browsing on the same page
+- Smooth scrolling
+- Clean snap behavior if possible
+
+Recommended structure:
+Create repair shelves / rows such as:
+
+Row 1:
+iPhone repairs
+
+Row 2:
+Samsung repairs
+
+Row 3:
+Other brands repairs
+
+Each row can scroll horizontally on mobile.
+
+Alternative acceptable structure:
+A main horizontal repair carousel filtered by selected brand.
+
+The experience should feel like browsing products in an online store.
+
+-----------------------------------
+7. IMPROVE PRODUCT MODAL / QUICK VIEW
+-----------------------------------
+When a repair card is clicked, open a premium quick-view modal.
+
+The current modal must be improved.
+
+Required modal layout:
+- white popup card
+- blurred dark overlay
+- rounded corners
+- close button top-right
+- image smaller than before
+- title
+- short summary
+- price
+- WhatsApp booking button
+
+The image should not occupy the whole popup.
+It should leave enough space for text and CTA.
+
+Example summary:
+"Nous réparons les écrans, batteries, caméras et connecteurs de nombreux modèles iPhone, Samsung, Huawei et Xiaomi avec des pièces de qualité."
+
+Button:
+"RÉSERVER SUR WHATSAPP"
+
+The modal should feel like a compact product quick-view, not an image viewer.
+
+-----------------------------------
+8. ADD A FULL SERVICE OVERVIEW SECTION INSPIRED BY LOCAL REPAIR WEBSITES
+-----------------------------------
+Add a presentation section after the products area.
+This section is not the main flow, but it must be complete and useful.
+
+It should visually resemble local repair-service category blocks:
+- large white rounded cards
+- short list of included items
+- one clear button under each service card
+
+IMPORTANT:
+Include the button under each card, clearly visible.
+
+SECTION TITLE:
+"NOS SERVICES"
+
+Create these cards:
+
+CARD 1
+Title:
+"Réparation"
+List:
+- iPhone
+- Samsung
+- Huawei
+- Google Pixel
+- Xiaomi / Redmi
+Button:
+"FAIRE MON DEVIS"
+
+CARD 2
+Title:
+"Types de réparations"
+List:
+- Écran
+- Batterie
+- Caméra
+- Connecteur
+- Diagnostic
+Button:
+"VOIR LES RÉPARATIONS"
+
+CARD 3
+Title:
+"Déplacement"
+List:
+- Marseille & alentours
+- À domicile
+- Au bureau
+- Au café / restaurant
+Button:
+"NOUS CONTACTER"
+
+CARD 4
+Title:
+"Accessoires"
+List:
+- Chargeurs
+- Câbles
+- Protection
+Button:
+"VOIR LES ACCESSOIRES"
+
+STYLE
+- stacked on mobile
+- premium white cards
+- rounded-xl or 2xl
+- soft shadow
+- clean list layout
+- subtle icons or plus icons
+- clear CTA button under each card
+
+-----------------------------------
+9. ADD BUSINESS HOURS / HORAIRES SECTION
+-----------------------------------
+Add a clean business hours section below “À propos”.
+
+Title:
+"HORAIRES D’OUVERTURE"
+
+Add green status badge:
+"OUVERT 6J/7"
+
+Display this schedule:
+
+Lundi: 10:00 – 19:00
+Mardi: 10:00 – 19:00
+Mercredi: 10:00 – 19:00
+Jeudi: 10:00 – 19:00
+Vendredi: 10:00 – 19:00
+Samedi: 10:00 – 18:15
+Dimanche: Fermé
+
+Design:
+- clean rounded white card
+- row separators
+- premium typography
+- strong readability
+- local-business reassurance feel
+
+-----------------------------------
+10. KEEP THE EXPERIENCE CONSISTENT
+-----------------------------------
+Do not redesign the site from scratch.
+
+Keep:
+- premium Apple-like spacing
+- blue accent
+- white / grey UI
+- Framer Motion subtle transitions
+- mobile-first responsiveness
+
+The result should feel like:
+- a local Marseille repair brand
+- a smartphone-repair ecommerce experience
+- modern, premium, and easy to browse
+
+-----------------------------------
+11. OUTPUT
+-----------------------------------
+Return ONLY the modified or new code needed for:
+- hero text style update
+- improved model search section
+- fixed search logic
+- official brand-card visuals
+- horizontal repair catalog rows
+- improved product modal
+- full services overview with buttons
+- horaires section
+
+Do NOT regenerate the entire project.
+Do NOT rewrite unrelated files.

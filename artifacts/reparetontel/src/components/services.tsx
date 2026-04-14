@@ -1,26 +1,26 @@
 import { motion } from "framer-motion";
-import { Wrench, RefreshCw, Smartphone, Package, Plus } from "lucide-react";
+import { Wrench, RefreshCw, Smartphone, Package, MapPin, Plus } from "lucide-react";
 
 const SERVICE_CARDS = [
   {
     icon: Wrench,
     title: "Réparation",
-    items: ["Téléphone", "Tablette", "Console"],
-    cta: "Faire un devis",
-    href: "#booking",
-  },
-  {
-    icon: RefreshCw,
-    title: "Rachat",
-    items: ["iPhone", "Samsung"],
-    cta: "Estimer mon appareil",
+    items: ["iPhone", "Samsung", "Huawei", "Google Pixel", "Xiaomi / Redmi"],
+    cta: "Faire mon devis",
     href: "#booking",
   },
   {
     icon: Smartphone,
-    title: "Vente",
-    items: ["Téléphones reconditionnés", "iPhone", "Samsung"],
-    cta: "Voir les offres",
+    title: "Types de réparations",
+    items: ["Écran", "Batterie", "Caméra", "Connecteur", "Diagnostic"],
+    cta: "Voir les réparations",
+    href: "#products",
+  },
+  {
+    icon: MapPin,
+    title: "Déplacement",
+    items: ["Marseille & alentours", "À domicile", "Au bureau", "Au café / restaurant"],
+    cta: "Nous contacter",
     href: "#booking",
   },
   {
@@ -52,7 +52,7 @@ export function Services() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-foreground mb-2">
+          <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-foreground mb-2 uppercase">
             Nos services
           </h2>
           <p className="text-muted-foreground text-base">
@@ -79,22 +79,20 @@ export function Services() {
                   <Icon className="w-5 h-5 text-primary" />
                 </div>
 
-                <h3 className="text-lg font-bold text-foreground mb-3">
-                  {card.title}
-                </h3>
+                <h3 className="text-lg font-bold text-foreground mb-3">{card.title}</h3>
 
                 <ul className="flex-1 space-y-2 mb-5">
-                  {card.items.map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
+                  {card.items.map((it) => (
+                    <li key={it} className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Plus className="w-3.5 h-3.5 text-primary shrink-0" />
-                      {item}
+                      {it}
                     </li>
                   ))}
                 </ul>
 
                 <a
                   href={card.href}
-                  className="inline-flex items-center justify-center w-full h-9 rounded-xl border border-primary/30 text-primary text-sm font-semibold hover:bg-primary hover:text-white transition-all duration-200"
+                  className="inline-flex items-center justify-center w-full h-9 rounded-xl border border-primary/30 text-primary text-xs font-bold uppercase tracking-wide hover:bg-primary hover:text-white transition-all duration-200"
                 >
                   {card.cta}
                 </a>

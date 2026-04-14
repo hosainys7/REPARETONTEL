@@ -45,7 +45,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-sm font-medium text-white mb-8 tracking-wide">
+            <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-semibold text-white mb-8 tracking-widest uppercase">
               <span className="relative flex h-2.5 w-2.5 shrink-0">
                 <motion.span
                   animate={{ scale: [1, 1.8, 1], opacity: [0.8, 0, 0.8] }}
@@ -54,7 +54,7 @@ export function Hero() {
                 />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_6px_2px_rgba(74,222,128,0.6)]" />
               </span>
-              Déplacement sur tout Marseille gratuitement
+              Déplacement sur tout Marseille &amp; alentours
             </span>
           </motion.div>
 
@@ -62,9 +62,9 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6 uppercase"
           >
-            Écran, batterie, connecteur : intervention rapide à Marseille
+            Écran, batterie, connecteur&nbsp;: intervention rapide à Marseille
           </motion.h1>
 
           <motion.p
@@ -97,10 +97,10 @@ export function Hero() {
           <button
             key={idx}
             onClick={() => setCurrentSlide(idx)}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${
-              idx === currentSlide ? "bg-white w-8" : "bg-white/40 hover:bg-white/60"
+            className={`h-2.5 rounded-full transition-all duration-500 ${
+              idx === currentSlide ? "bg-white w-8" : "bg-white/40 hover:bg-white/60 w-2.5"
             }`}
-            aria-label={`Go to slide ${idx + 1}`}
+            aria-label={`Diapositive ${idx + 1}`}
           />
         ))}
       </div>
