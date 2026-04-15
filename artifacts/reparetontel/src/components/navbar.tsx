@@ -35,8 +35,19 @@ export function Navbar() {
       >
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex items-center justify-between h-20">
-            <a href="#" className={`text-2xl font-bold tracking-tight transition-colors duration-300 ${scrolled ? "text-foreground" : "text-white"}`}>
-              Réparetontel<span className="text-primary">.</span>
+            <a href="#" className="flex items-center gap-2.5">
+              <img
+                src="/logo.jpeg"
+                alt="Réparetontel logo"
+                className="h-9 w-9 rounded-lg object-contain shrink-0"
+              />
+              <span
+                className={`text-sm font-bold tracking-widest uppercase transition-colors duration-300 ${
+                  scrolled ? "text-foreground" : "text-white"
+                }`}
+              >
+                Réparetontel
+              </span>
             </a>
 
             <nav className="hidden md:flex items-center gap-8">
