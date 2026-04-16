@@ -1,0 +1,151 @@
+Modify ONLY the following parts of the current website. Do NOT redesign the whole website and do NOT rewrite unrelated sections.
+
+GOAL
+Fix and improve:
+1. the Horaires section
+2. the green status badge text
+3. the navbar alignment and spacing
+
+Keep the current visual identity:
+- premium
+- clean
+- white / grey / blue
+- Apple-like minimalism
+- mobile-first
+
+-----------------------------------
+1. UPDATE THE HORAIRES SECTION
+-----------------------------------
+Change the business hours logic completely.
+
+CURRENT ISSUE
+The current horaires section shows fixed daily hours like:
+10:00 – 19:00
+This is no longer correct.
+
+NEW REQUIREMENT
+The business is available:
+24h/24
+7j/7
+
+Update the section so it reflects this clearly and elegantly.
+
+SECTION TITLE
+Keep:
+"HORAIRES D’OUVERTURE"
+
+STATUS BADGE
+Use a green badge showing:
+"OUVERT 24H/24 • 7J/7"
+
+Do not keep the old weekly schedule rows as the main content.
+Instead, simplify the horaires card into a premium availability panel.
+
+NEW HORAIRES CARD CONTENT
+Create a clean card that communicates:
+- Disponibilité 24h/24
+- Intervention 7j/7
+- Déplacement sur Marseille & alentours
+
+You may present this in one of these elegant ways:
+- a simple 3-line availability summary
+- or 3 premium info rows
+- or one highlighted main availability line plus 2 support lines
+
+Example copy:
+- "Disponible 24h/24"
+- "Intervention 7j/7"
+- "Déplacement sur tout Marseille & alentours"
+
+STYLE
+- white rounded card
+- soft shadow
+- premium typography
+- green accent for availability
+- very clean layout
+- no clutter
+
+Optional:
+You may keep a subtle “Aujourd’hui” highlight only if it still looks useful, but the main message must clearly be 24/24h and 7/7j.
+
+-----------------------------------
+2. UPDATE THE GREEN STATUS BADGE TEXT
+-----------------------------------
+Wherever the green dot badge appears (hero or availability area), update the text so it reads clearly like the reference style.
+
+Current issue:
+The badge text is not exactly what is wanted.
+
+Required text:
+"DÉPLACEMENT SUR TOUT MARSEILLE & ALENTOURS"
+
+Keep:
+- blinking / glowing green dot on the left
+- dark pill background
+- white uppercase text
+- premium centered alignment
+- elegant spacing
+
+The badge should feel like a premium live-status pill.
+
+-----------------------------------
+3. FIX THE NAVBAR ALIGNMENT
+-----------------------------------
+Current issue:
+The navbar items are not well aligned.
+The logo/name, menu items, and CTA button feel visually uneven.
+
+Fix the navbar so it looks professionally aligned.
+
+REQUIREMENTS
+- Align brand/logo, nav links, and CTA button on a clean single horizontal baseline
+- Improve spacing between nav items
+- Prevent awkward wrapping like:
+  "À propos" breaking badly or looking misaligned
+- Ensure the menu looks balanced on desktop
+- Keep it responsive on mobile
+- Keep the current structure and style direction
+
+DESKTOP NAVBAR
+Make sure:
+- logo + brand name are grouped neatly
+- nav links are evenly spaced
+- CTA button sits properly aligned on the right
+- vertical alignment is consistent
+- no cramped spacing
+
+MOBILE NAVBAR
+Keep the mobile menu behavior, but make sure the brand area stays visually clean and aligned.
+
+BRAND DISPLAY
+Keep:
+- logo + brand name together
+- uppercase brand name
+- premium spacing
+
+-----------------------------------
+4. KEEP EVERYTHING ELSE
+-----------------------------------
+Do NOT change:
+- hero main layout
+- products section
+- modals
+- footer
+- services logic
+- global theme
+
+Only improve:
+- horaires content + presentation
+- badge text
+- navbar alignment
+
+-----------------------------------
+5. OUTPUT
+-----------------------------------
+Return ONLY the modified code for:
+- horaires section
+- badge text update
+- navbar alignment update
+
+Do not regenerate the whole website.
+Do not rewrite unrelated files.

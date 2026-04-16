@@ -25,24 +25,24 @@ export function Navbar() {
     <>
       <motion.header
         className="fixed top-0 left-0 right-0 z-50"
-        initial={{ backgroundColor: "rgba(255, 255, 255, 0)", borderBottom: "1px solid rgba(255,255,255,0)" }}
+        initial={{ backgroundColor: "rgba(255,255,255,0)", borderBottom: "1px solid rgba(255,255,255,0)" }}
         animate={{
-          backgroundColor: scrolled ? "rgba(255, 255, 255, 0.95)" : "rgba(255, 255, 255, 0)",
-          borderBottom: scrolled ? "1px solid rgba(0, 0, 0, 0.05)" : "1px solid rgba(255,255,255,0)",
-          backdropFilter: scrolled ? "blur(12px)" : "blur(0px)",
+          backgroundColor: scrolled ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0)",
+          borderBottom: scrolled ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(255,255,255,0)",
+          backdropFilter: scrolled ? "blur(14px)" : "blur(0px)",
         }}
         transition={{ duration: 0.3 }}
       >
         <div className="container mx-auto px-4 md:px-8">
-          <div className="flex items-center justify-between h-20">
-            <a href="#" className="flex items-center gap-2.5">
+          <div className="flex items-center h-20 gap-8">
+            <a href="#" className="flex items-center gap-2 shrink-0">
               <img
                 src="/logo.jpeg"
                 alt="Réparetontel logo"
-                className="h-9 w-9 rounded-lg object-contain shrink-0"
+                className="h-8 w-8 rounded-lg object-contain shrink-0"
               />
               <span
-                className={`text-sm font-bold tracking-widest uppercase transition-colors duration-300 ${
+                className={`text-xs font-bold tracking-[0.18em] uppercase transition-colors duration-300 whitespace-nowrap ${
                   scrolled ? "text-foreground" : "text-white"
                 }`}
               >
@@ -50,12 +50,12 @@ export function Navbar() {
               </span>
             </a>
 
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
               {links.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                  className={`text-sm font-medium whitespace-nowrap transition-colors hover:text-primary ${
                     scrolled ? "text-foreground/70" : "text-white/80 hover:text-white"
                   }`}
                 >
@@ -64,14 +64,17 @@ export function Navbar() {
               ))}
             </nav>
 
-            <div className="hidden md:block">
-              <Button asChild className="rounded-full px-6 font-semibold shadow-md bg-primary hover:bg-primary/90 text-white">
+            <div className="hidden md:flex items-center shrink-0 ml-auto">
+              <Button
+                asChild
+                className="rounded-full px-6 h-9 text-sm font-semibold shadow-md bg-primary hover:bg-primary/90 text-white"
+              >
                 <a href="#whatsapp">Réserver</a>
               </Button>
             </div>
 
             <button
-              className="md:hidden p-2"
+              className="md:hidden p-2 ml-auto"
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Menu"
             >
@@ -88,26 +91,32 @@ export function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-white pt-24 px-4 md:hidden"
+            className="fixed inset-0 z-40 bg-white pt-24 px-6 md:hidden"
           >
             <nav className="flex flex-col gap-6 text-center">
               {links.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-2xl font-semibold text-foreground tracking-tight"
+                  className="text-xl font-semibold text-foreground tracking-tight hover:text-primary transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}
                 </a>
               ))}
-              <div className="mt-8">
-                <Button asChild size="lg" className="rounded-full w-full font-semibold bg-primary text-white">
-                  <a href="#whatsapp" onClick={() => setIsOpen(false)}>Réserver maintenant</a>
+              <div className="mt-6">
+                <Button
+                  asChild
+                  size="lg"
+                  className="rounded-full w-full font-semibold bg-primary text-white"
+                >
+                  <a href="#whatsapp" onClick={() => setIsOpen(false)}>
+                    Réserver maintenant
+                  </a>
                 </Button>
               </div>
             </nav>

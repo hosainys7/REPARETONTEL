@@ -1,19 +1,32 @@
 import { motion } from "framer-motion";
-import { Clock } from "lucide-react";
+import { Clock, CheckCircle2, MapPin } from "lucide-react";
 
-const SCHEDULE = [
-  { day: "Lundi", hours: "10:00 – 19:00" },
-  { day: "Mardi", hours: "10:00 – 19:00" },
-  { day: "Mercredi", hours: "10:00 – 19:00" },
-  { day: "Jeudi", hours: "10:00 – 19:00" },
-  { day: "Vendredi", hours: "10:00 – 19:00" },
-  { day: "Samedi", hours: "10:00 – 18:15" },
-  { day: "Dimanche", hours: null },
+const AVAILABILITY = [
+  {
+    icon: CheckCircle2,
+    label: "Disponible",
+    value: "24h/24",
+    color: "text-green-600",
+    bg: "bg-green-50",
+    border: "border-green-100",
+  },
+  {
+    icon: CheckCircle2,
+    label: "Intervention",
+    value: "7j/7",
+    color: "text-green-600",
+    bg: "bg-green-50",
+    border: "border-green-100",
+  },
+  {
+    icon: MapPin,
+    label: "Zone",
+    value: "Marseille & alentours",
+    color: "text-primary",
+    bg: "bg-primary/5",
+    border: "border-primary/10",
+  },
 ];
-
-const TODAY_INDEX = new Date().getDay();
-const DAY_MAP = [6, 0, 1, 2, 3, 4, 5];
-const todayScheduleIdx = DAY_MAP[TODAY_INDEX];
 
 export function Horaires() {
   return (
@@ -34,51 +47,47 @@ export function Horaires() {
                 Horaires d'ouverture
               </h2>
             </div>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-50 border border-green-200 text-green-700 text-xs font-bold uppercase tracking-wide">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-              Ouvert 6j/7
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-50 border border-green-200 text-green-700 text-xs font-bold uppercase tracking-widest">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-500" />
+              </span>
+              Ouvert 24h/24 &bull; 7j/7
             </span>
           </div>
 
           <div className="bg-white rounded-2xl shadow-[0_2px_16px_-6px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden">
-            {SCHEDULE.map((entry, idx) => {
-              const isToday = idx === todayScheduleIdx;
-              const isClosed = !entry.hours;
+            {AVAILABILITY.map((item, idx) => {
+              const Icon = item.icon;
               return (
                 <div
-                  key={entry.day}
-                  className={`flex items-center justify-between px-5 py-3.5 ${
-                    idx < SCHEDULE.length - 1 ? "border-b border-gray-100" : ""
-                  } ${isToday ? "bg-primary/5" : ""}`}
+                  key={item.label}
+                  className={`flex items-center justify-between px-5 py-4 ${
+                    idx < AVAILABILITY.length - 1 ? "border-b border-gray-100" : ""
+                  }`}
                 >
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`text-sm font-medium ${
-                        isToday ? "text-primary font-semibold" : "text-foreground"
-                      }`}
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center ${item.bg} border ${item.border}`}
                     >
-                      {entry.day}
+                      <Icon className={`w-4 h-4 ${item.color}`} />
+                    </div>
+                    <span className="text-sm font-medium text-muted-foreground">
+                      {item.label}
                     </span>
-                    {isToday && (
-                      <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full uppercase tracking-wide">
-                        Aujourd'hui
-                      </span>
-                    )}
                   </div>
-                  <span
-                    className={`text-sm font-semibold tabular-nums ${
-                      isClosed
-                        ? "text-muted-foreground/50"
-                        : isToday
-                        ? "text-primary"
-                        : "text-foreground"
-                    }`}
-                  >
-                    {isClosed ? "Fermé" : entry.hours}
+                  <span className={`text-sm font-bold ${item.color}`}>
+                    {item.value}
                   </span>
                 </div>
               );
             })}
+
+            <div className="px-5 py-4 bg-gradient-to-r from-green-50 to-primary/5 border-t border-gray-100">
+              <p className="text-xs text-center text-muted-foreground font-medium tracking-wide uppercase">
+                Réponse rapide garantie — contactez-nous à tout moment
+              </p>
+            </div>
           </div>
         </motion.div>
       </div>
