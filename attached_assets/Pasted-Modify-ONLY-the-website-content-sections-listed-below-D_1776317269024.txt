@@ -1,0 +1,126 @@
+Modify ONLY the website content sections listed below. Do NOT redesign the whole website and do NOT rewrite unrelated sections.
+
+GOAL
+Improve the website copy by:
+- strengthening the hero text with 1 or 2 extra lines
+- improving the “À propos” section with richer trust-building copy
+- adding a clean FAQ section
+- clearly mentioning supported phone brands
+
+Keep the current visual design, layout style, colors, and component structure.
+
+-----------------------------------
+1. HERO COPY IMPROVEMENT
+-----------------------------------
+Keep the current hero layout and main title.
+
+Main title:
+"ÉCRAN, BATTERIE, CONNECTEUR : INTERVENTION RAPIDE À MARSEILLE"
+
+Keep the current subtitle, but strengthen the hero with additional supporting lines.
+
+Use this copy structure:
+- Main subtitle:
+  "Service de réparation de téléphones à domicile, rapide et professionnel."
+- Extra supporting line:
+  "Nous réparons les modèles iPhone, Samsung, Huawei, Google Pixel et Xiaomi."
+- Extra supporting line:
+  "Déplacement sur tout Marseille & alentours, 24h/24 et 7j/7."
+
+Make sure the added text remains elegant, readable, and not overcrowded.
+
+-----------------------------------
+2. À PROPOS SECTION COPY UPDATE
+-----------------------------------
+Keep the current “À propos” section, but replace the text with a stronger and more informative version.
+
+Use this copy:
+
+"Réparetontel propose un service de réparation de téléphones à domicile à Marseille et alentours. Nous intervenons rapidement sur les pannes les plus fréquentes : écran, batterie, caméra, connecteur et autres réparations du quotidien."
+
+"Nous prenons en charge plusieurs marques comme iPhone, Samsung, Huawei, Google Pixel, Xiaomi et Redmi. Notre objectif est simple : vous offrir un service fiable, rapide et pratique, où que vous soyez."
+
+Keep the tone:
+- professional
+- trustworthy
+- simple
+- local
+
+-----------------------------------
+3. ADD FAQ SECTION
+-----------------------------------
+Add a new FAQ section near the lower part of the page, before Contact or before Footer.
+
+Section title:
+"Questions fréquentes"
+
+Add these FAQ items:
+
+1. "Quels téléphones réparez-vous ?"
+Answer:
+"Nous réparons plusieurs marques, notamment iPhone, Samsung, Huawei, Google Pixel, Xiaomi et Redmi."
+
+2. "Quels types de réparations proposez-vous ?"
+Answer:
+"Nous intervenons sur les écrans, batteries, caméras, connecteurs de charge et d’autres réparations courantes."
+
+3. "Vous vous déplacez où ?"
+Answer:
+"Nous nous déplaçons sur tout Marseille et alentours, selon votre emplacement."
+
+4. "Le service est-il à domicile uniquement ?"
+Answer:
+"Oui, le service est principalement à domicile, mais nous pouvons aussi intervenir sur votre lieu de travail ou dans un lieu pratique pour vous."
+
+5. "Êtes-vous disponibles tous les jours ?"
+Answer:
+"Oui, nous sommes disponibles 24h/24 et 7j/7."
+
+6. "Comment réserver une réparation ?"
+Answer:
+"Vous pouvez réserver directement via WhatsApp ou en envoyant une demande depuis le formulaire du site."
+
+Design this FAQ section in a clean premium style:
+- simple accordion or stacked question cards
+- rounded white cards
+- soft shadow
+- mobile-friendly
+- consistent with the website design
+
+-----------------------------------
+4. SUPPORTED BRANDS VISIBILITY
+-----------------------------------
+Make supported brands clearly visible in a relevant section such as Hero, À propos, or model selection area.
+
+Use the following wording where appropriate:
+"Nous prenons en charge les principales marques : iPhone, Samsung, Huawei, Google Pixel, Xiaomi et Redmi."
+
+-----------------------------------
+5. KEEP EVERYTHING ELSE
+-----------------------------------
+Do NOT change:
+- navbar
+- hero structure
+- product cards
+- modal behavior
+- footer
+- horaires
+- colors
+- general page layout
+
+Only update:
+- hero copy
+- à propos copy
+- FAQ section
+- supported brands visibility
+
+-----------------------------------
+6. OUTPUT
+-----------------------------------
+Return only the modified content/code for:
+- hero text content
+- à propos section content
+- FAQ section
+- supported brands text placement
+
+Do not regenerate the whole website.

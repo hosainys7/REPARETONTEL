@@ -6,6 +6,7 @@ import { Services } from "@/components/services";
 import { About } from "@/components/about";
 import { Horaires } from "@/components/horaires";
 import { Booking } from "@/components/booking";
+import { Faq } from "@/components/faq";
 import { MapSection } from "@/components/map";
 import { Footer } from "@/components/footer";
 
@@ -21,6 +22,7 @@ export default function Home() {
         <About />
         <Horaires />
         <Booking />
+        <Faq />
         <MapSection />
       </main>
       <Footer />

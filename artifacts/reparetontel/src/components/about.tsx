@@ -16,14 +16,19 @@ export function About() {
               L'expertise mobile à votre porte
             </h2>
             
-            <p className="text-xl text-muted-foreground leading-relaxed mb-12">
-              <strong className="text-foreground font-semibold">Réparetontel</strong> propose un service de réparation de téléphones à domicile à Marseille. Intervention rapide, service fiable et accompagnement professionnel pour redonner vie à vos appareils.
-            </p>
-            
+            <div className="space-y-4 mb-12">
+              <p className="text-xl text-muted-foreground leading-relaxed">
+                <strong className="text-foreground font-semibold">Réparetontel</strong> propose un service de réparation de téléphones à domicile à Marseille et alentours. Nous intervenons rapidement sur les pannes les plus fréquentes&nbsp;: écran, batterie, caméra, connecteur et autres réparations du quotidien.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Nous prenons en charge plusieurs marques comme <strong className="text-foreground font-medium">iPhone, Samsung, Huawei, Google Pixel, Xiaomi</strong> et <strong className="text-foreground font-medium">Redmi</strong>. Notre objectif est simple&nbsp;: vous offrir un service fiable, rapide et pratique, où que vous soyez.
+              </p>
+            </div>
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
               {[
                 "Service à domicile",
-                "Intervention rapide",
+                "Disponible 24h/24",
                 "Relation de confiance"
               ].map((badge, idx) => (
                 <div key={idx} className="flex items-center gap-2">

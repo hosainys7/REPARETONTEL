@@ -67,14 +67,22 @@ export function Hero() {
             Écran, batterie, connecteur&nbsp;: intervention rapide à Marseille
           </motion.h1>
 
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg md:text-2xl text-gray-200 mb-10 font-light"
+            className="mb-10 space-y-2"
           >
-            Service à domicile, rapide et professionnel.
-          </motion.p>
+            <p className="text-lg md:text-xl text-gray-200 font-light">
+              Service de réparation de téléphones à domicile, rapide et professionnel.
+            </p>
+            <p className="text-sm md:text-base text-gray-300/80 font-light">
+              Nous réparons les modèles iPhone, Samsung, Huawei, Google Pixel et Xiaomi.
+            </p>
+            <p className="text-sm md:text-base text-gray-300/80 font-light">
+              Déplacement sur tout Marseille &amp; alentours, 24h/24 et 7j/7.
+            </p>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
