@@ -104,25 +104,28 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.0 }}
-            className="mt-8 flex items-center justify-center gap-4"
+            style={{ pointerEvents: "auto" }}
+            className="relative z-30 mt-8 flex items-center justify-center gap-4"
           >
             <a
               href="https://www.tiktok.com/@reparetontel13"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="TikTok"
-              className="w-9 h-9 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
+              style={{ pointerEvents: "auto" }}
+              className="relative z-30 inline-flex items-center justify-center w-11 h-11 rounded-full text-white/80 hover:text-white hover:bg-white/15 hover:scale-105 transition-all duration-200 cursor-pointer"
             >
-              <FaTiktok className="w-4 h-4" />
+              <FaTiktok className="w-[18px] h-[18px]" />
             </a>
             <a
               href="https://www.snapchat.com/add/repare-tontel13"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Snapchat"
-              className="w-9 h-9 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
+              style={{ pointerEvents: "auto" }}
+              className="relative z-30 inline-flex items-center justify-center w-11 h-11 rounded-full text-white/80 hover:text-white hover:bg-white/15 hover:scale-105 transition-all duration-200 cursor-pointer"
             >
-              <FaSnapchatGhost className="w-4 h-4" />
+              <FaSnapchatGhost className="w-[18px] h-[18px]" />
             </a>
           </motion.div>
         </div>

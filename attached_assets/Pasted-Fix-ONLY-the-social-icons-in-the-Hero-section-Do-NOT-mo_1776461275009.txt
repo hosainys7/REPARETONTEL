@@ -1,0 +1,90 @@
+Fix ONLY the social icons in the Hero section. Do NOT modify any other logic.
+
+GOAL:
+Ensure TikTok and Snapchat icons are fully clickable, visible, and properly layered.
+
+---------------------------------------
+1. MAKE ICONS REAL LINKS
+---------------------------------------
+
+Ensure each icon is wrapped in a proper anchor tag:
+
+<a href="..." target="_blank" rel="noopener noreferrer">
+
+NOT div or button.
+
+---------------------------------------
+2. CORRECT LINKS (EXACT)
+---------------------------------------
+
+TikTok:
+https://www.tiktok.com/@reparetontel13
+
+Snapchat:
+https://www.snapchat.com/add/repare-tontel13
+
+---------------------------------------
+3. FIX CLICK ISSUE (CRITICAL)
+---------------------------------------
+
+Ensure icons are clickable:
+
+- Add: position: relative
+- Add: z-index: 20 or higher
+- Ensure NO overlay is covering them
+
+Check hero layers:
+- background image
+- gradient overlay
+- content container
+
+Make sure icons are ABOVE all overlays.
+
+---------------------------------------
+4. FIX POINTER EVENTS
+---------------------------------------
+
+Ensure:
+
+pointer-events: auto;
+
+AND parent containers do NOT block clicks.
+
+---------------------------------------
+5. IMPROVE HIT AREA
+---------------------------------------
+
+Each icon should:
+
+- be inside a 36px–44px clickable circle
+- have display: flex
+- align center
+- justify center
+
+---------------------------------------
+6. ADD HOVER FEEDBACK
+---------------------------------------
+
+Add subtle interaction:
+
+- opacity increase
+- slight scale (1.05)
+- smooth transition (200ms)
+
+---------------------------------------
+7. VISUAL POSITION
+---------------------------------------
+
+Keep icons:
+
+- BELOW hero buttons
+- centered or slightly left aligned
+- spaced with gap: 12px–16px
+
+---------------------------------------
+OUTPUT
+---------------------------------------
+
+Return ONLY the updated Hero social icons code.
+
+Do NOT touch selector, search, or data.
