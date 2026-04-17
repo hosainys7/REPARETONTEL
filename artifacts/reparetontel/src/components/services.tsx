@@ -6,14 +6,14 @@ const SERVICE_CARDS = [
     icon: Wrench,
     title: "Réparation",
     items: ["iPhone", "Samsung", "Huawei", "Google Pixel", "Xiaomi / Redmi"],
-    cta: "Faire mon devis",
-    href: "#booking",
+    cta: "Choisir mon modèle",
+    href: "#selector",
   },
   {
     icon: Smartphone,
     title: "Types de réparations",
     items: ["Écran", "Batterie", "Caméra", "Connecteur", "Diagnostic"],
-    cta: "Voir les réparations",
+    cta: "Voir les interventions",
     href: "#products",
   },
   {
@@ -26,9 +26,9 @@ const SERVICE_CARDS = [
   {
     icon: Package,
     title: "Accessoires",
-    items: ["Chargeurs", "Câbles", "Protection"],
+    items: ["Apple Watch", "Galaxy Watch", "AirPods (toutes générations)"],
     cta: "Voir les accessoires",
-    href: "#booking",
+    href: "#selector",
   },
 ];
 

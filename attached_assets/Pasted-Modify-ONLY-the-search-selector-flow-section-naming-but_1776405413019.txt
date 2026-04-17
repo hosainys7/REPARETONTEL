@@ -1,0 +1,217 @@
+Modify ONLY the search / selector flow, section naming, button targets, and accessories integration. Do NOT redesign the whole website.
+
+GOAL
+Refine the current same-page brand → model → repair flow so it works more logically.
+
+Main goals:
+1. Make search truly global
+2. Integrate accessories into the search flow from the top
+3. Change the general repairs showcase so it becomes an orientation section, not a booking section
+4. Fix section/button navigation targets
+5. Improve section naming so it better reflects the content
+
+Keep the current visual design system:
+- premium
+- white / grey / blue
+- rounded cards
+- soft shadows
+- Apple-like clean layout
+- mobile-first
+
+Do NOT redesign unrelated sections.
+
+--------------------------------------------------
+1. MAKE SEARCH TRULY GLOBAL
+--------------------------------------------------
+The search must work across ALL available catalog items, not only the currently active state.
+
+Current issue:
+- typing "watch" finds accessories only in some contexts
+- typing "redmi" or "huawei" does not always show results unless the user first goes back to step 1
+- search still depends too much on the current selected state
+
+Required behavior:
+- search must always use the full catalog source
+- results must include:
+  - smartphone brands
+  - phone models
+  - accessories categories / accessory models
+- typing "iphone" should show iPhone-related results
+- typing "samsung" should show Samsung-related results
+- typing "huawei" should show Huawei results immediately
+- typing "redmi" should show Redmi results immediately
+- typing "watch" should show watch-related accessory results immediately
+- typing "airpods" should show AirPods-related accessory results immediately
+
+Clearing the search should still reset cleanly to the initial state.
+
+--------------------------------------------------
+2. INTEGRATE ACCESSORIES INTO THE TOP SEARCH FLOW
+--------------------------------------------------
+Accessories should not feel like a disconnected section hidden lower in the page.
+
+Instead:
+- accessories must be discoverable directly from the top search / selector flow
+- if the user searches for:
+  - watch
+  - apple watch
+  - samsung watch
+  - airpods
+  - airpods pro
+the selector should show accessory-related options naturally
+
+When the user clicks an accessory result:
+- show the accessory types / models
+For example:
+- Apple Watch
+- Samsung Galaxy Watch
+- AirPods 1
+- AirPods Pro
+- AirPods Pro 3
+- AirPods 3
+- AirPods 4
+
+This should feel like a parallel branch of the same selector system, not a separate hidden feature.
+
+--------------------------------------------------
+3. RENAME THE SEARCH / MODEL SECTION
+--------------------------------------------------
+The current naming should be improved.
+
+Rename the top selector section to something more suitable, such as:
+"Choisissez votre modèle"
+
+or another professional equivalent that fits the content better.
+
+Use the best title for a section where users choose:
+- a brand
+- a model
+- or an accessory category
+
+This section should clearly communicate that it is the starting point.
+
+--------------------------------------------------
+4. RENAME THE REPAIRS SHOWCASE SECTION
+--------------------------------------------------
+The current “Nos réparations” naming should be improved.
+
+This section is not meant to be the model-specific booking flow.
+It is more of a general overview of repair types.
+
+Rename it to something more appropriate, such as:
+- "Interventions disponibles"
+or
+- "Types d’interventions"
+
+Choose the most suitable professional wording.
+
+--------------------------------------------------
+5. CHANGE THE PURPOSE OF THE GENERAL REPAIRS SHOWCASE
+--------------------------------------------------
+The general repair-type section should NOT contain:
+- WhatsApp booking buttons
+- prices
+
+This section should become a simple orientation / service overview.
+
+For each repair-type card (Écran, Batterie, Caméra, Connecteur, Vitre arrière, Diagnostic):
+- keep title
+- keep short summary
+- remove price display
+- remove direct WhatsApp booking CTA
+
+Replace the CTA with a button such as:
+- "Choisir un modèle"
+or
+- "Voir les modèles"
+
+The button must guide the visitor to the model-selection section above.
+
+Purpose:
+- explain the available repair types
+- direct the user into the actual selector flow
+- not act as the final booking step
+
+--------------------------------------------------
+6. FIX BUTTON TARGETS IN “NOS SERVICES”
+--------------------------------------------------
+Update the buttons in the service cards section so they go to the correct destinations.
+
+Required behavior:
+
+Card 1: Réparation
+- button should scroll to the model selection section
+- this is the main entry point for phone repairs
+
+Card 2: Types de réparations
+- button should scroll to the general repair showcase section
+- not to WhatsApp
+
+Card 3: Déplacement
+- button can remain a contact-oriented CTA
+- for example:
+  "Nous contacter"
+
+Card 4: Accessoires
+- button should scroll to the top search / model selection section
+- because accessories are now part of the same top selection flow
+- not to a lower disconnected area
+
+--------------------------------------------------
+7. ACCESSORY / MODEL DISPLAY LOGIC
+--------------------------------------------------
+When an accessory category is selected from search results:
+- show the relevant accessory models in the same selector flow
+- then show available interventions / service types for that selected accessory if applicable
+
+This should use the same interaction logic as phones:
+- category / brand
+- model
+- available intervention types
+
+Do not make accessories look like an orphan section outside the main flow.
+
+--------------------------------------------------
+8. KEEP MODEL-SPECIFIC REPAIR FLOW AS THE REAL BOOKING FLOW
+--------------------------------------------------
+The real booking flow remains:
+1. choose brand / model / accessory
+2. choose repair type
+3. book
+
+The model-specific repair cards shown after a model is selected can still keep booking buttons and pricing logic if needed.
+
+But the general repair showcase section must remain informational only.
+
+--------------------------------------------------
+9. KEEP DESIGN CONSISTENCY
+--------------------------------------------------
+Do NOT redesign the whole site.
+
+Keep:
+- white / light grey background
+- blue accent
+- rounded cards
+- soft shadow
+- premium Apple-like cleanliness
+- current design language
+
+Only modify:
+- global search behavior
+- accessories integration
+- section naming
+- button targets
+- general repairs showcase behavior
+
+--------------------------------------------------
+10. OUTPUT
+--------------------------------------------------
+Return only the modified code for:
+- search / selector logic
+- accessories integration in the top flow
+- section title updates
+- repairs showcase CTA/content adjustments
+- services card button target updates
+
+Do not rewrite unrelated sections.
+Do not redesign the whole website.

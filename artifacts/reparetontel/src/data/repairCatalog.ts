@@ -186,7 +186,13 @@ export const BRANDS: BrandDef[] = [
 ];
 
 export function whatsAppLink(brand: string, model: string, repair: string): string {
-  const text = `Bonjour, je souhaite réserver une réparation pour un ${brand} ${model} — ${repair}.`;
+  const subject = brand && brand !== "Accessoires" ? `${brand} ${model}` : model;
+  const text = `Bonjour, je souhaite réserver une réparation pour un ${subject} — ${repair}.`;
+  return `https://wa.me/33605557812?text=${encodeURIComponent(text)}`;
+}
+
+export function whatsAppQuote(brand: string): string {
+  const text = `Bonjour, je souhaite obtenir un devis pour un téléphone ${brand}.`;
   return `https://wa.me/33605557812?text=${encodeURIComponent(text)}`;
 }
 

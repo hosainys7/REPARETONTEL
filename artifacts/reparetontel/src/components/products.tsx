@@ -1,12 +1,9 @@
 import { motion } from "framer-motion";
-import { Monitor, BatteryFull, Camera, Zap, Shield, Activity } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa";
+import { Monitor, BatteryFull, Camera, Zap, Shield, Activity, ArrowRight } from "lucide-react";
 
 type Service = {
   type: string;
   summary: string;
-  priceLabel: string;
-  duration: string;
   icon: React.ElementType;
   iconBg: string;
   iconColor: string;
@@ -15,63 +12,38 @@ type Service = {
 const SERVICES: Service[] = [
   {
     type: "Écran",
-    summary: "Dalle fissurée ou tactile qui ne répond plus ? Remplacement rapide avec pièces de qualité.",
-    priceLabel: "À partir de 39€",
-    duration: "30–60 min",
-    icon: Monitor,
-    iconBg: "#f0f7ff",
-    iconColor: "#2563EB",
+    summary: "Dalle fissurée ou tactile qui ne répond plus ? Remplacement avec pièces de qualité, en moins d'une heure.",
+    icon: Monitor, iconBg: "#f0f7ff", iconColor: "#2563EB",
   },
   {
     type: "Batterie",
     summary: "Autonomie réduite ou téléphone qui s'éteint seul ? Retrouvez une endurance comme neuf.",
-    priceLabel: "À partir de 25€",
-    duration: "20–30 min",
-    icon: BatteryFull,
-    iconBg: "#f0fdf4",
-    iconColor: "#16a34a",
+    icon: BatteryFull, iconBg: "#f0fdf4", iconColor: "#16a34a",
   },
   {
     type: "Caméra",
-    summary: "Photos floues, module cassé ou caméra frontale HS ? Remplacement du module photo.",
-    priceLabel: "À partir de 35€",
-    duration: "30–45 min",
-    icon: Camera,
-    iconBg: "#fdf4ff",
-    iconColor: "#9333ea",
+    summary: "Photos floues, module cassé ou caméra frontale HS ? Remplacement complet du module photo.",
+    icon: Camera, iconBg: "#fdf4ff", iconColor: "#9333ea",
   },
   {
     type: "Connecteur de charge",
     summary: "Port USB-C ou Lightning endommagé, charge intermittente ? Réparation en une intervention.",
-    priceLabel: "À partir de 29€",
-    duration: "30–45 min",
-    icon: Zap,
-    iconBg: "#fffbeb",
-    iconColor: "#d97706",
+    icon: Zap, iconBg: "#fffbeb", iconColor: "#d97706",
   },
   {
     type: "Vitre arrière",
-    summary: "Dos fissuré ou éclats de verre ? Remplacement de la vitre arrière à domicile.",
-    priceLabel: "Sur demande",
-    duration: "30–45 min",
-    icon: Shield,
-    iconBg: "#fff1f2",
-    iconColor: "#e11d48",
+    summary: "Dos fissuré ou éclats de verre ? Remplacement de la vitre arrière directement à domicile.",
+    icon: Shield, iconBg: "#fff1f2", iconColor: "#e11d48",
   },
   {
     type: "Diagnostic",
     summary: "Panne inconnue ou comportement anormal ? Analyse complète de votre appareil, sans engagement.",
-    priceLabel: "Gratuit",
-    duration: "15–20 min",
-    icon: Activity,
-    iconBg: "#f0fdfa",
-    iconColor: "#0d9488",
+    icon: Activity, iconBg: "#f0fdfa", iconColor: "#0d9488",
   },
 ];
 
-function waLink(type: string) {
-  const text = `Bonjour, je souhaite obtenir un devis pour une réparation : ${type}.`;
-  return `https://wa.me/33605557812?text=${encodeURIComponent(text)}`;
+function scrollToSelector() {
+  document.getElementById("selector")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 export function Products() {
@@ -87,10 +59,10 @@ export function Products() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-4 uppercase">
-              Nos réparations
+              Types d'interventions
             </h2>
             <p className="text-lg text-muted-foreground">
-              Six types d'interventions réalisées à domicile, sur tous les modèles.
+              Six interventions réalisées à domicile sur tous les modèles. Choisissez votre appareil pour voir les tarifs.
             </p>
           </motion.div>
         </div>
@@ -114,42 +86,33 @@ export function Products() {
                   <Icon className="w-6 h-6" style={{ color: service.iconColor }} />
                 </div>
 
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <h3 className="text-base font-bold text-foreground leading-tight">
-                    {service.type}
-                  </h3>
-                  <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold shrink-0 ${
-                    service.priceLabel === "Gratuit"
-                      ? "bg-green-50 text-green-700 border border-green-200"
-                      : service.priceLabel === "Sur demande"
-                      ? "bg-gray-100 text-muted-foreground"
-                      : "bg-primary text-white shadow-sm"
-                  }`}>
-                    {service.priceLabel}
-                  </span>
-                </div>
+                <h3 className="text-base font-bold text-foreground leading-tight mb-2">
+                  {service.type}
+                </h3>
 
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-4">
+                <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-5">
                   {service.summary}
                 </p>
 
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] text-muted-foreground/60 font-medium">
-                    ⏱ {service.duration}
-                  </span>
-                  <a
-                    href={waLink(service.type)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#25D366] hover:text-[#1da853] transition-colors"
-                  >
-                    <FaWhatsapp className="w-3.5 h-3.5" />
-                    Réserver
-                  </a>
-                </div>
+                <button
+                  onClick={scrollToSelector}
+                  className="inline-flex items-center justify-center gap-1.5 w-full h-10 rounded-xl border border-primary/20 text-primary text-xs font-bold uppercase tracking-wide hover:bg-primary hover:text-white transition-all duration-200 group/btn"
+                >
+                  Voir les modèles
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
+                </button>
               </motion.div>
             );
           })}
+        </div>
+
+        <div className="text-center mt-10">
+          <p className="text-sm text-muted-foreground">
+            Vous savez déjà ce qu'il vous faut ?{" "}
+            <a href="#booking" className="text-primary font-semibold hover:underline">
+              Contactez-nous directement
+            </a>
+          </p>
         </div>
 
       </div>
