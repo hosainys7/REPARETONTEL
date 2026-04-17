@@ -1,0 +1,370 @@
+Modify ONLY the relevant parts of the current website. Do NOT redesign the whole website from scratch. Keep the current visual identity, existing stack, and overall page structure unless needed for this new feature.
+
+GOAL
+Implement a scalable, data-driven smartphone repair selector on the SAME PAGE.
+
+The visitor flow must be:
+1. Select a brand
+2. Select a model
+3. View available repairs
+4. Book via WhatsApp
+
+This must be built in a clean, scalable way because there are many models.
+
+IMPORTANT IMPLEMENTATION RULES
+- Do NOT hardcode every model directly inside JSX
+- Create a dedicated local data file for the catalog
+- Use a data-driven architecture
+- No database is needed for now
+- Everything must work on the same page
+- Keep it simple, scalable, and easy to extend later
+
+TECH STACK
+Use the current project stack:
+- React
+- Tailwind
+- Framer Motion if needed
+- Existing design system already in the project
+
+DO NOT CHANGE
+- navbar structure
+- hero structure
+- footer
+- global theme
+- existing premium white/grey/blue design direction
+
+--------------------------------------------------
+1. CREATE A LOCAL CATALOG DATA STRUCTURE
+--------------------------------------------------
+Create a separate local data file, for example:
+- src/data/repairCatalog.ts
+
+This file must contain structured data for:
+- brands
+- models
+- repairs
+
+Use a scalable shape such as:
+
+Brand
+- id
+- name
+- logo or visual reference if needed
+- models[]
+
+Model
+- id
+- name
+- image
+- repairs[]
+
+Repair
+- type
+- short summary
+- priceLabel
+- duration if relevant
+- optional image
+
+Use a reusable structure so it is easy to add more brands and models later.
+
+IMPORTANT
+Do NOT create a separate custom repair list manually inside each JSX component.
+All content must come from the catalog data file.
+
+--------------------------------------------------
+2. INITIAL BRANDS TO SUPPORT
+--------------------------------------------------
+Add these brand groups in the catalog:
+
+1. iPhone
+2. Samsung
+3. Accessoires
+
+For now, the main interactive repair flow should support:
+- iPhone
+- Samsung
+
+Accessoires can exist in the data but should remain secondary for now.
+
+--------------------------------------------------
+3. IPHONE MODELS TO INCLUDE
+--------------------------------------------------
+Add these iPhone models:
+
+- iPhone 7/8
+- iPhone 7+/8+
+- iPhone X
+- iPhone 11
+- iPhone 11 Pro
+- iPhone 11 Pro Max
+- iPhone 12
+- iPhone 12 mini
+- iPhone 12 Pro
+- iPhone 12 Pro Max
+- iPhone 13
+- iPhone 13 mini
+- iPhone 13 Pro
+- iPhone 13 Pro Max
+- iPhone 14
+- iPhone 14+
+- iPhone 14 Pro
+- iPhone 14 Pro Max
+- iPhone 15
+- iPhone 15+
+- iPhone 15 Pro
+- iPhone 15 Pro Max
+- iPhone 16
+- iPhone 16e
+- iPhone 16+
+- iPhone 16 Pro Max
+- iPhone 17
+- iPhone 17 Air
+- iPhone 17 Pro Max
+
+--------------------------------------------------
+4. SAMSUNG MODELS TO INCLUDE
+--------------------------------------------------
+Add these Samsung models:
+
+- A10
+- A11
+- A12
+- A13
+- A14
+- A15
+- A16
+- A17
+- A20 / A20s / A20e
+- A21s
+- A22 4G / A22 5G
+- A23
+- A24
+- A25
+- A26
+- A30 / M30
+- A31
+- A32 4G / A32 5G
+- A33
+- A34
+- A35
+- A36
+- A40
+- A41
+- A42 5G
+- A50
+- A51 4G / 5G
+- A52
+- A53
+- A54
+- A55
+- A56
+- A60
+- A70
+- A71
+- A72
+- A73
+- A80
+- S8 / S9
+- S10 / S10e / S10+ / S10 5G
+- S20 / S20 FE / S20+ / S20 Ultra
+- S21 / S21 FE / S21+ / S21 Ultra
+- S22 / S22+ / S22 Ultra
+- S23 / S23+ / S23 FE / S23 Ultra
+- S24 / S24+ / S24 FE / S24 Ultra
+- S25 / S25+ / S25 FE / S25 Ultra
+
+--------------------------------------------------
+5. ACCESSOIRES TO INCLUDE
+--------------------------------------------------
+Add an accessory group in the catalog for later use:
+
+- Apple Watch
+- Samsung Galaxy Watch
+- AirPods 1
+- AirPods Pro
+- AirPods Pro 3
+- AirPods 3
+- AirPods 4
+
+This does not need to be the main interactive flow yet, but structure it cleanly for future expansion.
+
+--------------------------------------------------
+6. REPAIR TYPES
+--------------------------------------------------
+Use Option B:
+Some repairs can have visible prices, while others can use “prix à demander” or “sur demande”.
+
+For now, each supported phone model should include repair types such as:
+- Écran
+- Batterie
+- Caméra
+- Connecteur de charge
+- Vitre arrière
+- Diagnostic
+
+If needed, not every model must show every repair immediately, but the structure must support them.
+
+Use short summaries for each repair type.
+
+Examples:
+- Écran: "Écran fissuré ou tactile défectueux."
+- Batterie: "Remplacement batterie pour retrouver une bonne autonomie."
+- Caméra: "Réparation ou remplacement du module caméra."
+- Connecteur de charge: "Réparation du port de charge et des problèmes de connexion."
+- Vitre arrière: "Remplacement de la vitre arrière endommagée."
+- Diagnostic: "Analyse rapide de la panne avant intervention."
+
+PRICE STRATEGY
+Use a mix of:
+- exact price for selected popular repairs
+- or “prix à demander” for others
+
+This is important. Do NOT force exact prices for all models if data is unavailable.
+
+--------------------------------------------------
+7. SAME-PAGE USER FLOW
+--------------------------------------------------
+Do NOT create a separate page for each brand or model.
+
+Implement everything on the same page using progressive interaction:
+
+Step 1:
+User selects a brand
+
+Step 2:
+Show models for the selected brand
+
+Step 3:
+User selects a model
+
+Step 4:
+Show repairs available for that selected model
+
+Step 5:
+User clicks a repair card and books via WhatsApp
+
+--------------------------------------------------
+8. MODEL SEARCH + BRAND SELECTION
+--------------------------------------------------
+Keep the current search / selection section but improve it to work with the new catalog.
+
+Required behavior:
+- search by model name
+- search by brand
+- case-insensitive
+- clearing the input restores the full relevant state
+- selected brand filters visible models
+- typing a model narrows the results
+
+Examples:
+- typing “iphone 13” shows iPhone 13
+- typing “a15” shows Samsung A15
+- clearing the field restores the full model list for the active brand or all models if no brand selected
+
+The search section should feel premium, simple, and guided.
+
+--------------------------------------------------
+9. MODEL DISPLAY
+--------------------------------------------------
+After selecting a brand, show its models in a clean grid.
+
+Model card requirements:
+- white card
+- rounded corners
+- soft shadow
+- model image if available
+- model name
+- premium clean spacing
+- mobile friendly
+
+Layout:
+- 2 cards per row on mobile
+- more columns on larger screens if appropriate
+
+Behavior:
+- clicking a model reveals the repairs section below on the same page
+- scroll to the repairs section after selection if it improves UX
+
+--------------------------------------------------
+10. REPAIRS DISPLAY FOR SELECTED MODEL
+--------------------------------------------------
+Once a model is selected, show its repairs in a section below.
+
+This section should feel like a repair catalog and be easy to scan.
+
+Each repair card must contain:
+- repair type
+- short summary
+- optional duration
+- price label
+- booking button
+
+Style:
+- clean white cards
+- rounded corners
+- soft shadow
+- premium typography
+- mobile-friendly stacked layout
+
+The booking button can say:
+- “Réserver”
+or
+- “Réserver sur WhatsApp”
+
+--------------------------------------------------
+11. WHATSAPP BOOKING LOGIC
+--------------------------------------------------
+Each repair card must support booking.
+
+Use a WhatsApp link with prefilled text including:
+- brand
+- model
+- repair type
+
+Example:
+"Bonjour, je souhaite réserver une réparation pour un iPhone 13 - Écran."
+
+Do not overcomplicate this yet.
+Just generate the message dynamically based on the selected repair.
+
+--------------------------------------------------
+12. COMPONENT ARCHITECTURE
+--------------------------------------------------
+Refactor cleanly into reusable pieces if needed.
+
+Suggested structure:
+- data file for catalog
+- brand selector component
+- model grid component
+- repairs grid component
+
+But keep it practical and compatible with the existing project.
+
+Do not over-engineer the solution.
+
+--------------------------------------------------
+13. DESIGN CONSISTENCY
+--------------------------------------------------
+Keep the existing site style:
+- white / light grey background
+- blue accents
+- premium spacing
+- Apple-like cleanliness
+- rounded UI
+- soft shadows
+- mobile-first
+
+This feature should feel integrated into the current Réparetontel site, not like a foreign tool.
+
+--------------------------------------------------
+14. OUTPUT
+--------------------------------------------------
+Return only the modified / new code needed for:
+- the catalog data file
+- brand/model/repair logic
+- the same-page selector flow
+- improved search behavior
+- repair cards with booking CTA
+
+Do NOT rewrite the whole website.
+Do NOT regenerate unrelated sections.
