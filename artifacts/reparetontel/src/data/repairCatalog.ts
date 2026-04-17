@@ -37,7 +37,11 @@ function makeRepairs(prices: PriceMap): Repair[] {
 }
 
 function mkId(prefix: string, name: string): string {
-  return `${prefix}-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+  return `${prefix}-${name
+    .toLowerCase()
+    .replace(/\+/g, "plus")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")}`;
 }
 
 function iphone(name: string, screen: string, battery: string, camera = "Sur demande"): ModelDef {

@@ -1,0 +1,105 @@
+Modify ONLY the search / state flow logic of the current brand → model → repair selector. Do NOT redesign the UI and do NOT move to the stage-2 polish yet.
+
+GOAL
+Fix the selector state so the search, selected brand, selected model, and step indicator always stay in sync.
+
+CURRENT ISSUES TO FIX
+1. If the user selects iPhone, then types "samsung" in the search bar, the UI still stays inside the iPhone context and shows 0 results.
+2. When the search input is cleared, the UI does not fully reset to the correct initial state.
+3. The step indicator remains stuck on step 2 ("Réparation") even when the user is effectively starting a new search.
+4. The selector should not require clicking “back” manually just to recover from a new search.
+5. Search should operate from the full original catalog, not only from the currently selected brand context unless a brand filter is intentionally active.
+
+REQUIRED BEHAVIOR
+
+A. SEARCH MUST USE THE FULL ORIGINAL CATALOG
+- Search must always query the full catalog source data.
+- Do NOT search only within the currently displayed brand unless explicitly intended.
+- Typing "iphone" should show iPhone models.
+- Typing "samsung" should show Samsung models even if the user was previously inside the iPhone context.
+- Typing a model like "iPhone 12" or "A15" should show matching results correctly.
+
+B. CLEARING SEARCH MUST RESET CORRECTLY
+When the search input becomes empty:
+- clear the search results
+- reset selected model
+- reset selected repair state if any
+- restore the correct default model selection state
+- show either:
+  1. the initial brand selection screen, OR
+  2. the full model state in a clearly defined default mode
+Choose one consistent reset behavior and apply it everywhere.
+Preferred behavior:
+- clearing search returns the user to step 1 / brand selection
+
+C. STEP INDICATOR MUST MATCH THE REAL USER STATE
+Use a clean logic for steps:
+- Step 1 = user is choosing a brand or model
+- Step 2 = user has selected a specific model and is now viewing repairs
+- Step 3 = user is booking / clicking repair CTA
+
+Do NOT keep the user visually in step 2 if they are starting a new search.
+If the user types a new query, the UI should move back to the correct discovery state.
+
+D. BRAND / MODEL STATE SYNCHRONIZATION
+When a new search term matches a different brand:
+- automatically clear the previously selected brand and model if needed
+- update the visible results to the matching brand/models
+- do not keep stale breadcrumbs like “Marques / iPhone” when the search now targets Samsung
+
+E. BREADCRUMBS MUST STAY CORRECT
+- If the user is viewing iPhone models, breadcrumb can show:
+  Marques / iPhone
+- If the user searches globally and results include another brand, breadcrumb must update accordingly
+- If no brand is currently selected, breadcrumb should return to the generic state or disappear
+
+F. REPAIRS POPULAIRES SECTION CHANGE
+Update the “Réparations populaires” section so it no longer mixes model names in the title text of every card.
+
+I want this section to become a simpler repair-type showcase list, such as:
+- Écran
+- Batterie
+- Caméra
+- Connecteur de charge
+- Vitre arrière
+- Diagnostic
+
+These cards can keep:
+- image or icon
+- short summary
+- price label or “sur demande”
+- booking CTA
+
+But remove the current logic where this showcase section is mainly labeled by model names like:
+- Écran iPhone 13
+- Batterie iPhone 11
+etc.
+
+The model-specific repair list should remain in the selected-model repair flow.
+The “Réparations populaires” section should become a more general service showcase.
+
+G. IMPLEMENTATION QUALITY
+- Refactor the state logic cleanly
+- Use the original catalog as the source of truth
+- Derive filtered results from source data
+- Avoid stale UI states
+- Avoid duplicated state if unnecessary
+- Keep the code maintainable
+
+DO NOT CHANGE
+- main design system
+- navbar
+- hero
+- footer
+- horaires
+- FAQ
+- general visual styling
+
+OUTPUT
+Return only the code changes needed for:
+- fixing the selector/search/reset logic
+- syncing step state and breadcrumbs
+- updating the “Réparations populaires” section into general repair-type cards
+
+Do not move to stage-2 polish yet.
+Do not rebuild unrelated sections.
