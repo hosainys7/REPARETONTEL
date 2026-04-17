@@ -26,9 +26,9 @@ const SERVICE_CARDS = [
   {
     icon: Package,
     title: "Accessoires",
-    items: ["Apple Watch", "Galaxy Watch", "AirPods (toutes générations)"],
+    items: ["Apple Watch", "Galaxy Watch", "AirPods", "Chargeurs", "Câbles"],
     cta: "Voir les accessoires",
-    href: "#selector",
+    href: "#accessoires",
   },
 ];
 

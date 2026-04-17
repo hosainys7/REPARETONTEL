@@ -1,5 +1,7 @@
+import cableUsbLightning from "@assets/UEFUE3661_1776460456493.JPG";
+import cableUsbUsbc from "@assets/EPCEE8267_1776460456492.JPG";
+
 export type DeviceType = "phone" | "accessory";
-export type AccessoryCategory = "watch" | "airpods";
 
 export type Repair = {
   type: string;
@@ -12,7 +14,6 @@ export type ModelDef = {
   id: string;
   name: string;
   type: DeviceType;
-  category?: AccessoryCategory;
   repairs: Repair[];
 };
 
@@ -20,9 +21,21 @@ export type BrandDef = {
   id: string;
   name: string;
   slug: string;
-  type: DeviceType;
   models: ModelDef[];
 };
+
+export type Product = {
+  id: string;
+  name: string;
+  description: string;
+  price?: string;
+  image?: string;
+  iconName?: "zap" | "cable";
+};
+
+export type AccessoryCategoryDef =
+  | { slug: string; name: string; iconName: "watch" | "airpods" | "zap" | "cable"; kind: "models"; models: ModelDef[] }
+  | { slug: string; name: string; iconName: "watch" | "airpods" | "zap" | "cable"; kind: "products"; products: Product[] };
 
 type RepairDef = { type: string; summary: string; duration: string };
 type PriceMap = Partial<Record<string, string>>;
@@ -41,13 +54,10 @@ const WATCH_REPAIRS: RepairDef[] = [
   { type: "Batterie", summary: "Remplacement batterie pour retrouver une bonne autonomie.", duration: "30–45 min" },
   { type: "Diagnostic", summary: "Analyse complète de la panne avant intervention.", duration: "15–20 min" },
   { type: "Réinitialisation", summary: "Remise à zéro complète de la montre et reconfiguration.", duration: "15–30 min" },
-  { type: "Problème connexion", summary: "Résolution des problèmes de pairage Bluetooth ou Wi-Fi.", duration: "15–30 min" },
 ];
 
 const AIRPODS_REPAIRS: RepairDef[] = [
-  { type: "Problème son", summary: "Son coupé, faible ou déséquilibré entre les écouteurs.", duration: "30–45 min" },
   { type: "Batterie", summary: "Autonomie réduite des écouteurs ou du boîtier.", duration: "30–45 min" },
-  { type: "Boîtier", summary: "Boîtier endommagé ou ne se recharge plus.", duration: "30–45 min" },
   { type: "Diagnostic", summary: "Analyse complète de la panne avant intervention.", duration: "15–20 min" },
 ];
 
@@ -86,22 +96,10 @@ function iphone(name: string, screen: string, battery: string, camera = "Sur dem
 type SamsungTier = "budget" | "mid" | "high" | "flagship";
 
 const SAMSUNG_TIER_PRICES: Record<SamsungTier, PriceMap> = {
-  budget: {
-    "Écran": "39€", "Batterie": "25€", "Caméra": "35€",
-    "Connecteur de charge": "29€", "Vitre arrière": "Sur demande", "Diagnostic": "Gratuit",
-  },
-  mid: {
-    "Écran": "49€", "Batterie": "29€", "Caméra": "39€",
-    "Connecteur de charge": "30€", "Vitre arrière": "Sur demande", "Diagnostic": "Gratuit",
-  },
-  high: {
-    "Écran": "59€", "Batterie": "35€", "Caméra": "45€",
-    "Connecteur de charge": "35€", "Vitre arrière": "Sur demande", "Diagnostic": "Gratuit",
-  },
-  flagship: {
-    "Écran": "Sur demande", "Batterie": "39€", "Caméra": "49€",
-    "Connecteur de charge": "35€", "Vitre arrière": "Sur demande", "Diagnostic": "Gratuit",
-  },
+  budget: { "Écran": "39€", "Batterie": "25€", "Caméra": "35€", "Connecteur de charge": "29€", "Vitre arrière": "Sur demande", "Diagnostic": "Gratuit" },
+  mid:    { "Écran": "49€", "Batterie": "29€", "Caméra": "39€", "Connecteur de charge": "30€", "Vitre arrière": "Sur demande", "Diagnostic": "Gratuit" },
+  high:   { "Écran": "59€", "Batterie": "35€", "Caméra": "45€", "Connecteur de charge": "35€", "Vitre arrière": "Sur demande", "Diagnostic": "Gratuit" },
+  flagship: { "Écran": "Sur demande", "Batterie": "39€", "Caméra": "49€", "Connecteur de charge": "35€", "Vitre arrière": "Sur demande", "Diagnostic": "Gratuit" },
 };
 
 function samsung(name: string, tier: SamsungTier): ModelDef {
@@ -114,34 +112,20 @@ function samsung(name: string, tier: SamsungTier): ModelDef {
 }
 
 const IPHONE_MODELS: ModelDef[] = [
-  iphone("7 / 8", "45€", "29€", "39€"),
-  iphone("7+ / 8+", "49€", "29€", "39€"),
-  iphone("X", "69€", "35€", "45€"),
-  iphone("11", "59€", "35€", "45€"),
-  iphone("11 Pro", "79€", "39€", "49€"),
-  iphone("11 Pro Max", "89€", "39€", "49€"),
-  iphone("12", "79€", "39€", "49€"),
-  iphone("12 mini", "69€", "39€", "45€"),
-  iphone("12 Pro", "89€", "39€", "55€"),
-  iphone("12 Pro Max", "99€", "39€", "59€"),
-  iphone("13", "89€", "39€", "49€"),
-  iphone("13 mini", "79€", "39€", "45€"),
-  iphone("13 Pro", "99€", "39€", "55€"),
-  iphone("13 Pro Max", "109€", "39€", "59€"),
-  iphone("14", "99€", "39€", "55€"),
-  iphone("14+", "109€", "39€", "55€"),
-  iphone("14 Pro", "119€", "39€", "65€"),
-  iphone("14 Pro Max", "129€", "39€", "65€"),
-  iphone("15", "Sur demande", "39€"),
-  iphone("15+", "Sur demande", "39€"),
-  iphone("15 Pro", "Sur demande", "39€"),
-  iphone("15 Pro Max", "Sur demande", "39€"),
-  iphone("16", "Sur demande", "39€"),
-  iphone("16e", "Sur demande", "39€"),
-  iphone("16+", "Sur demande", "39€"),
-  iphone("16 Pro Max", "Sur demande", "39€"),
-  iphone("17", "Sur demande", "Sur demande"),
-  iphone("17 Air", "Sur demande", "Sur demande"),
+  iphone("7 / 8", "45€", "29€", "39€"), iphone("7+ / 8+", "49€", "29€", "39€"),
+  iphone("X", "69€", "35€", "45€"), iphone("11", "59€", "35€", "45€"),
+  iphone("11 Pro", "79€", "39€", "49€"), iphone("11 Pro Max", "89€", "39€", "49€"),
+  iphone("12", "79€", "39€", "49€"), iphone("12 mini", "69€", "39€", "45€"),
+  iphone("12 Pro", "89€", "39€", "55€"), iphone("12 Pro Max", "99€", "39€", "59€"),
+  iphone("13", "89€", "39€", "49€"), iphone("13 mini", "79€", "39€", "45€"),
+  iphone("13 Pro", "99€", "39€", "55€"), iphone("13 Pro Max", "109€", "39€", "59€"),
+  iphone("14", "99€", "39€", "55€"), iphone("14+", "109€", "39€", "55€"),
+  iphone("14 Pro", "119€", "39€", "65€"), iphone("14 Pro Max", "129€", "39€", "65€"),
+  iphone("15", "Sur demande", "39€"), iphone("15+", "Sur demande", "39€"),
+  iphone("15 Pro", "Sur demande", "39€"), iphone("15 Pro Max", "Sur demande", "39€"),
+  iphone("16", "Sur demande", "39€"), iphone("16e", "Sur demande", "39€"),
+  iphone("16+", "Sur demande", "39€"), iphone("16 Pro Max", "Sur demande", "39€"),
+  iphone("17", "Sur demande", "Sur demande"), iphone("17 Air", "Sur demande", "Sur demande"),
   iphone("17 Pro Max", "Sur demande", "Sur demande"),
 ];
 
@@ -176,40 +160,54 @@ const SAMSUNG_MODELS: ModelDef[] = [
 ];
 
 // ── Accessories ─────────────────────────────────────────────────────────────
-const WATCH_PRICES: PriceMap = {
-  "Batterie": "Sur demande", "Diagnostic": "Gratuit",
-  "Réinitialisation": "Sur demande", "Problème connexion": "Sur demande",
-};
-const AIRPODS_PRICES: PriceMap = {
-  "Problème son": "Sur demande", "Batterie": "Sur demande",
-  "Boîtier": "Sur demande", "Diagnostic": "Gratuit",
-};
+const WATCH_PRICES: PriceMap = { "Batterie": "Sur demande", "Diagnostic": "Gratuit", "Réinitialisation": "Sur demande" };
+const AIRPODS_PRICES: PriceMap = { "Batterie": "Sur demande", "Diagnostic": "Gratuit" };
 
-function watch(id: string, name: string): ModelDef {
-  return { id, name, type: "accessory", category: "watch", repairs: makeRepairs(WATCH_REPAIRS, WATCH_PRICES) };
+function watchModel(id: string, name: string): ModelDef {
+  return { id, name, type: "accessory", repairs: makeRepairs(WATCH_REPAIRS, WATCH_PRICES) };
 }
-function airpods(id: string, name: string): ModelDef {
-  return { id, name, type: "accessory", category: "airpods", repairs: makeRepairs(AIRPODS_REPAIRS, AIRPODS_PRICES) };
+function airpodsModel(id: string, name: string): ModelDef {
+  return { id, name, type: "accessory", repairs: makeRepairs(AIRPODS_REPAIRS, AIRPODS_PRICES) };
 }
 
-const ACCESSORY_MODELS: ModelDef[] = [
-  watch("apple-watch", "Apple Watch"),
-  watch("galaxy-watch", "Samsung Galaxy Watch"),
-  airpods("airpods-1", "AirPods 1"),
-  airpods("airpods-3", "AirPods 3"),
-  airpods("airpods-4", "AirPods 4"),
-  airpods("airpods-pro", "AirPods Pro"),
-  airpods("airpods-pro-3", "AirPods Pro 3"),
+const APPLE_WATCH_MODELS: ModelDef[] = [watchModel("apple-watch", "Apple Watch")];
+const GALAXY_WATCH_MODELS: ModelDef[] = [watchModel("galaxy-watch", "Samsung Galaxy Watch")];
+const AIRPODS_MODELS: ModelDef[] = [
+  airpodsModel("airpods-1", "AirPods 1"),
+  airpodsModel("airpods-3", "AirPods 3"),
+  airpodsModel("airpods-4", "AirPods 4"),
+  airpodsModel("airpods-pro", "AirPods Pro"),
+  airpodsModel("airpods-pro-3", "AirPods Pro 3"),
 ];
 
-export const BRANDS: BrandDef[] = [
-  { id: "iphone", name: "iPhone", slug: "iphone", type: "phone", models: IPHONE_MODELS },
-  { id: "samsung", name: "Samsung", slug: "samsung", type: "phone", models: SAMSUNG_MODELS },
-  { id: "accessoires", name: "Accessoires", slug: "accessoires", type: "accessory", models: ACCESSORY_MODELS },
+const CHARGER_PRODUCTS: Product[] = [
+  { id: "ch-20w-iphone", name: "Chargeur rapide 20W USB-C vers iPhone", description: "Charge rapide 20W pour iPhone, connectique USB-C vers Lightning.", iconName: "zap" },
+  { id: "ch-20w-cc",     name: "Chargeur 20W USB-C vers USB-C",         description: "Chargeur 20W universel USB-C vers USB-C.", iconName: "zap" },
+  { id: "ch-30w-cc",     name: "Chargeur rapide 30W USB-C vers USB-C",  description: "Charge rapide 30W USB-C vers USB-C, idéale pour Android et iPad.", iconName: "zap" },
+  { id: "ch-30w-iphone", name: "Chargeur rapide 30W USB-C vers iPhone", description: "Charge rapide 30W pour iPhone, connectique USB-C vers Lightning.", iconName: "zap" },
 ];
 
+const CABLE_PRODUCTS: Product[] = [
+  { id: "ca-light", name: "Câble USB vers Lightning", description: "Câble robuste pour iPhone et accessoires Apple.", price: "5€", image: cableUsbLightning },
+  { id: "ca-usbc",  name: "Câble USB vers USB-C",     description: "Câble universel USB vers USB-C, compatible Android, AirPods et accessoires.", price: "5€", image: cableUsbUsbc },
+];
+
+export const ACCESSORY_CATEGORIES: AccessoryCategoryDef[] = [
+  { slug: "apple-watch",  name: "Apple Watch",          iconName: "watch",   kind: "models",   models: APPLE_WATCH_MODELS },
+  { slug: "galaxy-watch", name: "Samsung Galaxy Watch", iconName: "watch",   kind: "models",   models: GALAXY_WATCH_MODELS },
+  { slug: "airpods",      name: "AirPods",              iconName: "airpods", kind: "models",   models: AIRPODS_MODELS },
+  { slug: "chargeurs",    name: "Chargeurs",            iconName: "zap",     kind: "products", products: CHARGER_PRODUCTS },
+  { slug: "cables",       name: "Câbles",               iconName: "cable",   kind: "products", products: CABLE_PRODUCTS },
+];
+
+export const PHONE_BRANDS: BrandDef[] = [
+  { id: "iphone",  name: "iPhone",  slug: "iphone",  models: IPHONE_MODELS },
+  { id: "samsung", name: "Samsung", slug: "samsung", models: SAMSUNG_MODELS },
+];
+
+// ── WhatsApp helpers ────────────────────────────────────────────────────────
 export function whatsAppLink(brand: string, model: string, repair: string): string {
-  const subject = brand && brand !== "Accessoires" ? `${brand} ${model}` : model;
+  const subject = brand ? `${brand} ${model}` : model;
   const text = `Bonjour, je souhaite réserver une réparation pour un ${subject} — ${repair}.`;
   return `https://wa.me/33605557812?text=${encodeURIComponent(text)}`;
 }
@@ -219,21 +217,48 @@ export function whatsAppQuote(brand: string): string {
   return `https://wa.me/33605557812?text=${encodeURIComponent(text)}`;
 }
 
-export function searchAllModels(query: string): { brand: BrandDef; model: ModelDef }[] {
+export function whatsAppProduct(productName: string, price?: string): string {
+  const suffix = price ? ` (${price})` : "";
+  const text = `Bonjour, je suis intéressé(e) par : ${productName}${suffix}.`;
+  return `https://wa.me/33605557812?text=${encodeURIComponent(text)}`;
+}
+
+// ── Search (global, includes phones, accessories, products) ────────────────
+export type SearchHit =
+  | { kind: "phone-model";       brand: BrandDef;             model: ModelDef }
+  | { kind: "accessory-model";   category: AccessoryCategoryDef; model: ModelDef }
+  | { kind: "accessory-product"; category: AccessoryCategoryDef; product: Product };
+
+export function searchAllItems(query: string): SearchHit[] {
   if (!query.trim()) return [];
   const q = query.toLowerCase();
-  const results: { brand: BrandDef; model: ModelDef }[] = [];
-  for (const brand of BRANDS) {
+  const hits: SearchHit[] = [];
+
+  for (const brand of PHONE_BRANDS) {
     for (const model of brand.models) {
-      const haystack = [
-        model.name.toLowerCase(),
-        brand.name.toLowerCase(),
-        model.category ?? "",
-      ].join(" ");
-      if (haystack.includes(q)) {
-        results.push({ brand, model });
+      if (model.name.toLowerCase().includes(q) || brand.name.toLowerCase().includes(q)) {
+        hits.push({ kind: "phone-model", brand, model });
       }
     }
   }
-  return results;
+
+  for (const cat of ACCESSORY_CATEGORIES) {
+    if (cat.kind === "models") {
+      for (const model of cat.models) {
+        const haystack = `${model.name} ${cat.name} accessoires`.toLowerCase();
+        if (haystack.includes(q)) {
+          hits.push({ kind: "accessory-model", category: cat, model });
+        }
+      }
+    } else {
+      for (const product of cat.products) {
+        const haystack = `${product.name} ${cat.name} accessoires`.toLowerCase();
+        if (haystack.includes(q)) {
+          hits.push({ kind: "accessory-product", category: cat, product });
+        }
+      }
+    }
+  }
+
+  return hits;
 }

@@ -1,0 +1,203 @@
+Modify ONLY specific parts of the current app. Do NOT redesign the whole website.
+
+GOAL:
+- Fix search + selector flow completely
+- Integrate accessories inside the SAME flow (not separate)
+- Remove unnecessary sections
+- Ensure consistent UX across phones + accessories
+- Add social icons (TikTok + Snapchat ONLY)
+
+---------------------------------------
+1. FIX SEARCH STATE LOGIC (CRITICAL)
+---------------------------------------
+
+Rewrite the selector state logic to behave predictably:
+
+RULES:
+
+- Search must ALWAYS be global (all brands + accessories)
+- Typing in search must:
+  → clear selectedBrand
+  → clear selectedModel
+  → reset to STEP 1 (MODEL)
+
+- Clearing the input must:
+  → return to full brand grid (STEP 1)
+
+- Searching "Samsung", "Huawei", "Redmi", etc must work from ANY state
+- Searching must NOT stay stuck on previous brand (no stale context)
+
+- Models must include ALL brands (not filtered by previous selection)
+
+---------------------------------------
+2. INTEGRATE ACCESSORIES INTO SELECTOR
+---------------------------------------
+
+Add a new "brand" card inside selector:
+
+→ "Accessoires"
+
+When clicked:
+→ Show categories (same UI as model cards)
+
+Categories:
+
+- Apple Watch
+- Samsung Galaxy Watch
+- AirPods
+- Chargeurs
+- Câbles
+
+IMPORTANT:
+These must use the SAME card design as models.
+
+---------------------------------------
+3. ACCESSORIES FLOW (UNIFIED UX)
+---------------------------------------
+
+Use SAME flow logic as phones:
+
+Example:
+
+Accessoires → AirPods → AirPods Pro → show cards
+Accessoires → Apple Watch → show repair cards
+Accessoires → Chargeurs → show product cards
+
+---------------------------------------
+4. PRODUCTS (CHARGERS & CABLES)
+---------------------------------------
+
+Chargeurs and Câbles behave like product cards:
+
+Each card must include:
+
+- image or icon
+- title
+- short description
+- price (if exists)
+- button → opens WhatsApp
+
+Examples:
+
+- CHARGEUR RAPIDE 20W TYPE-C IPHONE
+- CHARGEUR 20W TYPE-C → TYPE-C
+- CHARGEUR RAPIDE 30W TYPE-C
+- CÂBLE USB → LIGHTNING — 5€
+- CÂBLE USB → TYPE-C — 5€
+
+IMPORTANT:
+
+- SAME design as repair cards
+- NO modal
+- Direct WhatsApp action
+- Keep UI consistent
+
+---------------------------------------
+5. FIX REPAIRS PER DEVICE TYPE
+---------------------------------------
+
+Currently all devices share phone repairs → WRONG
+
+Fix logic:
+
+Phones:
+- Écran
+- Batterie
+- Caméra
+- Connecteur
+- Vitre arrière
+- Diagnostic
+
+Watches:
+- Batterie
+- Diagnostic
+- Réinitialisation
+
+AirPods:
+- Batterie
+- Diagnostic
+
+Chargeurs / Câbles:
+- NO repairs
+- Only product cards
+
+---------------------------------------
+6. REMOVE UNUSED SECTIONS
+---------------------------------------
+
+DELETE completely:
+
+- "TYPES D’INTERVENTIONS" section
+- Standalone "ACCESSOIRES" section (bottom)
+
+All flows must go through selector.
+
+---------------------------------------
+7. FIX ACCESS ENTRY POINTS
+---------------------------------------
+
+Any "Accessoires" link in the UI must:
+
+→ scroll to selector
+→ auto-select "Accessoires"
+
+---------------------------------------
+8. ADD SOCIAL ICONS IN HERO (IMPORTANT)
+---------------------------------------
+
+Under hero main text:
+
+Add SMALL icons (not buttons):
+
+- TikTok
+- Snapchat
+
+Style:
+- minimal
+- inline or centered
+- subtle hover
+- clean modern look
+
+Links:
+
+TikTok:
+https://www.tiktok.com/@reparetontel13
+
+Snapchat:
+https://www.snapchat.com/add/repare-tontel13
+
+IMPORTANT:
+- Do NOT add WhatsApp here
+- Icons only (no large text)
+
+---------------------------------------
+9. KEEP DESIGN SYSTEM
+---------------------------------------
+
+DO NOT change:
+
+- navbar structure
+- hero layout
+- colors
+- spacing
+- typography
+
+KEEP:
+- minimal Apple-like design
+- rounded cards
+- soft shadows
+
+---------------------------------------
+OUTPUT
+---------------------------------------
+
+Return ONLY:
+
+- updated selector logic
+- fixed search behavior
+- accessories integration
+- repaired data logic
+- removed sections
+- hero social icons
+
+Do NOT rewrite entire app.

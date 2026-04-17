@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FaTiktok, FaSnapchatGhost } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 
 const SLIDES = [
@@ -97,6 +98,32 @@ export function Hero() {
             <Button asChild size="lg" variant="outline" className="rounded-full w-full sm:w-auto px-8 h-14 text-base bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white font-semibold backdrop-blur-sm">
               <a href="#services">Voir les réparations</a>
             </Button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
+            className="mt-8 flex items-center justify-center gap-4"
+          >
+            <a
+              href="https://www.tiktok.com/@reparetontel13"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok"
+              className="w-9 h-9 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
+            >
+              <FaTiktok className="w-4 h-4" />
+            </a>
+            <a
+              href="https://www.snapchat.com/add/repare-tontel13"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Snapchat"
+              className="w-9 h-9 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
+            >
+              <FaSnapchatGhost className="w-4 h-4" />
+            </a>
           </motion.div>
         </div>
       </div>
