@@ -1,0 +1,151 @@
+Fix the selector logic and repair system ONLY. Do NOT redesign UI.
+
+GOAL:
+Correct the flow and separate phone repairs from accessory repairs.
+
+--------------------------------------------------
+1. ADD DEVICE TYPE SYSTEM
+--------------------------------------------------
+
+Each item must have a type:
+
+- type: "phone"
+- type: "accessory"
+
+Examples:
+- iPhone → phone
+- Samsung → phone
+- Apple Watch → accessory
+- AirPods → accessory
+
+--------------------------------------------------
+2. SEPARATE REPAIR TYPES BY DEVICE TYPE
+--------------------------------------------------
+
+Phone repairs:
+- Écran
+- Batterie
+- Caméra
+- Connecteur
+- Vitre arrière
+
+Accessory repairs:
+
+For WATCH:
+- Batterie
+- Diagnostic
+- Réinitialisation
+- Problème connexion
+
+For AIRPODS:
+- Problème son
+- Batterie
+- Boîtier
+- Diagnostic
+
+IMPORTANT:
+When user selects an accessory → NEVER show phone repairs.
+
+--------------------------------------------------
+3. FIX ACCESSORIES FLOW
+--------------------------------------------------
+
+Accessoires must behave like a proper branch:
+
+Step 1:
+- Brands
+- Accessoires
+
+If user clicks Accessoires:
+
+Step 2:
+- Apple Watch
+- Samsung Galaxy Watch
+- AirPods
+
+Step 3:
+- Show correct repairs (not phone repairs)
+
+--------------------------------------------------
+4. FIX SEARCH (CRITICAL)
+--------------------------------------------------
+
+Search must be GLOBAL and STATELESS.
+
+On every input change:
+- reset selectedBrand
+- reset selectedModel
+- reset selectedType
+
+Search must return:
+- brands
+- models
+- accessories
+- accessory types
+
+Typing:
+- "watch" → show Apple Watch / Samsung Watch
+- "airpods" → show AirPods
+- "redmi" → show Redmi
+- "huawei" → show Huawei
+
+Clearing input:
+→ return to Step 1 (brand selection)
+
+--------------------------------------------------
+5. REMOVE “TYPES D’INTERVENTIONS” SECTION
+--------------------------------------------------
+
+Delete this section completely.
+
+It breaks the flow.
+
+--------------------------------------------------
+6. FIX REPAIR CARDS (GENERAL SECTION)
+--------------------------------------------------
+
+In general repair cards:
+
+REMOVE:
+- WhatsApp button
+- prices
+
+REPLACE with:
+Button:
+"VOIR LES MODÈLES"
+
+Behavior:
+Scroll to model selection section
+
+--------------------------------------------------
+7. BOOKING ONLY AFTER MODEL SELECTION
+--------------------------------------------------
+
+WhatsApp booking must exist ONLY in:
+
+Model-specific repair view
+
+Flow:
+Model → Repair → WhatsApp
+
+--------------------------------------------------
+8. KEEP DESIGN
+--------------------------------------------------
+
+Do NOT change:
+- layout
+- colors
+- spacing
+
+Only fix logic and behavior.
+
+--------------------------------------------------
+OUTPUT:
+Only update:
+- selector logic
+- search behavior
+- repair mapping
+- remove wrong section
+- fix buttons
+
+Do NOT rewrite entire app.

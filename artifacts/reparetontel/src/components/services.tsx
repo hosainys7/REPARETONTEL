@@ -13,8 +13,8 @@ const SERVICE_CARDS = [
     icon: Smartphone,
     title: "Types de réparations",
     items: ["Écran", "Batterie", "Caméra", "Connecteur", "Diagnostic"],
-    cta: "Voir les interventions",
-    href: "#products",
+    cta: "Voir les modèles",
+    href: "#selector",
   },
   {
     icon: MapPin,

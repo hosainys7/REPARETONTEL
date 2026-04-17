@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, Smartphone, Watch, ChevronLeft, Clock, Zap, Camera,
   Monitor, BatteryFull, Shield, Activity, MessageCircle, X,
+  RotateCcw, Bluetooth, Volume2, Package,
 } from "lucide-react";
 import {
   BRANDS, whatsAppLink, whatsAppQuote, searchAllModels,
@@ -33,6 +34,10 @@ const REPAIR_ICONS: Record<string, React.ElementType> = {
   "Connecteur de charge": Zap,
   "Vitre arrière": Shield,
   "Diagnostic": Activity,
+  "Réinitialisation": RotateCcw,
+  "Problème connexion": Bluetooth,
+  "Problème son": Volume2,
+  "Boîtier": Package,
 };
 
 const STEPS = ["Modèle", "Réparation", "Réserver"];

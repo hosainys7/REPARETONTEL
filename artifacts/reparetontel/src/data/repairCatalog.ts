@@ -1,3 +1,6 @@
+export type DeviceType = "phone" | "accessory";
+export type AccessoryCategory = "watch" | "airpods";
+
 export type Repair = {
   type: string;
   summary: string;
@@ -8,6 +11,8 @@ export type Repair = {
 export type ModelDef = {
   id: string;
   name: string;
+  type: DeviceType;
+  category?: AccessoryCategory;
   repairs: Repair[];
 };
 
@@ -15,10 +20,15 @@ export type BrandDef = {
   id: string;
   name: string;
   slug: string;
+  type: DeviceType;
   models: ModelDef[];
 };
 
-const REPAIR_DEFS: { type: string; summary: string; duration: string }[] = [
+type RepairDef = { type: string; summary: string; duration: string };
+type PriceMap = Partial<Record<string, string>>;
+
+// ── Repair definitions, scoped per device type ──────────────────────────────
+const PHONE_REPAIRS: RepairDef[] = [
   { type: "Écran", summary: "Écran fissuré ou tactile défectueux.", duration: "30–60 min" },
   { type: "Batterie", summary: "Remplacement batterie pour retrouver une bonne autonomie.", duration: "20–30 min" },
   { type: "Caméra", summary: "Réparation ou remplacement du module caméra.", duration: "30–45 min" },
@@ -27,10 +37,22 @@ const REPAIR_DEFS: { type: string; summary: string; duration: string }[] = [
   { type: "Diagnostic", summary: "Analyse rapide de la panne avant intervention.", duration: "15–20 min" },
 ];
 
-type PriceMap = Partial<Record<string, string>>;
+const WATCH_REPAIRS: RepairDef[] = [
+  { type: "Batterie", summary: "Remplacement batterie pour retrouver une bonne autonomie.", duration: "30–45 min" },
+  { type: "Diagnostic", summary: "Analyse complète de la panne avant intervention.", duration: "15–20 min" },
+  { type: "Réinitialisation", summary: "Remise à zéro complète de la montre et reconfiguration.", duration: "15–30 min" },
+  { type: "Problème connexion", summary: "Résolution des problèmes de pairage Bluetooth ou Wi-Fi.", duration: "15–30 min" },
+];
 
-function makeRepairs(prices: PriceMap): Repair[] {
-  return REPAIR_DEFS.map((def) => ({
+const AIRPODS_REPAIRS: RepairDef[] = [
+  { type: "Problème son", summary: "Son coupé, faible ou déséquilibré entre les écouteurs.", duration: "30–45 min" },
+  { type: "Batterie", summary: "Autonomie réduite des écouteurs ou du boîtier.", duration: "30–45 min" },
+  { type: "Boîtier", summary: "Boîtier endommagé ou ne se recharge plus.", duration: "30–45 min" },
+  { type: "Diagnostic", summary: "Analyse complète de la panne avant intervention.", duration: "15–20 min" },
+];
+
+function makeRepairs(defs: RepairDef[], prices: PriceMap): Repair[] {
+  return defs.map((def) => ({
     ...def,
     priceLabel: prices[def.type] ?? "Sur demande",
   }));
@@ -44,11 +66,13 @@ function mkId(prefix: string, name: string): string {
     .replace(/^-|-$/g, "")}`;
 }
 
+// ── Phones ──────────────────────────────────────────────────────────────────
 function iphone(name: string, screen: string, battery: string, camera = "Sur demande"): ModelDef {
   return {
     id: mkId("iphone", name),
     name: `iPhone ${name}`,
-    repairs: makeRepairs({
+    type: "phone",
+    repairs: makeRepairs(PHONE_REPAIRS, {
       "Écran": screen,
       "Batterie": battery,
       "Caméra": camera,
@@ -84,7 +108,8 @@ function samsung(name: string, tier: SamsungTier): ModelDef {
   return {
     id: mkId("samsung", name),
     name,
-    repairs: makeRepairs(SAMSUNG_TIER_PRICES[tier]),
+    type: "phone",
+    repairs: makeRepairs(PHONE_REPAIRS, SAMSUNG_TIER_PRICES[tier]),
   };
 }
 
@@ -121,44 +146,25 @@ const IPHONE_MODELS: ModelDef[] = [
 ];
 
 const SAMSUNG_MODELS: ModelDef[] = [
-  samsung("Samsung A10", "budget"),
-  samsung("Samsung A11", "budget"),
-  samsung("Samsung A12", "budget"),
-  samsung("Samsung A13", "budget"),
-  samsung("Samsung A14", "budget"),
-  samsung("Samsung A15", "budget"),
-  samsung("Samsung A16", "budget"),
-  samsung("Samsung A17", "budget"),
-  samsung("Samsung A20 / A20s / A20e", "budget"),
-  samsung("Samsung A21s", "budget"),
-  samsung("Samsung A22 4G / A22 5G", "mid"),
-  samsung("Samsung A23", "mid"),
-  samsung("Samsung A24", "mid"),
-  samsung("Samsung A25", "mid"),
-  samsung("Samsung A26", "mid"),
-  samsung("Samsung A30 / M30", "mid"),
-  samsung("Samsung A31", "mid"),
-  samsung("Samsung A32 4G / A32 5G", "mid"),
-  samsung("Samsung A33", "mid"),
-  samsung("Samsung A34", "mid"),
-  samsung("Samsung A35", "mid"),
-  samsung("Samsung A36", "mid"),
-  samsung("Samsung A40", "mid"),
-  samsung("Samsung A41", "mid"),
-  samsung("Samsung A42 5G", "mid"),
-  samsung("Samsung A50", "mid"),
-  samsung("Samsung A51 4G / 5G", "mid"),
-  samsung("Samsung A52", "mid"),
-  samsung("Samsung A53", "mid"),
-  samsung("Samsung A54", "mid"),
-  samsung("Samsung A55", "mid"),
-  samsung("Samsung A56", "high"),
-  samsung("Samsung A60", "high"),
-  samsung("Samsung A70", "high"),
-  samsung("Samsung A71", "high"),
-  samsung("Samsung A72", "high"),
-  samsung("Samsung A73", "high"),
-  samsung("Samsung A80", "high"),
+  samsung("Samsung A10", "budget"), samsung("Samsung A11", "budget"),
+  samsung("Samsung A12", "budget"), samsung("Samsung A13", "budget"),
+  samsung("Samsung A14", "budget"), samsung("Samsung A15", "budget"),
+  samsung("Samsung A16", "budget"), samsung("Samsung A17", "budget"),
+  samsung("Samsung A20 / A20s / A20e", "budget"), samsung("Samsung A21s", "budget"),
+  samsung("Samsung A22 4G / A22 5G", "mid"), samsung("Samsung A23", "mid"),
+  samsung("Samsung A24", "mid"), samsung("Samsung A25", "mid"),
+  samsung("Samsung A26", "mid"), samsung("Samsung A30 / M30", "mid"),
+  samsung("Samsung A31", "mid"), samsung("Samsung A32 4G / A32 5G", "mid"),
+  samsung("Samsung A33", "mid"), samsung("Samsung A34", "mid"),
+  samsung("Samsung A35", "mid"), samsung("Samsung A36", "mid"),
+  samsung("Samsung A40", "mid"), samsung("Samsung A41", "mid"),
+  samsung("Samsung A42 5G", "mid"), samsung("Samsung A50", "mid"),
+  samsung("Samsung A51 4G / 5G", "mid"), samsung("Samsung A52", "mid"),
+  samsung("Samsung A53", "mid"), samsung("Samsung A54", "mid"),
+  samsung("Samsung A55", "mid"), samsung("Samsung A56", "high"),
+  samsung("Samsung A60", "high"), samsung("Samsung A70", "high"),
+  samsung("Samsung A71", "high"), samsung("Samsung A72", "high"),
+  samsung("Samsung A73", "high"), samsung("Samsung A80", "high"),
   samsung("Samsung S8 / S9", "high"),
   samsung("Samsung S10 / S10e / S10+ / S10 5G", "high"),
   samsung("Samsung S20 / S20 FE / S20+ / S20 Ultra", "flagship"),
@@ -169,20 +175,37 @@ const SAMSUNG_MODELS: ModelDef[] = [
   samsung("Samsung S25 / S25+ / S25 FE / S25 Ultra", "flagship"),
 ];
 
+// ── Accessories ─────────────────────────────────────────────────────────────
+const WATCH_PRICES: PriceMap = {
+  "Batterie": "Sur demande", "Diagnostic": "Gratuit",
+  "Réinitialisation": "Sur demande", "Problème connexion": "Sur demande",
+};
+const AIRPODS_PRICES: PriceMap = {
+  "Problème son": "Sur demande", "Batterie": "Sur demande",
+  "Boîtier": "Sur demande", "Diagnostic": "Gratuit",
+};
+
+function watch(id: string, name: string): ModelDef {
+  return { id, name, type: "accessory", category: "watch", repairs: makeRepairs(WATCH_REPAIRS, WATCH_PRICES) };
+}
+function airpods(id: string, name: string): ModelDef {
+  return { id, name, type: "accessory", category: "airpods", repairs: makeRepairs(AIRPODS_REPAIRS, AIRPODS_PRICES) };
+}
+
 const ACCESSORY_MODELS: ModelDef[] = [
-  { id: "apple-watch", name: "Apple Watch", repairs: makeRepairs({ "Écran": "Sur demande", "Batterie": "Sur demande", "Diagnostic": "Gratuit" }) },
-  { id: "galaxy-watch", name: "Samsung Galaxy Watch", repairs: makeRepairs({ "Écran": "Sur demande", "Batterie": "Sur demande", "Diagnostic": "Gratuit" }) },
-  { id: "airpods-1", name: "AirPods 1", repairs: makeRepairs({ "Batterie": "Sur demande", "Diagnostic": "Gratuit" }) },
-  { id: "airpods-pro", name: "AirPods Pro", repairs: makeRepairs({ "Batterie": "Sur demande", "Diagnostic": "Gratuit" }) },
-  { id: "airpods-pro-3", name: "AirPods Pro 3", repairs: makeRepairs({ "Batterie": "Sur demande", "Diagnostic": "Gratuit" }) },
-  { id: "airpods-3", name: "AirPods 3", repairs: makeRepairs({ "Batterie": "Sur demande", "Diagnostic": "Gratuit" }) },
-  { id: "airpods-4", name: "AirPods 4", repairs: makeRepairs({ "Batterie": "Sur demande", "Diagnostic": "Gratuit" }) },
+  watch("apple-watch", "Apple Watch"),
+  watch("galaxy-watch", "Samsung Galaxy Watch"),
+  airpods("airpods-1", "AirPods 1"),
+  airpods("airpods-3", "AirPods 3"),
+  airpods("airpods-4", "AirPods 4"),
+  airpods("airpods-pro", "AirPods Pro"),
+  airpods("airpods-pro-3", "AirPods Pro 3"),
 ];
 
 export const BRANDS: BrandDef[] = [
-  { id: "iphone", name: "iPhone", slug: "iphone", models: IPHONE_MODELS },
-  { id: "samsung", name: "Samsung", slug: "samsung", models: SAMSUNG_MODELS },
-  { id: "accessoires", name: "Accessoires", slug: "accessoires", models: ACCESSORY_MODELS },
+  { id: "iphone", name: "iPhone", slug: "iphone", type: "phone", models: IPHONE_MODELS },
+  { id: "samsung", name: "Samsung", slug: "samsung", type: "phone", models: SAMSUNG_MODELS },
+  { id: "accessoires", name: "Accessoires", slug: "accessoires", type: "accessory", models: ACCESSORY_MODELS },
 ];
 
 export function whatsAppLink(brand: string, model: string, repair: string): string {
@@ -202,7 +225,12 @@ export function searchAllModels(query: string): { brand: BrandDef; model: ModelD
   const results: { brand: BrandDef; model: ModelDef }[] = [];
   for (const brand of BRANDS) {
     for (const model of brand.models) {
-      if (model.name.toLowerCase().includes(q) || brand.name.toLowerCase().includes(q)) {
+      const haystack = [
+        model.name.toLowerCase(),
+        brand.name.toLowerCase(),
+        model.category ?? "",
+      ].join(" ");
+      if (haystack.includes(q)) {
         results.push({ brand, model });
       }
     }
