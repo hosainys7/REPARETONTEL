@@ -64,7 +64,8 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6 uppercase"
           >
-            Écran, batterie, connecteur&nbsp;: intervention rapide à Marseille
+            intervention rapide à Marseille
+            N’ATTENDEZ PLUS POUR RÉSERVER
           </motion.h1>
 
           <motion.div
@@ -91,10 +92,10 @@ export function Hero() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Button asChild size="lg" className="rounded-full w-full sm:w-auto px-8 h-14 text-base bg-primary hover:bg-primary/90 text-white font-semibold">
-              <a href="#whatsapp">Réserver maintenant</a>
+              <a href="#selector">Réserver maintenant</a>
             </Button>
             <Button asChild size="lg" variant="outline" className="rounded-full w-full sm:w-auto px-8 h-14 text-base bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white font-semibold backdrop-blur-sm">
-              <a href="#products">Voir les réparations</a>
+              <a href="#services">Voir les réparations</a>
             </Button>
           </motion.div>
         </div>

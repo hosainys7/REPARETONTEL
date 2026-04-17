@@ -18,7 +18,7 @@ export function About() {
             
             <div className="space-y-4 mb-12">
               <p className="text-xl text-muted-foreground leading-relaxed">
-                <strong className="text-foreground font-semibold">Réparetontel</strong> propose un service de réparation de téléphones à domicile à Marseille et alentours. Nous intervenons rapidement sur les pannes les plus fréquentes&nbsp;: écran, batterie, caméra, connecteur et autres réparations du quotidien.
+                <strong className="text-foreground font-semibold">RÉPARE-TONTEL13</strong> propose un service de réparation de téléphones à domicile à Marseille et alentours. Nous intervenons rapidement sur les pannes les plus fréquentes&nbsp;: écran, batterie, caméra, connecteur et autres réparations du quotidien.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Nous prenons en charge plusieurs marques comme <strong className="text-foreground font-medium">iPhone, Samsung, Huawei, Google Pixel, Xiaomi</strong> et <strong className="text-foreground font-medium">Redmi</strong>. Notre objectif est simple&nbsp;: vous offrir un service fiable, rapide et pratique, où que vous soyez.

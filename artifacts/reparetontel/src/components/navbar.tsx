@@ -14,11 +14,11 @@ export function Navbar() {
 
   const links = [
     { name: "Accueil", href: "#" },
-    { name: "Produits", href: "#products" },
+    { name: "Modèles", href: "#selector" },
     { name: "Services", href: "#services" },
+    { name: "Accessoires", href: "#accessoires" },
     { name: "À propos", href: "#about" },
     { name: "Réservation", href: "#booking" },
-    { name: "Contact", href: "#contact" },
   ];
 
   return (
@@ -38,15 +38,15 @@ export function Navbar() {
             <a href="#" className="flex items-center gap-2 shrink-0">
               <img
                 src="/logo.jpeg"
-                alt="Réparetontel logo"
+                alt="RÉPARE-TONTEL13 logo"
                 className="h-8 w-8 rounded-lg object-contain shrink-0"
               />
               <span
-                className={`text-xs font-bold tracking-[0.18em] uppercase transition-colors duration-300 whitespace-nowrap ${
+                className={`text-xs font-bold tracking-[0.12em] uppercase transition-colors duration-300 whitespace-nowrap ${
                   scrolled ? "text-foreground" : "text-white"
                 }`}
               >
-                Réparetontel
+                RÉPARE-TONTEL13
               </span>
             </a>
 
@@ -69,7 +69,7 @@ export function Navbar() {
                 asChild
                 className="rounded-full px-6 h-9 text-sm font-semibold shadow-md bg-primary hover:bg-primary/90 text-white"
               >
-                <a href="#whatsapp">Réserver</a>
+                <a href="#booking">Réserver</a>
               </Button>
             </div>
 
@@ -114,7 +114,7 @@ export function Navbar() {
                   size="lg"
                   className="rounded-full w-full font-semibold bg-primary text-white"
                 >
-                  <a href="#whatsapp" onClick={() => setIsOpen(false)}>
+                  <a href="#booking" onClick={() => setIsOpen(false)}>
                     Réserver maintenant
                   </a>
                 </Button>

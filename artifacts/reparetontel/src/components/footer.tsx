@@ -10,7 +10,7 @@ export function Footer() {
           
           <div>
             <a href="#" className="text-2xl font-bold tracking-tight mb-4 block">
-              Réparetontel<span className="text-primary">.</span>
+              RÉPARE-TONTEL13<span className="text-primary">.</span>
             </a>
             <div className="flex items-center gap-3 text-slate-300 font-medium mb-6">
               <Phone className="w-5 h-5 text-primary" />
@@ -24,7 +24,8 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-lg mb-6">Liens rapides</h4>
             <ul className="space-y-4 text-sm text-slate-400">
-              <li><a href="#products" className="hover:text-white transition-colors">Réparations</a></li>
+              <li><a href="#selector" className="hover:text-white transition-colors">Réparations</a></li>
+              <li><a href="#accessoires" className="hover:text-white transition-colors">Accessoires</a></li>
               <li><a href="#services" className="hover:text-white transition-colors">Services</a></li>
               <li><a href="#about" className="hover:text-white transition-colors">À propos</a></li>
               <li><a href="#booking" className="hover:text-white transition-colors">Réserver</a></li>
@@ -58,7 +59,7 @@ export function Footer() {
         </div>
 
         <div className="max-w-5xl mx-auto pt-8 border-t border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} Réparetontel. Tous droits réservés.</p>
+          <p>© {new Date().getFullYear()} RÉPARE-TONTEL13. Tous droits réservés.</p>
           <div className="flex gap-6">
             <a href="#legal" className="hover:text-slate-300 transition-colors">Mentions légales</a>
           </div>

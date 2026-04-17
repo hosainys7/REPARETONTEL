@@ -1,0 +1,139 @@
+Modify ONLY the following parts of the current website. Do NOT redesign the whole website and do NOT rewrite unrelated sections.
+
+GOAL
+Apply three precise fixes only:
+1. Replace the old brand name everywhere with the correct new one
+2. Add the new accessories products
+3. Fix the Hero section buttons so they actually work
+
+IMPORTANT
+Do NOT change the overall design, layout, or website structure.
+Do NOT replace the “L'expertise mobile à votre porte” section title.
+Only apply the specific content and interaction fixes below.
+
+--------------------------------------------------
+1. REPLACE THE BRAND NAME EVERYWHERE
+--------------------------------------------------
+The correct brand name is:
+
+RÉPARE-TONTEL13
+
+Use this exact spelling everywhere.
+Important:
+- one single L only in TONTEL
+- not TONTELL
+- not Réparetontel
+- not REPAR-TONTEL
+- not any older version
+
+Replace the visible old brand name with:
+RÉPARE-TONTEL13
+
+Apply this in:
+- navbar brand text
+- footer brand text
+- the content paragraph in the section:
+  "L'expertise mobile à votre porte"
+
+For example, if the current paragraph begins with:
+"Réparetontel propose un service..."
+it must become:
+"RÉPARE-TONTEL13 propose un service..."
+
+Keep the rest of the paragraph and section layout unchanged unless small wording adjustment is needed for readability.
+
+--------------------------------------------------
+2. KEEP THE SECTION TITLE
+--------------------------------------------------
+Do NOT replace or remove the section title:
+"L'expertise mobile à votre porte"
+
+Keep this title exactly as it is.
+
+Only update the paragraph text inside that section so the brand name uses:
+RÉPARE-TONTEL13
+
+--------------------------------------------------
+3. ADD ACCESSORIES PRODUCTS
+--------------------------------------------------
+Add the following accessories into the accessories area / accessories data / accessories cards:
+
+- Chargeur rapide 20W Type-C iPhone
+- Chargeur 20W Type-C Type-C
+- Chargeur rapide 30W Type-C Type-C
+- Chargeur rapide 30W Type-C iPhone
+- Câble USB vers Lightning — 5€
+- Câble USB vers Type-C — 5€
+
+Present these in a clean and professional way.
+
+Recommended displayed names:
+- Chargeur rapide 20W USB-C vers iPhone
+- Chargeur 20W USB-C vers USB-C
+- Chargeur rapide 30W USB-C vers USB-C
+- Chargeur rapide 30W USB-C vers iPhone
+- Câble USB vers Lightning — 5€
+- Câble USB vers USB-C — 5€
+
+If the accessories section is data-driven, update the accessories data source cleanly.
+If it uses cards, render these as proper accessory cards.
+
+Use the available cable images where appropriate if they already exist in the project.
+
+Do not break the existing accessories flow.
+
+--------------------------------------------------
+4. FIX HERO BUTTONS
+--------------------------------------------------
+The buttons in the Hero section currently do not work correctly.
+
+Fix these buttons so they have working targets:
+
+Button 1:
+"Réserver maintenant"
+This should scroll or navigate to the main booking / selector flow section where the user starts choosing a model and repair.
+
+Button 2:
+"Voir les réparations"
+This should scroll or navigate to the repair-related section, such as:
+- the selector / model section
+or
+- the repairs showcase section
+Choose the most logical target already present in the page.
+
+Requirements:
+- smooth scroll if possible
+- valid anchor or navigation target
+- buttons must no longer be dead or non-functional
+
+--------------------------------------------------
+5. KEEP EVERYTHING ELSE
+--------------------------------------------------
+Do NOT change:
+- hero title text
+- hero layout
+- section designs
+- FAQ
+- horaires
+- footer layout
+- navbar layout
+- search logic
+- repair logic
+- general page design
+
+Only update:
+- visible brand name
+- paragraph brand name in “L'expertise mobile à votre porte”
+- accessories entries/cards
+- hero button links/targets
+
+--------------------------------------------------
+6. OUTPUT
+--------------------------------------------------
+Return only the code changes needed for:
+- brand name replacement
+- accessories addition
+- hero button fixes
+
+Do not rewrite unrelated sections.
+Do not redesign the whole website.
