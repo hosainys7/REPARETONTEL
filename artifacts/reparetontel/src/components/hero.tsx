@@ -69,43 +69,21 @@ export function Hero() {
             N’ATTENDEZ PLUS POUR RÉSERVER
           </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="mb-10 space-y-2"
+            transition={{ duration: 0.8, delay: 0.55 }}
+            className="mt-5 text-lg md:text-2xl text-white/90 font-light italic"
           >
-            <p className="text-lg md:text-xl text-gray-200 font-light">
-              Service de réparation de téléphones à domicile, rapide et professionnel.
-            </p>
-            <p className="text-sm md:text-base text-gray-300/80 font-light">
-              Nous réparons les modèles iPhone, Samsung, Huawei, Google Pixel et Xiaomi.
-            </p>
-            <p className="text-sm md:text-base text-gray-300/80 font-light">
-              Déplacement sur tout Marseille &amp; alentours, 24h/24 et 7j/7.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <Button asChild size="lg" className="rounded-full w-full sm:w-auto px-8 h-14 text-base bg-primary hover:bg-primary/90 text-white font-semibold">
-              <a href="#selector">Réserver maintenant</a>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-full w-full sm:w-auto px-8 h-14 text-base bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white font-semibold backdrop-blur-sm">
-              <a href="#services">Voir les réparations</a>
-            </Button>
-          </motion.div>
+            Un café, un croissant… et un téléphone réparé !
+          </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
             style={{ pointerEvents: "auto" }}
-            className="relative z-30 mt-8 flex items-center justify-center gap-4"
+            className="relative z-30 mt-4 flex items-center justify-center gap-4"
           >
             <a
               href="https://www.tiktok.com/@reparetontel13"
@@ -113,9 +91,9 @@ export function Hero() {
               rel="noopener noreferrer"
               aria-label="TikTok"
               style={{ pointerEvents: "auto" }}
-              className="relative z-30 inline-flex items-center justify-center w-11 h-11 rounded-full text-white/80 hover:text-white hover:bg-white/15 hover:scale-105 transition-all duration-200 cursor-pointer"
+              className="relative z-30 inline-flex items-center justify-center w-9 h-9 rounded-full text-white/80 hover:text-white hover:bg-white/15 hover:scale-105 transition-all duration-200 cursor-pointer"
             >
-              <FaTiktok className="w-[18px] h-[18px]" />
+              <FaTiktok className="w-4 h-4" />
             </a>
             <a
               href="https://www.snapchat.com/add/repare-tontel13"
@@ -123,10 +101,33 @@ export function Hero() {
               rel="noopener noreferrer"
               aria-label="Snapchat"
               style={{ pointerEvents: "auto" }}
-              className="relative z-30 inline-flex items-center justify-center w-11 h-11 rounded-full text-white/80 hover:text-white hover:bg-white/15 hover:scale-105 transition-all duration-200 cursor-pointer"
+              className="relative z-30 inline-flex items-center justify-center w-9 h-9 rounded-full text-white/80 hover:text-white hover:bg-white/15 hover:scale-105 transition-all duration-200 cursor-pointer"
             >
-              <FaSnapchatGhost className="w-[18px] h-[18px]" />
+              <FaSnapchatGhost className="w-4 h-4" />
             </a>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.85 }}
+            className="mt-4 text-base md:text-lg text-gray-200 font-light"
+          >
+            Service de réparation de téléphones à domicile, rapide et professionnel.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
+            className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <Button asChild size="lg" className="rounded-full w-full sm:w-auto px-8 h-14 text-base bg-primary hover:bg-primary/90 text-white font-semibold">
+              <a href="#selector">Réserver maintenant</a>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="rounded-full w-full sm:w-auto px-8 h-14 text-base bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white font-semibold backdrop-blur-sm">
+              <a href="#services">Voir les réparations</a>
+            </Button>
           </motion.div>
         </div>
       </div>

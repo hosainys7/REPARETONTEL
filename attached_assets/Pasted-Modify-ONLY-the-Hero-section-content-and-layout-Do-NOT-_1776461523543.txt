@@ -1,0 +1,95 @@
+Modify ONLY the Hero section content and layout. Do NOT touch other parts.
+
+GOAL:
+- Add the marketing hook
+- Fix social icons position
+- REMOVE unnecessary text from hero (clean minimal layout)
+
+---------------------------------------
+1. ADD HOOK TEXT
+---------------------------------------
+
+Insert this line BELOW the main hero title:
+
+"Un café, un croissant… et un téléphone réparé !"
+
+---------------------------------------
+2. REMOVE EXTRA TEXT (CRITICAL)
+---------------------------------------
+
+DELETE completely these lines from the hero:
+
+- "Nous réparons les modèles iPhone, Samsung, Huawei, Google Pixel et Xiaomi."
+- "Déplacement sur tout Marseille & alentours, 24h/24 et 7j/7."
+
+These must NOT appear anywhere in the hero anymore.
+
+---------------------------------------
+3. KEEP ONLY ONE DESCRIPTION
+---------------------------------------
+
+Keep ONLY this description under the icons:
+
+"Service de réparation de téléphones à domicile, rapide et professionnel."
+
+Do NOT add any other paragraph.
+
+---------------------------------------
+4. FIX SOCIAL ICONS POSITION
+---------------------------------------
+
+Move TikTok and Snapchat icons:
+
+FROM:
+→ below buttons (wrong)
+
+TO:
+→ BELOW the hook text
+→ ABOVE the description
+
+---------------------------------------
+5. FINAL HERO STRUCTURE (STRICT)
+---------------------------------------
+
+Hero must follow EXACTLY this order:
+
+1. TITLE (large)
+2. HOOK
+3. SOCIAL ICONS (TikTok + Snapchat)
+4. DESCRIPTION (single line only)
+5. BUTTONS
+
+---------------------------------------
+6. SPACING (IMPORTANT)
+---------------------------------------
+
+Add proper spacing:
+
+- Title → Hook: 16–24px
+- Hook → Icons: 12–16px
+- Icons → Description: 12–16px
+- Description → Buttons: 20–28px
+
+---------------------------------------
+7. SOCIAL ICON STYLE
+---------------------------------------
+
+- small circular icons (32–36px)
+- centered horizontally
+- gap 12–16px
+- subtle hover effect
+
+---------------------------------------
+8. DO NOT CHANGE
+---------------------------------------
+
+- hero background
+- buttons
+- colors
+- typography system
+
+---------------------------------------
+OUTPUT
+---------------------------------------
+
+Return ONLY updated Hero component.
