@@ -2,6 +2,17 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTiktok, FaSnapchatGhost } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
+import { selectorNav, smoothScrollToHash } from "@/lib/selectorBus";
+
+function handleSelectorCta(e: React.MouseEvent) {
+  e.preventDefault();
+  selectorNav({ kind: "open-selector" });
+}
+function handleServicesCta(e: React.MouseEvent) {
+  e.preventDefault();
+  selectorNav({ kind: "reset" });
+  setTimeout(() => smoothScrollToHash("#services"), 30);
+}
 
 const SLIDES = [
   { id: 1, src: "/slider-1.png" },
@@ -125,10 +136,10 @@ export function Hero() {
             className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Button asChild size="lg" className="rounded-full w-full sm:w-auto px-8 h-14 text-base bg-primary hover:bg-primary/90 text-white font-semibold">
-              <a href="#selector">Réserver maintenant</a>
+              <a href="#selector" onClick={handleSelectorCta}>Réserver maintenant</a>
             </Button>
             <Button asChild size="lg" variant="outline" className="rounded-full w-full sm:w-auto px-8 h-14 text-base bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white font-semibold backdrop-blur-sm">
-              <a href="#services">Voir les réparations</a>
+              <a href="#services" onClick={handleServicesCta}>Voir les réparations</a>
             </Button>
           </motion.div>
         </div>

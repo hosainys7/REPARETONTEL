@@ -1,15 +1,35 @@
 import { FaTiktok, FaWhatsapp } from "react-icons/fa6";
 import { FaSnapchat } from "react-icons/fa";
 import { Phone } from "lucide-react";
+import { selectorNav, smoothScrollToHash, scrollToTop } from "@/lib/selectorBus";
+
+function navStandard(hash: string) {
+  selectorNav({ kind: "reset" });
+  setTimeout(() => smoothScrollToHash(hash), 30);
+}
+function navHome() {
+  selectorNav({ kind: "reset" });
+  setTimeout(() => scrollToTop(), 30);
+}
+function navRepairsRoot() {
+  selectorNav({ kind: "open-selector" });
+}
+function navAccessoiresRoot() {
+  selectorNav({ kind: "open-accessory" });
+}
 
 export function Footer() {
+  const handleHome = (e: React.MouseEvent) => { e.preventDefault(); navHome(); };
+  const handleRepairs = (e: React.MouseEvent) => { e.preventDefault(); navRepairsRoot(); };
+  const handleAccessoires = (e: React.MouseEvent) => { e.preventDefault(); navAccessoiresRoot(); };
+  const handleStandard = (hash: string) => (e: React.MouseEvent) => { e.preventDefault(); navStandard(hash); };
   return (
     <footer className="bg-[#0f172a] text-white pt-20 pb-10">
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 max-w-5xl mx-auto">
           
           <div>
-            <a href="#" className="text-2xl font-bold tracking-tight mb-4 block">
+            <a href="#" onClick={handleHome} className="text-2xl font-bold tracking-tight mb-4 block">
               RÉPARE-TONTEL13<span className="text-primary">.</span>
             </a>
             <div className="flex items-center gap-3 text-slate-300 font-medium mb-6">
@@ -24,11 +44,11 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-lg mb-6">Liens rapides</h4>
             <ul className="space-y-4 text-sm text-slate-400">
-              <li><a href="#selector" className="hover:text-white transition-colors">Réparations</a></li>
-              <li><a href="#accessoires" className="hover:text-white transition-colors">Accessoires</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">Services</a></li>
-              <li><a href="#about" className="hover:text-white transition-colors">À propos</a></li>
-              <li><a href="#booking" className="hover:text-white transition-colors">Réserver</a></li>
+              <li><a href="#selector"    onClick={handleRepairs}            className="hover:text-white transition-colors">Réparations</a></li>
+              <li><a href="#accessoires" onClick={handleAccessoires}        className="hover:text-white transition-colors">Accessoires</a></li>
+              <li><a href="#services"    onClick={handleStandard("#services")} className="hover:text-white transition-colors">Services</a></li>
+              <li><a href="#about"       onClick={handleStandard("#about")}    className="hover:text-white transition-colors">À propos</a></li>
+              <li><a href="#booking"     onClick={handleStandard("#booking")}  className="hover:text-white transition-colors">Réserver</a></li>
             </ul>
           </div>
 

@@ -1,43 +1,57 @@
-import { motion } from "framer-motion";
-import { Wrench, RefreshCw, Smartphone, Package, MapPin, Plus } from "lucide-react";
+import { motion, type Variants } from "framer-motion";
+import { Wrench, Smartphone, Package, MapPin, Plus } from "lucide-react";
+import { selectorNav, smoothScrollToHash } from "@/lib/selectorBus";
 
-const SERVICE_CARDS = [
+type Card = {
+  icon: typeof Wrench;
+  title: string;
+  items: string[];
+  cta: string;
+  action: () => void;
+};
+
+function navStandard(hash: string) {
+  selectorNav({ kind: "reset" });
+  setTimeout(() => smoothScrollToHash(hash), 30);
+}
+
+const SERVICE_CARDS: Card[] = [
   {
     icon: Wrench,
     title: "Réparation",
     items: ["iPhone", "Samsung", "Huawei", "Google Pixel", "Xiaomi / Redmi"],
     cta: "Choisir mon modèle",
-    href: "#selector",
+    action: () => selectorNav({ kind: "open-selector" }),
   },
   {
     icon: Smartphone,
     title: "Types de réparations",
     items: ["Écran", "Batterie", "Caméra", "Connecteur", "Diagnostic"],
     cta: "Voir les modèles",
-    href: "#selector",
+    action: () => selectorNav({ kind: "open-selector" }),
   },
   {
     icon: Package,
     title: "Accessoires",
     items: ["Apple Watch", "Galaxy Watch", "AirPods", "Chargeurs", "Câbles"],
     cta: "Voir les accessoires",
-    href: "#accessoires",
+    action: () => selectorNav({ kind: "open-accessory" }),
   },
   {
     icon: MapPin,
     title: "Déplacement",
     items: ["Marseille & alentours", "À domicile", "Au bureau", "Au café / restaurant"],
     cta: "Nous contacter",
-    href: "#booking",
+    action: () => navStandard("#booking"),
   },
 ];
 
 export function Services() {
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     show: { opacity: 1, transition: { staggerChildren: 0.09 } },
   };
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0, y: 18 },
     show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
   };
@@ -90,12 +104,13 @@ export function Services() {
                   ))}
                 </ul>
 
-                <a
-                  href={card.href}
-                  className="inline-flex items-center justify-center w-full h-9 rounded-xl border border-primary/30 text-primary text-xs font-bold uppercase tracking-wide hover:bg-primary hover:text-white transition-all duration-200"
+                <button
+                  type="button"
+                  onClick={card.action}
+                  className="inline-flex items-center justify-center w-full h-9 rounded-xl border border-primary/30 text-primary text-xs font-bold uppercase tracking-wide hover:bg-primary hover:text-white transition-all duration-200 cursor-pointer"
                 >
                   {card.cta}
-                </a>
+                </button>
               </motion.div>
             );
           })}

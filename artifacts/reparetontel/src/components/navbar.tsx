@@ -6,45 +6,45 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { whatsAppQuote } from "@/data/repairCatalog";
+import { selectorNav, smoothScrollToHash, scrollToTop } from "@/lib/selectorBus";
 
 type RepairLink =
-  | { name: string; type: "select"; href: string; color: string; icon: typeof Smartphone }
+  | { name: string; type: "select"; brandSlug: string; color: string; icon: typeof Smartphone }
   | { name: string; type: "wa"; waBrand: string; color: string; icon: typeof Smartphone };
 
 const REPAIR_LINKS: RepairLink[] = [
-  { name: "iPhone",       type: "select", href: "#repairs/iphone",  color: "#1d1d1f", icon: Smartphone },
-  { name: "Samsung",      type: "select", href: "#repairs/samsung", color: "#1428A0", icon: Smartphone },
-  { name: "Huawei",       type: "wa",     waBrand: "Huawei",        color: "#CF0A2C", icon: Smartphone },
-  { name: "Redmi",        type: "wa",     waBrand: "Redmi",         color: "#e02020", icon: Smartphone },
-  { name: "Google Pixel", type: "wa",     waBrand: "Google Pixel",  color: "#1a73e8", icon: Smartphone },
-  { name: "Xiaomi",       type: "wa",     waBrand: "Xiaomi",        color: "#FF6900", icon: Smartphone },
+  { name: "iPhone",       type: "select", brandSlug: "iphone",     color: "#1d1d1f", icon: Smartphone },
+  { name: "Samsung",      type: "select", brandSlug: "samsung",    color: "#1428A0", icon: Smartphone },
+  { name: "Huawei",       type: "wa",     waBrand: "Huawei",       color: "#CF0A2C", icon: Smartphone },
+  { name: "Redmi",        type: "wa",     waBrand: "Redmi",        color: "#e02020", icon: Smartphone },
+  { name: "Google Pixel", type: "wa",     waBrand: "Google Pixel", color: "#1a73e8", icon: Smartphone },
+  { name: "Xiaomi",       type: "wa",     waBrand: "Xiaomi",       color: "#FF6900", icon: Smartphone },
 ];
 
 const ACCESSORY_LINKS = [
-  { name: "Apple Watch",          href: "#accessoires/apple-watch",  icon: Watch       },
-  { name: "Samsung Galaxy Watch", href: "#accessoires/galaxy-watch", icon: Watch       },
-  { name: "AirPods",              href: "#accessoires/airpods",      icon: Headphones  },
-  { name: "Chargeurs",            href: "#accessoires/chargeurs",    icon: ZapIcon     },
-  { name: "Câbles",               href: "#accessoires/cables",       icon: CableIcon   },
+  { name: "Apple Watch",          categorySlug: "apple-watch",  icon: Watch       },
+  { name: "Samsung Galaxy Watch", categorySlug: "galaxy-watch", icon: Watch       },
+  { name: "AirPods",              categorySlug: "airpods",      icon: Headphones  },
+  { name: "Chargeurs",            categorySlug: "chargeurs",    icon: ZapIcon     },
+  { name: "Câbles",               categorySlug: "cables",       icon: CableIcon   },
 ];
 
 const TOP_LINKS = [
-  { name: "Accueil",     href: "#"          },
-  { name: "Services",    href: "#services"  },
-  { name: "À propos",    href: "#about"     },
-  { name: "Réservation", href: "#booking"   },
+  { name: "Services",    href: "#services" },
+  { name: "À propos",    href: "#about"    },
+  { name: "Réservation", href: "#booking"  },
 ];
 
-// Force a hashchange even when the same hash is re-clicked
-function navigateHash(hash: string) {
-  if (typeof window === "undefined") return;
-  if (window.location.hash === hash) {
-    // reset, then re-apply on next tick so the listener fires again
-    history.replaceState(null, "", window.location.pathname + window.location.search);
-    setTimeout(() => { window.location.hash = hash; }, 0);
-  } else {
-    window.location.hash = hash;
-  }
+// Behavior B: standard navigation — reset selector + scroll to target.
+function navStandard(hash: string) {
+  selectorNav({ kind: "reset" });
+  setTimeout(() => smoothScrollToHash(hash), 30);
+}
+
+// Behavior E: home/logo
+function navHome() {
+  selectorNav({ kind: "reset" });
+  setTimeout(() => scrollToTop(), 30);
 }
 
 export function Navbar() {
@@ -57,13 +57,11 @@ export function Navbar() {
 
   useMotionValueEvent(scrollY, "change", (latest) => setScrolled(latest > 20));
 
-  // Outside-click close for desktop dropdowns
   useEffect(() => {
+    if (!openDropdown) return;
     function onDocClick() { setOpenDropdown(null); }
-    if (openDropdown) {
-      document.addEventListener("click", onDocClick);
-      return () => document.removeEventListener("click", onDocClick);
-    }
+    document.addEventListener("click", onDocClick);
+    return () => document.removeEventListener("click", onDocClick);
   }, [openDropdown]);
 
   function openMenu(name: "repairs" | "accessoires") {
@@ -75,21 +73,45 @@ export function Navbar() {
     closeTimer.current = setTimeout(() => setOpenDropdown(null), 150);
   }
 
+  function closeAll() { setOpenDropdown(null); setIsOpen(false); }
+
+  // Behavior C: a Réparations submenu item
   function handleRepairLink(e: React.MouseEvent, link: RepairLink) {
     e.preventDefault();
-    setOpenDropdown(null);
-    setIsOpen(false);
+    closeAll();
     if (link.type === "wa") {
+      // Reset selector state too, then open WhatsApp.
+      selectorNav({ kind: "reset" });
       window.open(whatsAppQuote(link.waBrand), "_blank", "noopener,noreferrer");
     } else {
-      navigateHash(link.href);
+      selectorNav({ kind: "open-brand", brandSlug: link.brandSlug });
     }
   }
-  function handleAccessoryLink(e: React.MouseEvent, href: string) {
+
+  // Behavior D: an Accessoires submenu item
+  function handleAccessoryLink(e: React.MouseEvent, categorySlug: string) {
     e.preventDefault();
-    setOpenDropdown(null);
-    setIsOpen(false);
-    navigateHash(href);
+    closeAll();
+    selectorNav({ kind: "open-accessory", categorySlug });
+  }
+
+  // Behavior B: a top-level standard link (Services / À propos / Réservation)
+  function handleStandardLink(e: React.MouseEvent, hash: string) {
+    e.preventDefault();
+    closeAll();
+    navStandard(hash);
+  }
+
+  function handleHomeLink(e: React.MouseEvent) {
+    e.preventDefault();
+    closeAll();
+    navHome();
+  }
+
+  function handleReserveCta(e: React.MouseEvent) {
+    e.preventDefault();
+    closeAll();
+    navStandard("#booking");
   }
 
   const navLinkClass = (active: boolean) =>
@@ -113,19 +135,17 @@ export function Navbar() {
       >
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex items-center h-20 gap-8">
-            {/* Logo */}
-            <a href="#" className="flex items-center gap-2 shrink-0">
+            <a href="#" onClick={handleHomeLink} className="flex items-center gap-2 shrink-0">
               <img src="/logo.jpeg" alt="RÉPARE-TONTEL13 logo" className="h-8 w-8 rounded-lg object-contain shrink-0" />
               <span className={`text-xs font-bold tracking-[0.12em] uppercase transition-colors duration-300 whitespace-nowrap ${scrolled ? "text-foreground" : "text-white"}`}>
                 RÉPARE-TONTEL13
               </span>
             </a>
 
-            {/* Desktop nav */}
             <nav className="hidden md:flex items-center gap-7 flex-1 justify-center">
-              <a href="#" className={navLinkClass(false)}>Accueil</a>
+              <a href="#" onClick={handleHomeLink} className={navLinkClass(false)}>Accueil</a>
 
-              {/* RÉPARATIONS DROPDOWN */}
+              {/* RÉPARATIONS */}
               <div
                 className="relative"
                 onMouseEnter={() => openMenu("repairs")}
@@ -162,7 +182,7 @@ export function Navbar() {
                             return (
                               <li key={link.name}>
                                 <a
-                                  href={link.type === "select" ? link.href : "#"}
+                                  href="#"
                                   onClick={(e) => handleRepairLink(e, link)}
                                   className="group flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-primary/5 transition-colors duration-150 cursor-pointer"
                                 >
@@ -186,7 +206,7 @@ export function Navbar() {
                 </AnimatePresence>
               </div>
 
-              {/* ACCESSOIRES DROPDOWN */}
+              {/* ACCESSOIRES */}
               <div
                 className="relative"
                 onMouseEnter={() => openMenu("accessoires")}
@@ -223,8 +243,8 @@ export function Navbar() {
                             return (
                               <li key={link.name}>
                                 <a
-                                  href={link.href}
-                                  onClick={(e) => handleAccessoryLink(e, link.href)}
+                                  href="#"
+                                  onClick={(e) => handleAccessoryLink(e, link.categorySlug)}
                                   className="group flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-primary/5 transition-colors duration-150 cursor-pointer"
                                 >
                                   <span className="w-8 h-8 rounded-lg bg-[#eff6ff] flex items-center justify-center">
@@ -244,14 +264,21 @@ export function Navbar() {
                 </AnimatePresence>
               </div>
 
-              {TOP_LINKS.slice(1).map((link) => (
-                <a key={link.name} href={link.href} className={navLinkClass(false)}>{link.name}</a>
+              {TOP_LINKS.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleStandardLink(e, link.href)}
+                  className={navLinkClass(false)}
+                >
+                  {link.name}
+                </a>
               ))}
             </nav>
 
             <div className="hidden md:flex items-center shrink-0 ml-auto">
               <Button asChild className="rounded-full px-6 h-9 text-sm font-semibold shadow-md bg-primary hover:bg-primary/90 text-white">
-                <a href="#booking">Réserver</a>
+                <a href="#booking" onClick={handleReserveCta}>Réserver</a>
               </Button>
             </div>
 
@@ -262,7 +289,6 @@ export function Navbar() {
         </div>
       </motion.header>
 
-      {/* MOBILE MENU */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -273,7 +299,13 @@ export function Navbar() {
             className="fixed inset-0 z-40 bg-white pt-24 px-6 md:hidden overflow-y-auto"
           >
             <nav className="flex flex-col gap-1 max-w-sm mx-auto">
-              <MobileLink href="#" label="Accueil" onClick={() => setIsOpen(false)} />
+              <a
+                href="#"
+                onClick={handleHomeLink}
+                className="block py-3 px-3 rounded-xl text-lg font-semibold text-foreground hover:bg-gray-50 transition-colors"
+              >
+                Accueil
+              </a>
 
               <MobileAccordion
                 label="Réparations"
@@ -285,7 +317,7 @@ export function Navbar() {
                   return (
                     <a
                       key={link.name}
-                      href={link.type === "select" ? link.href : "#"}
+                      href="#"
                       onClick={(e) => handleRepairLink(e, link)}
                       className="flex items-center gap-3 py-2.5 pl-3 pr-2 rounded-lg hover:bg-primary/5 transition-colors"
                     >
@@ -311,8 +343,8 @@ export function Navbar() {
                   return (
                     <a
                       key={link.name}
-                      href={link.href}
-                      onClick={(e) => handleAccessoryLink(e, link.href)}
+                      href="#"
+                      onClick={(e) => handleAccessoryLink(e, link.categorySlug)}
                       className="flex items-center gap-3 py-2.5 pl-3 pr-2 rounded-lg hover:bg-primary/5 transition-colors"
                     >
                       <span className="w-7 h-7 rounded-md bg-[#eff6ff] flex items-center justify-center">
@@ -324,13 +356,20 @@ export function Navbar() {
                 })}
               </MobileAccordion>
 
-              {TOP_LINKS.slice(1).map((link) => (
-                <MobileLink key={link.name} href={link.href} label={link.name} onClick={() => setIsOpen(false)} />
+              {TOP_LINKS.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleStandardLink(e, link.href)}
+                  className="block py-3 px-3 rounded-xl text-lg font-semibold text-foreground hover:bg-gray-50 transition-colors"
+                >
+                  {link.name}
+                </a>
               ))}
 
               <div className="mt-6">
                 <Button asChild size="lg" className="rounded-full w-full font-semibold bg-primary text-white">
-                  <a href="#booking" onClick={() => setIsOpen(false)}>Réserver maintenant</a>
+                  <a href="#booking" onClick={handleReserveCta}>Réserver maintenant</a>
                 </Button>
               </div>
             </nav>
@@ -338,18 +377,6 @@ export function Navbar() {
         )}
       </AnimatePresence>
     </>
-  );
-}
-
-function MobileLink({ href, label, onClick }: { href: string; label: string; onClick: () => void }) {
-  return (
-    <a
-      href={href}
-      onClick={onClick}
-      className="block py-3 px-3 rounded-xl text-lg font-semibold text-foreground hover:bg-gray-50 transition-colors"
-    >
-      {label}
-    </a>
   );
 }
 

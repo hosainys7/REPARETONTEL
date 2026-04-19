@@ -10,6 +10,9 @@ import {
   whatsAppLink, whatsAppQuote, whatsAppProduct, searchAllItems,
   type ModelDef, type Product, type AccessoryCategoryDef, type SearchHit,
 } from "@/data/repairCatalog";
+import {
+  onSelectorNav, smoothScrollToEl, HEADER_OFFSET, type SelectorAction,
+} from "@/lib/selectorBus";
 
 type BrandKind = "phones" | "accessoires" | "quote";
 
@@ -47,6 +50,8 @@ const REPAIR_ICONS: Record<string, React.ElementType> = {
 
 const STEPS = ["Modèle", "Réparation", "Réserver"];
 
+type ScrollTarget = "selector" | "detail" | null;
+
 export function ModelSearch() {
   const [brandSlug, setBrandSlug] = useState<string | null>(null);
   const [accessoryCatSlug, setAccessoryCatSlug] = useState<string | null>(null);
@@ -56,6 +61,7 @@ export function ModelSearch() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef   = useRef<HTMLDivElement>(null);
   const detailRef  = useRef<HTMLDivElement>(null);
+  const pendingScroll = useRef<ScrollTarget>(null);
 
   const isSearching = query.trim().length > 0;
 
@@ -67,62 +73,81 @@ export function ModelSearch() {
     ? ACCESSORY_CATEGORIES.find((c) => c.slug === accessoryCatSlug) ?? null
     : null;
 
-  // ── Reset entirely ────────────────────────────────────────────────────────
-  function resetAll() {
-    setQuery(""); setBrandSlug(null); setAccessoryCatSlug(null); setSelectedModel(null);
+  function clearState() {
+    setQuery("");
+    setBrandSlug(null);
+    setAccessoryCatSlug(null);
+    setSelectedModel(null);
   }
 
-  function scrollToSelf() {
-    setTimeout(() => sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
-  }
-
-  // ── Handle external deep-link triggers via hash ──────────────────────────
+  // ── Centralised scroll: fires AFTER DOM updates from any state change ────
   useEffect(() => {
-    function check() {
-      if (typeof window === "undefined") return;
-      const raw = window.location.hash.replace(/^#/, "");
-      if (!raw) return;
-
-      // #accessoires or #accessoires/<category-slug>
-      if (raw === "accessoires" || raw.startsWith("accessoires/")) {
-        const sub = raw.split("/")[1];
-        resetAll();
-        setBrandSlug("accessoires");
-        if (sub) {
-          const cat = ACCESSORY_CATEGORIES.find((c) => c.slug === sub);
-          if (cat) setAccessoryCatSlug(cat.slug);
+    if (!pendingScroll.current) return;
+    const target = pendingScroll.current;
+    pendingScroll.current = null;
+    // Wait two frames so AnimatePresence + layout settle before measuring.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (target === "detail") {
+          smoothScrollToEl(detailRef.current ?? sectionRef.current, HEADER_OFFSET);
+        } else {
+          smoothScrollToEl(sectionRef.current, HEADER_OFFSET);
         }
-        scrollToSelf();
-        return;
-      }
+      });
+    });
+  }, [brandSlug, accessoryCatSlug, selectedModel, query]);
 
-      // #repairs/<phone-brand-slug>
-      if (raw.startsWith("repairs/")) {
-        const slug = raw.split("/")[1];
-        const brand = PHONE_BRANDS.find((b) => b.slug === slug);
-        if (brand) {
-          resetAll();
-          setBrandSlug(brand.slug);
-          scrollToSelf();
+  // ── Listen to centralised navigation events ──────────────────────────────
+  useEffect(() => {
+    const off = onSelectorNav((action: SelectorAction) => {
+      // Always wipe state first
+      clearState();
+
+      switch (action.kind) {
+        case "reset":
+          // No scroll here; consumer handles their own destination scroll.
+          pendingScroll.current = null;
+          break;
+        case "open-selector":
+          pendingScroll.current = "selector";
+          break;
+        case "open-brand": {
+          const brand = PHONE_BRANDS.find((b) => b.slug === action.brandSlug);
+          if (brand) {
+            setBrandSlug(brand.slug);
+            pendingScroll.current = "selector";
+          } else if (action.brandSlug === "accessoires") {
+            setBrandSlug("accessoires");
+            pendingScroll.current = "selector";
+          } else {
+            // Unknown / quote-only brand → just open the brand grid.
+            pendingScroll.current = "selector";
+          }
+          break;
         }
-        return;
+        case "open-accessory":
+          setBrandSlug("accessoires");
+          if (action.categorySlug) {
+            const cat = ACCESSORY_CATEGORIES.find((c) => c.slug === action.categorySlug);
+            if (cat) setAccessoryCatSlug(cat.slug);
+          }
+          pendingScroll.current = "selector";
+          break;
       }
-    }
-    check();
-    window.addEventListener("hashchange", check);
-    return () => window.removeEventListener("hashchange", check);
+    });
+    return off;
   }, []);
 
-  // ── Search input (always resets state) ────────────────────────────────────
+  // ── Search input (always resets state) ───────────────────────────────────
   function handleQueryChange(val: string) {
     setQuery(val);
     setBrandSlug(null);
     setAccessoryCatSlug(null);
     setSelectedModel(null);
   }
-  function handleClearQuery() { resetAll(); }
+  function handleClearQuery() { clearState(); }
 
-  // ── Brand grid clicks ─────────────────────────────────────────────────────
+  // ── Brand grid clicks (in-component) ─────────────────────────────────────
   function handleBrandClick(slug: string, kind: BrandKind, name: string) {
     if (kind === "quote") {
       window.open(whatsAppQuote(name), "_blank", "noopener,noreferrer");
@@ -132,55 +157,48 @@ export function ModelSearch() {
     setBrandSlug(slug);
     setAccessoryCatSlug(null);
     setSelectedModel(null);
-    setTimeout(() => stageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+    pendingScroll.current = "selector";
   }
 
-  // ── Accessory category click ─────────────────────────────────────────────
   function handleCategoryClick(slug: string) {
     setAccessoryCatSlug(slug);
     setSelectedModel(null);
-    setTimeout(() => stageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+    pendingScroll.current = "selector";
   }
 
-  // ── Model click ───────────────────────────────────────────────────────────
   function handleModelClick(model: ModelDef) {
     setSelectedModel(model);
-    setTimeout(() => detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+    pendingScroll.current = "detail";
   }
 
-  // ── Search-result click (jumps directly to the right state) ──────────────
   function handleSearchHitClick(hit: SearchHit) {
     setQuery("");
     if (hit.kind === "phone-model") {
       setBrandSlug(hit.brand.slug);
       setAccessoryCatSlug(null);
       setSelectedModel(hit.model);
-      setTimeout(() => detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
+      pendingScroll.current = "detail";
     } else if (hit.kind === "accessory-model") {
       setBrandSlug("accessoires");
       setAccessoryCatSlug(hit.category.slug);
       setSelectedModel(hit.model);
-      setTimeout(() => detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
+      pendingScroll.current = "detail";
     } else {
       setBrandSlug("accessoires");
       setAccessoryCatSlug(hit.category.slug);
       setSelectedModel(null);
-      setTimeout(() => stageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
+      pendingScroll.current = "selector";
     }
   }
 
-  // ── Back navigation ───────────────────────────────────────────────────────
-  function handleBackToBrands() { resetAll(); }
-  function handleBackToCategories() { setAccessoryCatSlug(null); setSelectedModel(null); }
-  function handleBackToModels() { setSelectedModel(null); }
+  function handleBackToBrands()     { clearState(); pendingScroll.current = "selector"; }
+  function handleBackToCategories() { setAccessoryCatSlug(null); setSelectedModel(null); pendingScroll.current = "selector"; }
+  function handleBackToModels()     { setSelectedModel(null); pendingScroll.current = "selector"; }
 
   // ── Step indicator ────────────────────────────────────────────────────────
   const activeStep = selectedModel ? 1 : 0;
 
-  // ── Breadcrumb label segments ─────────────────────────────────────────────
-  const brandName = brandSlug === "accessoires"
-    ? "Accessoires"
-    : phoneBrand?.name ?? "";
+  const brandName = brandSlug === "accessoires" ? "Accessoires" : phoneBrand?.name ?? "";
 
   const showTopBrands = !brandSlug && !isSearching;
   const showAccessoryCategories = brandSlug === "accessoires" && !accessoryCatSlug && !isSearching;
@@ -188,7 +206,6 @@ export function ModelSearch() {
   const showPhoneModels = !!phoneBrand && !selectedModel && !isSearching;
   const showAccessoryModels = brandSlug === "accessoires" && accessoryCat?.kind === "models" && !selectedModel && !isSearching;
 
-  // Search results
   const searchHits = isSearching ? searchAllItems(query) : [];
   const quoteMatches = isSearching
     ? QUOTE_BRANDS.filter((b) => b.name.toLowerCase().includes(query.toLowerCase()))
@@ -213,7 +230,6 @@ export function ModelSearch() {
           </p>
         </motion.div>
 
-        {/* Search bar */}
         <div className="mb-8">
           <div className="relative">
             <input
@@ -238,7 +254,6 @@ export function ModelSearch() {
           </div>
         </div>
 
-        {/* Step indicator */}
         <div className="flex items-center justify-center gap-0 mb-10">
           {STEPS.map((step, idx) => (
             <div key={step} className="flex items-center">
@@ -265,11 +280,9 @@ export function ModelSearch() {
           ))}
         </div>
 
-        {/* Stage */}
         <div ref={stageRef}>
         <AnimatePresence mode="wait">
 
-          {/* SEARCH RESULTS */}
           {isSearching && (
             <motion.div
               key="search"
@@ -290,7 +303,6 @@ export function ModelSearch() {
                 </div>
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                  {/* Quote brands */}
                   {quoteMatches.map((b) => (
                     <motion.button
                       key={`q-${b.slug}`}
@@ -308,7 +320,6 @@ export function ModelSearch() {
                     </motion.button>
                   ))}
 
-                  {/* Hits */}
                   {searchHits.map((hit, i) => {
                     const label =
                       hit.kind === "phone-model" ? hit.model.name :
@@ -345,7 +356,6 @@ export function ModelSearch() {
             </motion.div>
           )}
 
-          {/* TOP BRANDS */}
           {showTopBrands && (
             <motion.div
               key="brands"
@@ -379,7 +389,6 @@ export function ModelSearch() {
             </motion.div>
           )}
 
-          {/* ACCESSORY CATEGORIES */}
           {showAccessoryCategories && (
             <motion.div
               key="cats"
@@ -416,7 +425,6 @@ export function ModelSearch() {
             </motion.div>
           )}
 
-          {/* PHONE MODELS */}
           {showPhoneModels && phoneBrand && (
             <motion.div
               key={`pm-${phoneBrand.slug}`}
@@ -438,7 +446,6 @@ export function ModelSearch() {
             </motion.div>
           )}
 
-          {/* ACCESSORY MODELS */}
           {showAccessoryModels && accessoryCat?.kind === "models" && (
             <motion.div
               key={`am-${accessoryCat.slug}`}
@@ -463,7 +470,6 @@ export function ModelSearch() {
             </motion.div>
           )}
 
-          {/* PRODUCTS (Chargeurs / Câbles) */}
           {showProducts && accessoryCat?.kind === "products" && (
             <motion.div
               key={`prod-${accessoryCat.slug}`}
@@ -490,7 +496,6 @@ export function ModelSearch() {
         </AnimatePresence>
         </div>
 
-        {/* REPAIR DETAIL */}
         <AnimatePresence>
           {selectedModel && (
             <motion.div
@@ -498,7 +503,7 @@ export function ModelSearch() {
               key={`repairs-${selectedModel.id}`}
               initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16 }}
               transition={{ duration: 0.4, delay: 0.05 }}
-              className="mt-10 pt-8 border-t border-gray-100"
+              className="mt-10 pt-8 border-t border-gray-100 scroll-mt-24"
             >
               <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                 <button onClick={handleBackToModels} className="flex items-center gap-1 hover:text-primary transition-colors">
@@ -562,7 +567,6 @@ export function ModelSearch() {
   );
 }
 
-// ── Sub-components ──────────────────────────────────────────────────────────
 function ModelCard({
   name, sub, icon: Icon, onClick,
 }: { name: string; sub: string | null; icon: React.ElementType; onClick: () => void }) {

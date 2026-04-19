@@ -1,0 +1,196 @@
+Modify ONLY navigation behavior and selector state handling. Do NOT redesign UI.
+
+GOAL
+Fix two issues:
+1) Wrong scroll after selecting a model (lands near Services instead of repair details)
+2) Selector state persists after navigation (navbar, footer, buttons)
+
+The app is a React SPA. Do NOT use full page reload.
+
+--------------------------------------------------
+1. FIX SCROLL AFTER MODEL SELECTION
+--------------------------------------------------
+
+Current:
+- User selects model (e.g. iPhone 13)
+- Repair section opens
+- Page scrolls to wrong position (near Services)
+
+Required:
+- After selecting ANY model:
+  → scroll ONLY to repair detail section
+  → focus stays on “Réparations disponibles”
+  → no second scroll or override
+
+Check:
+- handleModelClick
+- handleSearchHitClick
+- detailRef usage
+- remove any conflicting scroll triggers
+
+--------------------------------------------------
+2. GLOBAL RESET RULE (CRITICAL)
+--------------------------------------------------
+
+Any MAIN navigation must reset selector state.
+
+Selector state =:
+- query
+- brandSlug
+- accessoryCatSlug
+- selectedModel
+
+Reset means:
+- clear all values above
+
+--------------------------------------------------
+3. DEFINE NAVIGATION TYPES
+--------------------------------------------------
+
+A) STANDARD NAVIGATION (Behavior B)
+
+Applies to:
+- Services
+- À propos
+- Réservation
+- Footer links
+- Section buttons (booking, etc)
+
+Must:
+1. reset selector state
+2. scroll to target section
+
+---
+
+B) REPARATIONS ROOT
+
+Applies to:
+- navbar “Réparations”
+- footer “Réparations”
+
+Must:
+1. reset selector
+2. scroll to #selector
+3. show initial brand grid
+
+---
+
+C) REPARATIONS SUBMENU (Behavior C)
+
+Applies to:
+- Réparations > iPhone
+- Samsung
+- Huawei
+- Redmi
+- Pixel
+- Xiaomi
+
+Must:
+1. reset selector
+2. open selected brand
+3. scroll to selector
+4. show model grid (NO old model selected)
+
+---
+
+D) ACCESSOIRES SUBMENU (Behavior C)
+
+Applies to:
+- AirPods
+- Apple Watch
+- Samsung Watch
+- Chargeurs
+- Câbles
+
+Must:
+1. reset selector
+2. open accessoires
+3. open category
+4. scroll to selector
+5. NO previous state
+
+---
+
+E) HOME / LOGO
+
+Must:
+1. reset selector
+2. scroll to top
+
+---
+
+F) CTA: “Choisir mon modèle”
+
+Must:
+1. reset selector
+2. scroll to selector
+3. show initial state
+
+--------------------------------------------------
+4. IMPLEMENTATION STRATEGY
+--------------------------------------------------
+
+Do NOT rely on hash/anchor only.
+
+Implement a centralized selector control system.
+
+Example approach:
+
+- window event dispatch OR shared state handler
+
+Actions:
+- selector:reset
+- selector:open-brand
+- selector:open-accessory
+
+ModelSearch must listen and update state accordingly.
+
+--------------------------------------------------
+5. IMPORTANT EDGE CASE
+--------------------------------------------------
+
+Clicking same menu twice must still reset.
+
+Example:
+- user already in iPhone flow
+- clicks “Réparations > iPhone” again
+
+→ must restart clean
+
+--------------------------------------------------
+6. KEEP DESIGN UNCHANGED
+--------------------------------------------------
+
+Do NOT modify:
+- navbar UI
+- dropdowns
+- layout
+- styling
+- spacing
+
+Only modify:
+- state handling
+- navigation behavior
+- scroll logic
+
+--------------------------------------------------
+7. FILES TO UPDATE
+--------------------------------------------------
+
+Likely:
+- model-search.tsx
+- navbar.tsx
+- footer.tsx
+- services.tsx
+- hero.tsx (if CTA exists)
+
+--------------------------------------------------
+8. OUTPUT
+--------------------------------------------------
+
+Return ONLY:
+- updated navigation logic
+- selector reset logic
+- scroll fix
+
+Do NOT rewrite full project.
