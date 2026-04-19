@@ -86,22 +86,44 @@ export function ModelSearch() {
   // guarantee a single, layout-correct final scroll for model selection.
   
   // ── Single, authoritative scroll after model selection ──────────────────
-  // The model grid collapses on selection, the page height shrinks, and the
-  // browser keeps the previous scrollY → viewport ends up near "Nos services"
-  // even though the detail block is rendered above it. We avoid that by
-  // scrolling to a STABLE anchor placed right before the detail block (it is
-  // NOT inside the animated container, so it exists in the DOM unconditionally
-  // and at a fixed layout position). scroll-margin-top compensates for the
-  // fixed header.
+  // The model grid is wrapped in <AnimatePresence mode="wait">. On selection
+  // it EXITS over ~300ms before the detail block enters; during the exit the
+  // page height is still the pre-collapse height. Scrolling immediately
+  // therefore measures the wrong Y and the smooth scroll overshoots to the
+  // Services section. Strategy: schedule the scroll AFTER the exit completes,
+  // measured against a stable anchor that sits at the detail block's true
+  // post-collapse layout position. We use rAF for an early attempt + a
+  // setTimeout fallback past the exit animation duration to guarantee the
+  // viewport actually lands on "Réparations disponibles".
   useLayoutEffect(() => {
     if (!selectedModel) return;
     // Prevent focus-driven auto-scroll on the just-clicked card.
     (document.activeElement as HTMLElement | null)?.blur?.();
 
+    const HEADER = HEADER_OFFSET + 16;
+    let cancelled = false;
+
+    const doScroll = () => {
+      if (cancelled) return;
+      const el = repairsAnchorRef.current;
+      if (!el) return;
+      const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - HEADER);
+      window.scrollTo({ top, behavior: "smooth" });
+    };
+
+    // 1) Early attempt (next paint) — works when no grid above is collapsing.
     const raf = requestAnimationFrame(() => {
-      repairsAnchorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      requestAnimationFrame(doScroll);
     });
-    return () => cancelAnimationFrame(raf);
+    // 2) Authoritative attempt — fires after the AnimatePresence exit
+    //    (~300ms) so the measured anchor Y reflects the final layout.
+    const t = setTimeout(doScroll, 380);
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+      clearTimeout(t);
+    };
   }, [selectedModel]);
 
   // ── Listen to centralised navigation events ──────────────────────────────
