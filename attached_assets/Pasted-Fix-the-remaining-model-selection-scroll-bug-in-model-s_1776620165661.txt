@@ -1,0 +1,41 @@
+Fix the remaining model-selection scroll bug in model-search.tsx.
+
+Observed behavior:
+- When I click an iPhone model, the page lands at the "Nos services" title
+- When I click a Samsung model, the page lands even lower, around the "Accessoires / Déplacement" cards
+- When I click AirPods / watch models, it lands between the last cards and the "Nos services" title
+- Chargeurs / câbles are fine because they use a different flow
+
+Important:
+This means the selectedModel scroll is not actually moving the viewport to the repair detail section.
+The viewport is mostly staying at its previous scroll position after the model grid collapses.
+
+This is NOT just an offset issue.
+This is a failed post-collapse scroll execution issue.
+
+What I need:
+After selecting ANY model (phone or accessory model), the viewport must always move to the TOP of:
+"Réparations disponibles"
+
+Technical requirements:
+1. Add a stable anchor immediately before the repair detail section
+2. Use a dedicated ref for that anchor
+3. Trigger the scroll only after the DOM has fully updated and the model grid collapse has completed
+4. Use a more reliable delayed post-render strategy:
+   - requestAnimationFrame + setTimeout fallback, or
+   - double requestAnimationFrame + forced measurement
+5. Do NOT rely on the current one-frame approach if it is not actually moving the viewport
+6. Add a debug-safe forced scroll using window.scrollTo if scrollIntoView is not enough
+7. Ensure only one scroll runs after model selection
+8. Do NOT change UI or redesign the page
+
+Most important:
+The page must not stay at the previous scroll position after the model grid disappears.
+It must explicitly move the viewport to the repair section.
+
+Expected result:
+- Click iPhone 15 Pro → viewport lands at "Réparations disponibles"
+- Click Samsung S22 → viewport lands at "Réparations disponibles"
+- Click AirPods 3 → viewport lands at "Réparations disponibles"
+
+Return only the code changes in model-search.tsx.

@@ -87,42 +87,54 @@ export function ModelSearch() {
   
   // ── Single, authoritative scroll after model selection ──────────────────
   // The model grid is wrapped in <AnimatePresence mode="wait">. On selection
-  // it EXITS over ~300ms before the detail block enters; during the exit the
-  // page height is still the pre-collapse height. Scrolling immediately
-  // therefore measures the wrong Y and the smooth scroll overshoots to the
-  // Services section. Strategy: schedule the scroll AFTER the exit completes,
-  // measured against a stable anchor that sits at the detail block's true
-  // post-collapse layout position. We use rAF for an early attempt + a
-  // setTimeout fallback past the exit animation duration to guarantee the
-  // viewport actually lands on "Réparations disponibles".
+  // it EXITS over ~300ms before being removed from the DOM. While it's still
+  // exiting, the stable anchor sits BELOW the grid → measuring its Y now
+  // overshoots, the browser smoothly scrolls past the final landing, and
+  // then the grid collapses leaving the viewport parked on Services.
+  //
+  // Fix: a SINGLE scroll, fired AFTER the exit animation completes, when the
+  // anchor's measured Y reflects the final post-collapse layout. Disable
+  // CSS scroll-anchoring on <html> for the duration so the browser doesn't
+  // try to "preserve visible content" and fight us.
   useLayoutEffect(() => {
     if (!selectedModel) return;
-    // Prevent focus-driven auto-scroll on the just-clicked card.
+
+    // Kill focus-driven auto-scroll on the just-clicked card.
     (document.activeElement as HTMLElement | null)?.blur?.();
 
+    // Temporarily disable scroll anchoring so our scrollTo wins.
+    const html = document.documentElement;
+    const prevAnchor = html.style.overflowAnchor;
+    html.style.overflowAnchor = "none";
+
     const HEADER = HEADER_OFFSET + 16;
-    let cancelled = false;
+    let done = false;
 
     const doScroll = () => {
-      if (cancelled) return;
+      if (done) return;
+      done = true;
       const el = repairsAnchorRef.current;
       if (!el) return;
-      const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - HEADER);
-      window.scrollTo({ top, behavior: "smooth" });
+      const rect = el.getBoundingClientRect();
+      const top = Math.max(0, rect.top + window.scrollY - HEADER);
+      // Two passes: instant lock to the final position so any in-flight
+      // browser scroll is killed, then smooth refinement to the same Y so
+      // the user perceives a single fluid motion to "Réparations disponibles".
+      window.scrollTo({ top, behavior: "auto" });
+      requestAnimationFrame(() => {
+        const r2 = el.getBoundingClientRect();
+        const top2 = Math.max(0, r2.top + window.scrollY - HEADER);
+        window.scrollTo({ top: top2, behavior: "smooth" });
+      });
     };
 
-    // 1) Early attempt (next paint) — works when no grid above is collapsing.
-    const raf = requestAnimationFrame(() => {
-      requestAnimationFrame(doScroll);
-    });
-    // 2) Authoritative attempt — fires after the AnimatePresence exit
-    //    (~300ms) so the measured anchor Y reflects the final layout.
-    const t = setTimeout(doScroll, 380);
+    // Fire AFTER the AnimatePresence (mode="wait") exit completes (~300ms).
+    const t = setTimeout(doScroll, 360);
 
     return () => {
-      cancelled = true;
-      cancelAnimationFrame(raf);
+      done = true;
       clearTimeout(t);
+      html.style.overflowAnchor = prevAnchor;
     };
   }, [selectedModel]);
 
