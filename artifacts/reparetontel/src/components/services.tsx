@@ -17,18 +17,18 @@ const SERVICE_CARDS = [
     href: "#selector",
   },
   {
-    icon: MapPin,
-    title: "Déplacement",
-    items: ["Marseille & alentours", "À domicile", "Au bureau", "Au café / restaurant"],
-    cta: "Nous contacter",
-    href: "#booking",
-  },
-  {
     icon: Package,
     title: "Accessoires",
     items: ["Apple Watch", "Galaxy Watch", "AirPods", "Chargeurs", "Câbles"],
     cta: "Voir les accessoires",
     href: "#accessoires",
+  },
+  {
+    icon: MapPin,
+    title: "Déplacement",
+    items: ["Marseille & alentours", "À domicile", "Au bureau", "Au café / restaurant"],
+    cta: "Nous contacter",
+    href: "#booking",
   },
 ];
 

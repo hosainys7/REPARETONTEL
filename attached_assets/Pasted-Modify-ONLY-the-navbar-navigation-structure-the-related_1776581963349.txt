@@ -1,0 +1,288 @@
+Modify ONLY the navbar navigation structure, the related selector entry behavior, and the order/content emphasis of the Services section. Do NOT redesign the whole website and do NOT rewrite unrelated parts.
+
+GOAL
+Upgrade the navigation into a cleaner, more professional structure with attractive dropdown menus.
+
+The navbar should become:
+
+- Accueil
+- Réparations
+  - iPhone
+  - Samsung
+  - Huawei
+  - Redmi
+  - Google Pixel
+  - Xiaomi
+- Accessoires
+  - Apple Watch
+  - Samsung Galaxy Watch
+  - AirPods
+  - Chargeurs
+  - Câbles
+- Services
+- À propos
+- Réservation
+
+IMPORTANT
+This is not just text replacement.
+I want:
+1. a visually attractive desktop dropdown / mega-menu experience
+2. clean mobile behavior
+3. smart navigation targets that connect to the existing selector flow
+4. no broken links
+5. the site to keep its premium Apple-like design language
+
+--------------------------------------------------
+1. REBUILD NAVBAR STRUCTURE
+--------------------------------------------------
+
+Update the current navbar so it contains:
+
+- Accueil
+- Réparations
+- Accessoires
+- Services
+- À propos
+- Réservation
+
+Remove the current standalone top-level brand links from the navbar.
+Do NOT show iPhone / Samsung / etc directly as flat navbar items.
+They must appear inside dropdown menus.
+
+--------------------------------------------------
+2. CREATE A DESKTOP DROPDOWN / MEGA MENU FOR “RÉPARATIONS”
+--------------------------------------------------
+
+The “Réparations” item must open an attractive dropdown or compact mega-menu on desktop hover and/or click.
+
+Menu content:
+- iPhone
+- Samsung
+- Huawei
+- Redmi
+- Google Pixel
+- Xiaomi
+
+DESIGN REQUIREMENTS
+The dropdown must feel:
+- premium
+- clean
+- modern
+- easy to scan
+- visually attractive when opened
+
+Style direction:
+- white panel
+- rounded corners
+- soft shadow
+- subtle border
+- good spacing
+- nice hover states
+- small icons optional
+- consistent with current site design
+
+Behavior:
+- clicking iPhone should take the user to the selector and open the iPhone path
+- clicking Samsung should take the user to the selector and open the Samsung path
+- clicking Huawei / Redmi / Google Pixel / Xiaomi should trigger their existing quote / selector behavior consistently
+- no dead anchors
+- no page reload
+
+--------------------------------------------------
+3. CREATE A DESKTOP DROPDOWN / MEGA MENU FOR “ACCESSOIRES”
+--------------------------------------------------
+
+The “Accessoires” item must also open an attractive dropdown or compact mega-menu on desktop hover and/or click.
+
+Menu content:
+- Apple Watch
+- Samsung Galaxy Watch
+- AirPods
+- Chargeurs
+- Câbles
+
+DESIGN REQUIREMENTS
+Use the same design language as the Réparations dropdown:
+- premium white panel
+- rounded corners
+- shadow
+- balanced spacing
+- attractive hover effect
+- smooth animation if appropriate
+
+Behavior:
+- clicking Apple Watch should take the user to the selector and open the accessories branch at Apple Watch
+- clicking Samsung Galaxy Watch should open the accessories branch at Samsung Galaxy Watch
+- clicking AirPods should open the accessories branch at AirPods
+- clicking Chargeurs should open the accessories branch at Chargeurs
+- clicking Câbles should open the accessories branch at Câbles
+
+--------------------------------------------------
+4. KEEP MOBILE NAVIGATION CLEAN
+--------------------------------------------------
+
+On mobile:
+- keep the hamburger menu
+- inside the mobile menu, Réparations and Accessoires should also feel structured and clear
+- do not create a cluttered mess
+
+You may implement one of these clean mobile approaches:
+- expandable accordion subsections
+or
+- indented submenu links
+
+Preferred:
+- accordion-style mobile menu for Réparations and Accessoires
+
+Mobile structure should be:
+
+Réparations
+  - iPhone
+  - Samsung
+  - Huawei
+  - Redmi
+  - Google Pixel
+  - Xiaomi
+
+Accessoires
+  - Apple Watch
+  - Samsung Galaxy Watch
+  - AirPods
+  - Chargeurs
+  - Câbles
+
+Must remain elegant and easy to tap.
+
+--------------------------------------------------
+5. CONNECT NAVBAR ITEMS TO THE EXISTING SELECTOR FLOW
+--------------------------------------------------
+
+This is very important.
+
+Navbar menu items must not just scroll randomly.
+They must connect intelligently to the current selector logic.
+
+Desired behavior:
+- clicking a Réparations submenu item should bring the user to the selector and preselect the correct phone brand
+- clicking an Accessoires submenu item should bring the user to the selector and preselect the accessories branch and correct category
+
+Examples:
+- Réparations > iPhone → selector opens on iPhone models
+- Réparations > Samsung → selector opens on Samsung models
+- Accessoires > AirPods → selector opens on Accessoires > AirPods
+- Accessoires > Chargeurs → selector opens on Accessoires > Chargeurs
+
+Use a clean implementation approach.
+Do not rely on broken plain anchors only.
+
+Possible approach:
+- URL hash + internal state sync
+- or query params
+- or shared selector open logic
+
+But keep it simple, maintainable, and compatible with the current app.
+
+--------------------------------------------------
+6. KEEP “ACCUEIL”, “SERVICES”, “À PROPOS”, “RÉSERVATION”
+--------------------------------------------------
+
+These should remain top-level items.
+
+Behavior:
+- Accueil → top of page
+- Services → services section
+- À propos → about section
+- Réservation → booking section
+
+Make sure their anchors/targets are valid and existing.
+
+--------------------------------------------------
+7. UPDATE THE SERVICES SECTION ORDER
+--------------------------------------------------
+
+In the “Nos services” section, reorder the service cards to this order:
+
+1. Réparation
+2. Types de réparations
+3. Accessoires
+4. Déplacement
+
+I want Accessoires to appear before Déplacement.
+
+Keep the existing section styling and card design.
+Only update order and target logic if needed.
+
+--------------------------------------------------
+8. UPDATE SERVICES SECTION BUTTON TARGETS
+--------------------------------------------------
+
+Ensure the cards lead to the correct place:
+
+- Réparation → opens / scrolls to selector and starts the phone-repair flow
+- Types de réparations → scrolls to the services/repair-types related section if still present, or to the most relevant section that explains repair types
+- Accessoires → opens / scrolls to selector and starts the accessories flow
+- Déplacement → contact-oriented action or relevant information anchor
+
+Do not leave dead buttons.
+
+--------------------------------------------------
+9. DROPDOWN UX QUALITY
+--------------------------------------------------
+
+The desktop dropdown experience must feel attractive when the user opens it.
+
+Please include:
+- subtle fade / slide animation
+- hover highlight on items
+- clear visual grouping
+- enough padding
+- no cramped text
+- good spacing between list items
+- polished alignment
+
+Optional but welcome:
+- a tiny icon per submenu item
+- a short muted descriptor line under the dropdown title
+- a slightly wider dropdown panel if needed
+
+But keep it elegant and not overdesigned.
+
+--------------------------------------------------
+10. KEEP DESIGN CONSISTENCY
+--------------------------------------------------
+
+Do NOT redesign the whole site.
+
+Keep:
+- current color palette
+- premium white / grey / blue style
+- existing typography feel
+- soft shadows
+- rounded corners
+- clean Apple-like minimalism
+
+The new dropdowns must look native to the existing design.
+
+--------------------------------------------------
+11. FILES MOST LIKELY TO CHANGE
+--------------------------------------------------
+
+This change will likely involve:
+- navbar.tsx
+- model-search.tsx
+- possibly home.tsx only if anchor IDs need cleanup
+- services.tsx if service card order/targets must be updated
+
+Do not rewrite unrelated files.
+
+--------------------------------------------------
+12. OUTPUT
+--------------------------------------------------
+
+Return only the modified code needed for:
+- navbar dropdown / mobile accordion navigation
+- selector-entry behavior for Réparations and Accessoires
+- services section order and target updates
+
+Do not regenerate the whole app.
+Do not break existing working logic.

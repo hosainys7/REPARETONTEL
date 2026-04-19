@@ -35,19 +35,34 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-lg mb-6">Réseaux sociaux</h4>
             <div className="flex flex-col gap-4">
-              <a href="#whatsapp" className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors">
+              <a
+                href="https://wa.me/33605557812"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors"
+              >
                 <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-[#25D366]">
                   <FaWhatsapp className="w-4 h-4" />
                 </div>
                 WhatsApp
               </a>
-              <a href="#tiktok" className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors">
+              <a
+                href="https://www.tiktok.com/@reparetontel13"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors"
+              >
                 <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
                   <FaTiktok className="w-4 h-4" />
                 </div>
                 TikTok
               </a>
-              <a href="#snapchat" className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors">
+              <a
+                href="https://www.snapchat.com/add/repare-tontel13"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors"
+              >
                 <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-[#FFFC00]">
                   <FaSnapchat className="w-4 h-4 text-black" />
                 </div>

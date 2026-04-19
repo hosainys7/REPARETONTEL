@@ -45,7 +45,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-6 flex justify-center"
+            className="mb-8 md:mb-10 flex justify-center"
           >
             <span className="inline-flex max-w-full items-center gap-2 py-2 px-5 rounded-full bg-black/45 backdrop-blur-md border border-white/20 text-[11px] md:text-xs font-semibold text-white tracking-[0.18em] uppercase text-center">
               <span className="relative flex h-2.5 w-2.5 shrink-0">
@@ -68,7 +68,7 @@ export function Hero() {
             className="font-bold text-white tracking-tight mb-6 uppercase text-balance"
           >
             <span className="block">INTERVENTION RAPIDE À MARSEILLE</span>
-            <span className="block">N’ATTENDEZ PLUS POUR RÉSERVER</span>
+            <span className="block mt-3 md:mt-4">N’ATTENDEZ PLUS POUR RÉSERVER</span>
           </motion.h1>
 
           <motion.p

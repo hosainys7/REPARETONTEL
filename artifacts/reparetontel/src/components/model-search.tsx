@@ -76,14 +76,36 @@ export function ModelSearch() {
     setTimeout(() => sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   }
 
-  // ── Handle external "open accessoires" trigger via #accessoires hash ────
+  // ── Handle external deep-link triggers via hash ──────────────────────────
   useEffect(() => {
     function check() {
       if (typeof window === "undefined") return;
-      if (window.location.hash === "#accessoires") {
+      const raw = window.location.hash.replace(/^#/, "");
+      if (!raw) return;
+
+      // #accessoires or #accessoires/<category-slug>
+      if (raw === "accessoires" || raw.startsWith("accessoires/")) {
+        const sub = raw.split("/")[1];
         resetAll();
         setBrandSlug("accessoires");
+        if (sub) {
+          const cat = ACCESSORY_CATEGORIES.find((c) => c.slug === sub);
+          if (cat) setAccessoryCatSlug(cat.slug);
+        }
         scrollToSelf();
+        return;
+      }
+
+      // #repairs/<phone-brand-slug>
+      if (raw.startsWith("repairs/")) {
+        const slug = raw.split("/")[1];
+        const brand = PHONE_BRANDS.find((b) => b.slug === slug);
+        if (brand) {
+          resetAll();
+          setBrandSlug(brand.slug);
+          scrollToSelf();
+        }
+        return;
       }
     }
     check();
