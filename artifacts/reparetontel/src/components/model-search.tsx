@@ -11,7 +11,7 @@ import {
   type ModelDef, type Product, type AccessoryCategoryDef, type SearchHit,
 } from "@/data/repairCatalog";
 import {
-  onSelectorNav, smoothScrollToEl, getDocOffsetTop, HEADER_OFFSET, type SelectorAction,
+  onSelectorNav, smoothScrollToEl, HEADER_OFFSET, type SelectorAction,
 } from "@/lib/selectorBus";
 
 type BrandKind = "phones" | "accessoires" | "quote";
@@ -58,10 +58,11 @@ export function ModelSearch() {
   const [selectedModel, setSelectedModel] = useState<ModelDef | null>(null);
   const [query, setQuery] = useState("");
 
-  const sectionRef = useRef<HTMLElement>(null);
-  const stageRef   = useRef<HTMLDivElement>(null);
-  const detailRef  = useRef<HTMLDivElement>(null);
-  const pendingScroll = useRef<ScrollTarget>(null);
+  const sectionRef        = useRef<HTMLElement>(null);
+  const stageRef          = useRef<HTMLDivElement>(null);
+  const detailRef         = useRef<HTMLDivElement>(null);
+  const repairsAnchorRef  = useRef<HTMLDivElement>(null);
+  const pendingScroll     = useRef<ScrollTarget>(null);
 
   const isSearching = query.trim().length > 0;
 
@@ -83,37 +84,24 @@ export function ModelSearch() {
   // ── Selector-level scroll (brand grid, categories, search, back) ────────
   // Detail-level scroll is handled separately in useLayoutEffect below to
   // guarantee a single, layout-correct final scroll for model selection.
-  useEffect(() => {
-    if (pendingScroll.current !== "selector") return;
-    pendingScroll.current = null;
-    requestAnimationFrame(() => {
-      smoothScrollToEl(sectionRef.current, HEADER_OFFSET);
-    });
-  }, [brandSlug, accessoryCatSlug, query]);
-
+  
   // ── Single, authoritative scroll after model selection ──────────────────
-  // Uses useLayoutEffect + double rAF + offsetTop chain (transform-immune)
-  // so the page lands exactly at the top of "Réparations disponibles",
-  // independent of Framer Motion animations or layout-shift timing.
+  // The model grid collapses on selection, the page height shrinks, and the
+  // browser keeps the previous scrollY → viewport ends up near "Nos services"
+  // even though the detail block is rendered above it. We avoid that by
+  // scrolling to a STABLE anchor placed right before the detail block (it is
+  // NOT inside the animated container, so it exists in the DOM unconditionally
+  // and at a fixed layout position). scroll-margin-top compensates for the
+  // fixed header.
   useLayoutEffect(() => {
     if (!selectedModel) return;
-    // Prevent the browser from auto-scrolling to keep the just-clicked card
-    // visible after re-render.
+    // Prevent focus-driven auto-scroll on the just-clicked card.
     (document.activeElement as HTMLElement | null)?.blur?.();
 
-    let raf2 = 0;
-    const raf1 = requestAnimationFrame(() => {
-      raf2 = requestAnimationFrame(() => {
-        const el = detailRef.current;
-        if (!el) return;
-        const top = Math.max(0, getDocOffsetTop(el) - HEADER_OFFSET - 16);
-        window.scrollTo({ top, behavior: "smooth" });
-      });
+    const raf = requestAnimationFrame(() => {
+      repairsAnchorRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-    return () => {
-      cancelAnimationFrame(raf1);
-      if (raf2) cancelAnimationFrame(raf2);
-    };
+    return () => cancelAnimationFrame(raf);
   }, [selectedModel]);
 
   // ── Listen to centralised navigation events ──────────────────────────────
@@ -128,20 +116,22 @@ export function ModelSearch() {
           pendingScroll.current = null;
           break;
         case "open-selector":
-          pendingScroll.current = "selector";
+          pendingScroll.current = null;
+          requestAnimationFrame(() => {
+            smoothScrollToEl(sectionRef.current, HEADER_OFFSET);
+          });
           break;
         case "open-brand": {
           const brand = PHONE_BRANDS.find((b) => b.slug === action.brandSlug);
           if (brand) {
             setBrandSlug(brand.slug);
-            pendingScroll.current = "selector";
           } else if (action.brandSlug === "accessoires") {
             setBrandSlug("accessoires");
-            pendingScroll.current = "selector";
-          } else {
-            // Unknown / quote-only brand → just open the brand grid.
-            pendingScroll.current = "selector";
           }
+
+          requestAnimationFrame(() => {
+            smoothScrollToEl(sectionRef.current, HEADER_OFFSET);
+          });
           break;
         }
         case "open-accessory":
@@ -150,7 +140,10 @@ export function ModelSearch() {
             const cat = ACCESSORY_CATEGORIES.find((c) => c.slug === action.categorySlug);
             if (cat) setAccessoryCatSlug(cat.slug);
           }
-          pendingScroll.current = "selector";
+
+          requestAnimationFrame(() => {
+            smoothScrollToEl(sectionRef.current, HEADER_OFFSET);
+          });
           break;
       }
     });
@@ -514,6 +507,16 @@ export function ModelSearch() {
         </AnimatePresence>
         </div>
 
+        {/* Stable scroll anchor — always mounted, sits right before the
+            (animated) repair detail block so scrollIntoView lands reliably
+            even when the model grid above collapses. */}
+        <div
+          ref={repairsAnchorRef}
+          aria-hidden="true"
+          className="scroll-mt-24"
+          style={{ scrollMarginTop: HEADER_OFFSET + 16 }}
+        />
+
         <AnimatePresence>
           {selectedModel && (
             <motion.div
@@ -552,7 +555,7 @@ export function ModelSearch() {
                         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold shrink-0 ${
                           repair.priceLabel === "Gratuit"
                             ? "bg-green-50 text-green-700 border border-green-200"
-                            : repair.priceLabel === "Sur demande"
+                            : repair.priceLabel === "Sur commande"
                             ? "bg-gray-100 text-muted-foreground"
                             : "bg-primary text-white shadow-sm"
                         }`}>
@@ -626,7 +629,7 @@ function ProductCard({ product }: { product: Product }) {
         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold shrink-0 ${
           product.price ? "bg-primary text-white shadow-sm" : "bg-gray-100 text-muted-foreground"
         }`}>
-          {product.price ?? "Sur demande"}
+          {product.price ?? "Sur commande"}
         </span>
       </div>
       <h4 className="font-bold text-sm text-foreground mb-1 leading-snug">{product.name}</h4>

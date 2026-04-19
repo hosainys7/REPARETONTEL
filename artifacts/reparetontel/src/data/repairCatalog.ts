@@ -64,7 +64,7 @@ const AIRPODS_REPAIRS: RepairDef[] = [
 function makeRepairs(defs: RepairDef[], prices: PriceMap): Repair[] {
   return defs.map((def) => ({
     ...def,
-    priceLabel: prices[def.type] ?? "Sur demande",
+    priceLabel: prices[def.type] ?? "Sur commande",
   }));
 }
 
@@ -77,18 +77,18 @@ function mkId(prefix: string, name: string): string {
 }
 
 // ── Phones ──────────────────────────────────────────────────────────────────
-function iphone(name: string, screen: string, battery: string, camera = "Sur demande"): ModelDef {
+function iphone(name: string, screen: string, battery: string, camera = "Sur commande"): ModelDef {
   return {
     id: mkId("iphone", name),
     name: `iPhone ${name}`,
     type: "phone",
     repairs: makeRepairs(PHONE_REPAIRS, {
+      "Diagnostic": "Gratuit",
       "Écran": screen,
       "Batterie": battery,
       "Caméra": camera,
       "Connecteur de charge": "35€",
-      "Vitre arrière": "Sur demande",
-      "Diagnostic": "Gratuit",
+      "Vitre arrière": "Sur commande",
     }),
   };
 }
@@ -96,72 +96,94 @@ function iphone(name: string, screen: string, battery: string, camera = "Sur dem
 type SamsungTier = "budget" | "mid" | "high" | "flagship";
 
 const SAMSUNG_TIER_PRICES: Record<SamsungTier, PriceMap> = {
-  budget: { "Écran": "39€", "Batterie": "25€", "Caméra": "35€", "Connecteur de charge": "29€", "Vitre arrière": "Sur demande", "Diagnostic": "Gratuit" },
-  mid:    { "Écran": "49€", "Batterie": "29€", "Caméra": "39€", "Connecteur de charge": "30€", "Vitre arrière": "Sur demande", "Diagnostic": "Gratuit" },
-  high:   { "Écran": "59€", "Batterie": "35€", "Caméra": "45€", "Connecteur de charge": "35€", "Vitre arrière": "Sur demande", "Diagnostic": "Gratuit" },
-  flagship: { "Écran": "Sur demande", "Batterie": "39€", "Caméra": "49€", "Connecteur de charge": "35€", "Vitre arrière": "Sur demande", "Diagnostic": "Gratuit" },
+  budget: { "Diagnostic": "Gratuit" , "Écran": "39€", "Batterie": "25€", "Caméra": "35€", "Connecteur de charge": "29€", "Vitre arrière": "Sur commande"},
+  mid:    { "Diagnostic": "Gratuit", "Écran": "49€", "Batterie": "29€", "Caméra": "39€", "Connecteur de charge": "30€", "Vitre arrière": "Sur commande"},
+  high:   { "Diagnostic": "Gratuit", "Écran": "59€", "Batterie": "35€", "Caméra": "45€", "Connecteur de charge": "35€", "Vitre arrière": "Sur commande"},
+  flagship: { "Diagnostic": "Gratuit", "Écran": "Sur commande", "Batterie": "39€", "Caméra": "49€", "Connecteur de charge": "35€", "Vitre arrière": "Sur commande",},
 };
 
-function samsung(name: string, tier: SamsungTier): ModelDef {
+function samsung(name: string, tier: SamsungTier, screen?: string): ModelDef {
   return {
     id: mkId("samsung", name),
     name,
     type: "phone",
-    repairs: makeRepairs(PHONE_REPAIRS, SAMSUNG_TIER_PRICES[tier]),
+    repairs: makeRepairs(PHONE_REPAIRS, {
+      ...SAMSUNG_TIER_PRICES[tier],
+      ...(screen ? { "Écran": screen } : {}),
+    }),
   };
 }
 
 const IPHONE_MODELS: ModelDef[] = [
-  iphone("7 / 8", "45€", "29€", "39€"), iphone("7+ / 8+", "49€", "29€", "39€"),
-  iphone("X", "69€", "35€", "45€"), iphone("11", "59€", "35€", "45€"),
-  iphone("11 Pro", "79€", "39€", "49€"), iphone("11 Pro Max", "89€", "39€", "49€"),
-  iphone("12", "79€", "39€", "49€"), iphone("12 mini", "69€", "39€", "45€"),
-  iphone("12 Pro", "89€", "39€", "55€"), iphone("12 Pro Max", "99€", "39€", "59€"),
-  iphone("13", "89€", "39€", "49€"), iphone("13 mini", "79€", "39€", "45€"),
-  iphone("13 Pro", "99€", "39€", "55€"), iphone("13 Pro Max", "109€", "39€", "59€"),
-  iphone("14", "99€", "39€", "55€"), iphone("14+", "109€", "39€", "55€"),
-  iphone("14 Pro", "119€", "39€", "65€"), iphone("14 Pro Max", "129€", "39€", "65€"),
-  iphone("15", "Sur demande", "39€"), iphone("15+", "Sur demande", "39€"),
-  iphone("15 Pro", "Sur demande", "39€"), iphone("15 Pro Max", "Sur demande", "39€"),
-  iphone("16", "Sur demande", "39€"), iphone("16e", "Sur demande", "39€"),
-  iphone("16+", "Sur demande", "39€"), iphone("16 Pro Max", "Sur demande", "39€"),
-  iphone("17", "Sur demande", "Sur demande"), iphone("17 Air", "Sur demande", "Sur demande"),
-  iphone("17 Pro Max", "Sur demande", "Sur demande"),
+  iphone("7 / 8", "29,90€", "29€", "39€"), iphone("7+ / 8+", "39,90€", "29€", "39€"),
+  iphone("X", "44,90€", "29€", "45€"), iphone("11", "49,90€", "35€", "45€"),
+  iphone("11 Pro", "54,90€", "35€", "49€"), iphone("11 Pro Max", "58,90€", "35€", "49€"),
+  iphone("12", "59,90€", "35€", "49€"), iphone("12 mini", "59,90€", "35€", "45€"),
+  iphone("12 Pro", "59,90€", "35€", "55€"), iphone("12 Pro Max", "79,90€", "35€", "59€"),
+  iphone("13", "69,90€", "39€", "49€"), iphone("13 mini", "69,90€", "39€", "45€"),
+  iphone("13 Pro", "79,90€", "39€", "55€"), iphone("13 Pro Max", "89,90€", "39€", "59€"),
+  iphone("14", "79,90€", "45€", "55€"), iphone("14+", "79,90€", "45€", "55€"),
+  iphone("14 Pro", "89,90€", "45€", "65€"), iphone("14 Pro Max", "99,90€", "45€", "65€"),
+  iphone("15", "89,90€", "49", "Sur commande"), iphone("15+", "89,90€", "49", "Sur commande"),
+  iphone("15 Pro", "99,90€", "49", "Sur commande"), iphone("15 Pro Max", "109,90€", "49", "Sur commande"),
+  iphone("16", "129,90€", "Sur commande"), iphone("16e", "109,90€", "Sur commande"),
+  iphone("16+", "Sur commande", "Sur commande"), iphone("16 Pro Max", "Sur commande", "Sur commande"),
+  iphone("17", "Sur commande", "Sur commande"), iphone("17 Air", "Sur commande", "Sur commande"),
+  iphone("17 Pro Max", "Sur commande", "Sur commande"),
 ];
 
 const SAMSUNG_MODELS: ModelDef[] = [
-  samsung("Samsung A10", "budget"), samsung("Samsung A11", "budget"),
-  samsung("Samsung A12", "budget"), samsung("Samsung A13", "budget"),
-  samsung("Samsung A14", "budget"), samsung("Samsung A15", "budget"),
-  samsung("Samsung A16", "budget"), samsung("Samsung A17", "budget"),
-  samsung("Samsung A20 / A20s / A20e", "budget"), samsung("Samsung A21s", "budget"),
-  samsung("Samsung A22 4G / A22 5G", "mid"), samsung("Samsung A23", "mid"),
-  samsung("Samsung A24", "mid"), samsung("Samsung A25", "mid"),
-  samsung("Samsung A26", "mid"), samsung("Samsung A30 / M30", "mid"),
-  samsung("Samsung A31", "mid"), samsung("Samsung A32 4G / A32 5G", "mid"),
-  samsung("Samsung A33", "mid"), samsung("Samsung A34", "mid"),
-  samsung("Samsung A35", "mid"), samsung("Samsung A36", "mid"),
-  samsung("Samsung A40", "mid"), samsung("Samsung A41", "mid"),
-  samsung("Samsung A42 5G", "mid"), samsung("Samsung A50", "mid"),
-  samsung("Samsung A51 4G / 5G", "mid"), samsung("Samsung A52", "mid"),
-  samsung("Samsung A53", "mid"), samsung("Samsung A54", "mid"),
-  samsung("Samsung A55", "mid"), samsung("Samsung A56", "high"),
-  samsung("Samsung A60", "high"), samsung("Samsung A70", "high"),
-  samsung("Samsung A71", "high"), samsung("Samsung A72", "high"),
-  samsung("Samsung A73", "high"), samsung("Samsung A80", "high"),
-  samsung("Samsung S8 / S9", "high"),
-  samsung("Samsung S10 / S10e / S10+ / S10 5G", "high"),
-  samsung("Samsung S20 / S20 FE / S20+ / S20 Ultra", "flagship"),
-  samsung("Samsung S21 / S21 FE / S21+ / S21 Ultra", "flagship"),
-  samsung("Samsung S22 / S22+ / S22 Ultra", "flagship"),
-  samsung("Samsung S23 / S23+ / S23 FE / S23 Ultra", "flagship"),
-  samsung("Samsung S24 / S24+ / S24 FE / S24 Ultra", "flagship"),
-  samsung("Samsung S25 / S25+ / S25 FE / S25 Ultra", "flagship"),
-];
+    samsung("Samsung A10", "budget", "49,90€"),
+    samsung("Samsung A11", "budget", "49,90€"),
+    samsung("Samsung A12", "budget", "49,90€"),
+    samsung("Samsung A13", "budget", "49,90€"),
+    samsung("Samsung A14", "budget", "49,90€"),
+    samsung("Samsung A15", "budget", "49,90€"),
+    samsung("Samsung A16", "budget", "49,90€"),
+    samsung("Samsung A17", "budget", "59,90€"),
+    samsung("Samsung A20 / A20s / A20e", "budget", "49,90€"),
+    samsung("Samsung A21s", "budget", "49,90€"),
+    samsung("Samsung A22 4G / A22 5G", "mid", "59,90€"),
+    samsung("Samsung A23", "mid", "59,90€"),
+    samsung("Samsung A24", "mid", "59,90€"),
+    samsung("Samsung A25", "mid", "59,90€"),
+    samsung("Samsung A26", "mid", "59,90€"),
+    samsung("Samsung A30 / M30", "mid", "59,90€"),
+    samsung("Samsung A31", "mid", "59,90€"),
+    samsung("Samsung A32 4G / A32 5G", "mid", "59,90€"),
+    samsung("Samsung A33", "mid", "59,90€"),
+    samsung("Samsung A34", "mid", "59,90€"),
+    samsung("Samsung A35", "mid", "59,90€"),
+    samsung("Samsung A36", "mid", "59,90€"),
+    samsung("Samsung A40", "mid", "49,90€"),
+    samsung("Samsung A41", "mid", "59,90€"),
+    samsung("Samsung A42 5G", "mid", "59,90€"),
+    samsung("Samsung A50", "mid", "59,90€"),
+    samsung("Samsung A51 4G / 5G", "mid", "59,90€"),
+    samsung("Samsung A52", "mid", "49,90€"),
+    samsung("Samsung A53", "mid", "69,90€"),
+    samsung("Samsung A54", "mid", "69,90€"),
+    samsung("Samsung A55", "mid", "79,90€"),
+    samsung("Samsung A56", "high", "79,90€"),
+    samsung("Samsung A60", "high", "79,90€"),
+    samsung("Samsung A70", "high", "79,90€"),
+    samsung("Samsung A71", "high", "79,90€"),
+    samsung("Samsung A72", "high", "79,90€"),
+    samsung("Samsung A73", "high", "79,90€"),
+    samsung("Samsung A80", "high", "89,90€"),
+    samsung("Samsung S8 / S9", "high", "Sur commande"),
+    samsung("Samsung S10 / S10e / S10+ / S10 5G", "high", "Sur commande"),
+    samsung("Samsung S20 / S20 FE / S20+ / S20 Ultra", "flagship", "Sur commande"),
+    samsung("Samsung S21 / S21 FE / S21+ / S21 Ultra", "flagship", "Sur commande"),
+    samsung("Samsung S22 / S22+ / S22 Ultra", "flagship", "Sur commande"),
+    samsung("Samsung S23 / S23+ / S23 FE / S23 Ultra", "flagship", "Sur commande"),
+    samsung("Samsung S24 / S24+ / S24 FE / S24 Ultra", "flagship", "Sur commande"),
+    samsung("Samsung S25 / S25+ / S25 FE / S25 Ultra", "flagship", "Sur commande"),
+  ];
 
 // ── Accessories ─────────────────────────────────────────────────────────────
-const WATCH_PRICES: PriceMap = { "Batterie": "Sur demande", "Diagnostic": "Gratuit", "Réinitialisation": "Sur demande" };
-const AIRPODS_PRICES: PriceMap = { "Batterie": "Sur demande", "Diagnostic": "Gratuit" };
+const WATCH_PRICES: PriceMap = { "Batterie": "Sur commande", "Diagnostic": "Gratuit", "Réinitialisation": "Sur commande" };
+const AIRPODS_PRICES: PriceMap = { "Batterie": "Sur commande", "Diagnostic": "Gratuit" };
 
 function watchModel(id: string, name: string): ModelDef {
   return { id, name, type: "accessory", repairs: makeRepairs(WATCH_REPAIRS, WATCH_PRICES) };
