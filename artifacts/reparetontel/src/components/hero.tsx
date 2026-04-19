@@ -20,7 +20,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative h-[100dvh] w-full overflow-hidden bg-black">
+    <section className="relative min-h-[100dvh] w-full overflow-hidden bg-black">
       <AnimatePresence mode="sync">
         <motion.div
           key={currentSlide}
@@ -39,14 +39,15 @@ export function Hero() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="relative z-20 container mx-auto h-full flex flex-col justify-center px-4 md:px-8">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="relative z-20 container mx-auto min-h-[100dvh] flex flex-col justify-center px-4 md:px-8 pt-28 md:pt-32 pb-24 md:pb-28">
+        <div className="max-w-3xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            className="mb-6 flex justify-center"
           >
-            <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-xs font-semibold text-white mb-8 tracking-widest uppercase">
+            <span className="inline-flex max-w-full items-center gap-2 py-2 px-5 rounded-full bg-black/45 backdrop-blur-md border border-white/20 text-[11px] md:text-xs font-semibold text-white tracking-[0.18em] uppercase text-center">
               <span className="relative flex h-2.5 w-2.5 shrink-0">
                 <motion.span
                   animate={{ scale: [1, 1.8, 1], opacity: [0.8, 0, 0.8] }}
@@ -55,7 +56,7 @@ export function Hero() {
                 />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500 shadow-[0_0_6px_2px_rgba(74,222,128,0.6)]" />
               </span>
-              Déplacement sur tout Marseille &amp; alentours
+              <span>DÉPLACEMENT SUR TOUT MARSEILLE &amp; ALENTOURS</span>
             </span>
           </motion.div>
 
@@ -63,10 +64,11 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6 uppercase"
+            style={{ fontSize: "clamp(2rem, 5.2vw, 3.75rem)", lineHeight: 1.08 }}
+            className="font-bold text-white tracking-tight mb-6 uppercase text-balance"
           >
-            intervention rapide à Marseille
-            N’ATTENDEZ PLUS POUR RÉSERVER
+            <span className="block">INTERVENTION RAPIDE À MARSEILLE</span>
+            <span className="block">N’ATTENDEZ PLUS POUR RÉSERVER</span>
           </motion.h1>
 
           <motion.p

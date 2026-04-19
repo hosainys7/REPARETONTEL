@@ -1,0 +1,92 @@
+Modify ONLY the Hero component responsiveness and spacing. Do NOT redesign the page and do NOT change unrelated sections.
+
+GOAL
+Make the Hero fully responsive so it looks correct on:
+- desktop at normal browser zoom (100%)
+- smaller laptop widths
+- mobile screens
+
+CURRENT PROBLEM
+At desktop zoom 100%, the Hero becomes visually crowded:
+- the title is too large
+- the navbar feels too close to the hero content
+- the badge, hook, icons, description, and buttons are too compressed vertically
+- the layout only looks acceptable when browser zoom is reduced, which is not correct
+
+This must be fixed at the layout level, not by relying on browser zoom.
+
+REQUIRED FIXES
+
+1. MAKE THE HERO TITLE FLUID
+Replace the current fixed title sizing with a fluid responsive size using CSS clamp.
+The title must scale smoothly across screen sizes instead of jumping to an oversized desktop size.
+
+Use a heading size strategy like:
+- fluid font sizing with clamp(...)
+- strong but controlled line-height
+- prevent oversized wrapping on desktop
+
+The title should remain:
+- uppercase
+- centered
+- bold
+- visually dominant
+But it must no longer overwhelm the layout on desktop.
+
+2. REDUCE THE CONTENT WIDTH SLIGHTLY
+The centered hero text block is currently too wide.
+Reduce the maximum content width so the title, hook, and description sit in a cleaner vertical column.
+
+This should improve:
+- text rhythm
+- readability
+- spacing under the navbar
+
+3. ADD CLEAR TOP SPACING BELOW THE NAVBAR
+The hero content needs more breathing room from the navbar.
+Add top padding to the hero content wrapper so the badge and title do not feel visually glued to the top navigation.
+
+This spacing must be responsive:
+- moderate on mobile
+- slightly larger on desktop
+
+4. MAKE HERO HEIGHT MORE FLEXIBLE
+Do not rely on a rigid height that causes content crowding.
+Use a more flexible min-height approach so the hero can breathe naturally across desktop and mobile.
+
+The hero should still feel full-screen, but not cramped.
+
+5. KEEP THE HERO CONTENT ORDER EXACTLY THE SAME
+Do NOT change the content order.
+Keep this exact order:
+1. badge
+2. main title
+3. hook text
+4. social icons
+5. description
+6. buttons
+7. slider dots
+
+6. KEEP THE EXISTING DESIGN
+Do NOT change:
+- text copy
+- colors
+- hero background image
+- buttons styling
+- social icon styling
+- animations
+- navbar structure
+
+Only improve:
+- responsive sizing
+- spacing
+- content width
+- vertical breathing room
+
+IMPLEMENTATION DIRECTION
+Apply the changes directly in Hero component classes.
+Use a single clean responsive solution, not multiple conflicting variants.
+
+OUTPUT
+Return ONLY the updated Hero component.
+Do not rewrite unrelated files.
