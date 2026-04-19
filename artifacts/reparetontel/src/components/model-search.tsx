@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, Smartphone, Watch, Headphones, Cable as CableIcon, Zap as ZapIcon,
@@ -11,7 +11,7 @@ import {
   type ModelDef, type Product, type AccessoryCategoryDef, type SearchHit,
 } from "@/data/repairCatalog";
 import {
-  onSelectorNav, smoothScrollToEl, HEADER_OFFSET, type SelectorAction,
+  onSelectorNav, smoothScrollToEl, getDocOffsetTop, HEADER_OFFSET, type SelectorAction,
 } from "@/lib/selectorBus";
 
 type BrandKind = "phones" | "accessoires" | "quote";
@@ -50,7 +50,7 @@ const REPAIR_ICONS: Record<string, React.ElementType> = {
 
 const STEPS = ["Modèle", "Réparation", "Réserver"];
 
-type ScrollTarget = "selector" | "detail" | null;
+type ScrollTarget = "selector" | null;
 
 export function ModelSearch() {
   const [brandSlug, setBrandSlug] = useState<string | null>(null);
@@ -80,22 +80,41 @@ export function ModelSearch() {
     setSelectedModel(null);
   }
 
-  // ── Centralised scroll: fires AFTER DOM updates from any state change ────
+  // ── Selector-level scroll (brand grid, categories, search, back) ────────
+  // Detail-level scroll is handled separately in useLayoutEffect below to
+  // guarantee a single, layout-correct final scroll for model selection.
   useEffect(() => {
-    if (!pendingScroll.current) return;
-    const target = pendingScroll.current;
+    if (pendingScroll.current !== "selector") return;
     pendingScroll.current = null;
-    // Wait two frames so AnimatePresence + layout settle before measuring.
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        if (target === "detail") {
-          smoothScrollToEl(detailRef.current ?? sectionRef.current, HEADER_OFFSET);
-        } else {
-          smoothScrollToEl(sectionRef.current, HEADER_OFFSET);
-        }
+      smoothScrollToEl(sectionRef.current, HEADER_OFFSET);
+    });
+  }, [brandSlug, accessoryCatSlug, query]);
+
+  // ── Single, authoritative scroll after model selection ──────────────────
+  // Uses useLayoutEffect + double rAF + offsetTop chain (transform-immune)
+  // so the page lands exactly at the top of "Réparations disponibles",
+  // independent of Framer Motion animations or layout-shift timing.
+  useLayoutEffect(() => {
+    if (!selectedModel) return;
+    // Prevent the browser from auto-scrolling to keep the just-clicked card
+    // visible after re-render.
+    (document.activeElement as HTMLElement | null)?.blur?.();
+
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        const el = detailRef.current;
+        if (!el) return;
+        const top = Math.max(0, getDocOffsetTop(el) - HEADER_OFFSET - 16);
+        window.scrollTo({ top, behavior: "smooth" });
       });
     });
-  }, [brandSlug, accessoryCatSlug, selectedModel, query]);
+    return () => {
+      cancelAnimationFrame(raf1);
+      if (raf2) cancelAnimationFrame(raf2);
+    };
+  }, [selectedModel]);
 
   // ── Listen to centralised navigation events ──────────────────────────────
   useEffect(() => {
@@ -167,8 +186,9 @@ export function ModelSearch() {
   }
 
   function handleModelClick(model: ModelDef) {
+    // No pendingScroll here — useLayoutEffect on selectedModel handles the
+    // single, authoritative scroll to the repair detail block.
     setSelectedModel(model);
-    pendingScroll.current = "detail";
   }
 
   function handleSearchHitClick(hit: SearchHit) {
@@ -177,12 +197,10 @@ export function ModelSearch() {
       setBrandSlug(hit.brand.slug);
       setAccessoryCatSlug(null);
       setSelectedModel(hit.model);
-      pendingScroll.current = "detail";
     } else if (hit.kind === "accessory-model") {
       setBrandSlug("accessoires");
       setAccessoryCatSlug(hit.category.slug);
       setSelectedModel(hit.model);
-      pendingScroll.current = "detail";
     } else {
       setBrandSlug("accessoires");
       setAccessoryCatSlug(hit.category.slug);
@@ -503,7 +521,7 @@ export function ModelSearch() {
               key={`repairs-${selectedModel.id}`}
               initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16 }}
               transition={{ duration: 0.4, delay: 0.05 }}
-              className="mt-10 pt-8 border-t border-gray-100 scroll-mt-24"
+              className="mt-10 pt-8 border-t border-gray-100"
             >
               <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                 <button onClick={handleBackToModels} className="flex items-center gap-1 hover:text-primary transition-colors">

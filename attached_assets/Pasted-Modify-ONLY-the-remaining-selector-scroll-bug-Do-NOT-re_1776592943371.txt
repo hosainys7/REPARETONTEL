@@ -1,0 +1,171 @@
+Modify ONLY the remaining selector scroll bug. Do NOT redesign UI and do NOT touch working reset/navigation behavior unless required for this fix.
+
+GOAL
+Fix the final wrong-scroll issue after selecting a phone model or accessory model.
+
+CURRENT ISSUE
+After selecting a model:
+- the repair detail opens correctly
+- but the page scroll lands slightly wrong
+
+Examples:
+- for phones, the page drifts toward the Services section
+- for Apple Watch / Samsung Watch, it lands near the end of the repair options instead of the top of the repair detail block
+
+This means the state is correct, but the final scroll positioning is still wrong.
+
+IMPORTANT DIAGNOSIS
+Treat this as a scroll orchestration problem caused by conflicting scroll systems:
+- CSS global smooth scrolling
+- JS smooth scrolling
+- possible hash/anchor side effects
+- focus-preservation on clicked buttons
+- Framer Motion / layout shift after mount
+
+--------------------------------------------------
+1. REMOVE GLOBAL SCROLL CONFLICTS
+--------------------------------------------------
+
+Audit the global CSS.
+
+If there is a rule like:
+* { scroll-behavior: smooth; }
+
+remove it from the universal selector.
+
+Do NOT apply smooth scroll globally on all elements.
+
+If needed:
+- set html { scroll-behavior: auto; }
+or
+- leave scrolling fully controlled by the JS helpers
+
+The app already has custom scroll logic, so global smooth scrolling must not compete with it.
+
+--------------------------------------------------
+2. USE EXACTLY ONE SCROLL METHOD FOR MODEL SELECTION
+--------------------------------------------------
+
+After selecting any model (phone or accessory model), there must be exactly ONE scroll action.
+
+Do NOT combine:
+- scrollIntoView
+- hash navigation
+- native anchor jumps
+- multiple timeouts
+- multiple rAF scrolls on the same interaction
+
+Choose one single final method.
+
+Preferred:
+Use window.scrollTo with a computed top offset:
+- target = repair detail section top
+- minus fixed header offset
+- minus a small extra spacing value
+
+Example intent:
+top = detailEl.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET - 16
+
+Then:
+window.scrollTo({ top, behavior: "smooth" })
+
+--------------------------------------------------
+3. SCROLL ONLY AFTER THE DETAIL SECTION IS ACTUALLY LAID OUT
+--------------------------------------------------
+
+Do not scroll too early.
+
+The repair detail block is mounted dynamically and may still be shifting because of:
+- React render timing
+- AnimatePresence / Framer Motion
+- layout changes when the model grid collapses and the repair detail appears
+
+Required:
+- run the final scroll only after the detail section is mounted and layout is stable
+- use one reliable post-render strategy
+- avoid duplicated delayed scroll calls
+
+A useLayoutEffect or a carefully controlled effect based on selectedModel is acceptable.
+
+But the final measured scroll position must be taken after the detail block exists and has its final layout.
+
+--------------------------------------------------
+4. PREVENT FOCUS-CAUSED EXTRA SCROLL
+--------------------------------------------------
+
+When a model card is clicked, the browser may try to preserve focus visibility and cause an additional unwanted scroll.
+
+Before applying the model selection state:
+- blur the currently active element if needed
+
+Example intent:
+(document.activeElement as HTMLElement | null)?.blur?.()
+
+Do the same for accessory model clicks if necessary.
+
+--------------------------------------------------
+5. REMOVE ANY HASH / ANCHOR SIDE EFFECTS DURING MODEL SELECTION
+--------------------------------------------------
+
+Choosing a model must not update a hash or trigger an anchor navigation.
+
+Model selection should be:
+- state update
+- then one controlled scroll to repair detail
+
+Nothing else.
+
+Check:
+- handleModelClick
+- handleSearchHitClick
+- any bus action accidentally firing a second target
+- any hidden anchor behavior
+
+--------------------------------------------------
+6. PHONE MODELS AND ACCESSORY MODELS MUST USE THE SAME CORRECT TOP ALIGNMENT
+--------------------------------------------------
+
+The final repair detail position should be aligned the same way for:
+- phones
+- Apple Watch / Samsung Watch
+- AirPods
+
+The page should land at the TOP of the “Réparations disponibles” section, not the bottom.
+
+--------------------------------------------------
+7. KEEP EVERYTHING ELSE
+--------------------------------------------------
+
+Do NOT change:
+- reset/navigation system that is already working
+- navbar dropdowns
+- footer navigation
+- selector logic
+- design
+- colors
+- layout styling
+
+Only fix the final wrong scroll behavior after model selection.
+
+--------------------------------------------------
+8. FILES MOST LIKELY TO CHANGE
+--------------------------------------------------
+
+Likely files:
+- model-search.tsx
+- src/lib/selectorBus.ts if needed
+- src/index.css only for global scroll-behavior cleanup
+
+Do not rewrite unrelated files.
+
+--------------------------------------------------
+9. OUTPUT
+--------------------------------------------------
+
+Return only the code changes needed to:
+- remove conflicting global smooth scroll
+- ensure one single final scroll method
+- fix top alignment for the repair detail section
+- prevent focus-caused extra scrolling
+
+Do not regenerate the whole app.

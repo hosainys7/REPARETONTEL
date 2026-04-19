@@ -19,12 +19,23 @@ export function onSelectorNav(handler: (action: SelectorAction) => void): () => 
   return () => window.removeEventListener(EVENT, fn);
 }
 
-export function smoothScrollToEl(el: HTMLElement | null, offset = HEADER_OFFSET) {
+// Walk the offsetParent chain so transforms (Framer Motion) don't skew the
+// measured Y position. getBoundingClientRect() includes transforms, which
+// causes the wrong final scroll target while animations are still running.
+export function getDocOffsetTop(el: HTMLElement): number {
+  let top = 0;
+  let node: HTMLElement | null = el;
+  while (node) {
+    top += node.offsetTop;
+    node = node.offsetParent as HTMLElement | null;
+  }
+  return top;
+}
+
+export function smoothScrollToEl(el: HTMLElement | null, offset = HEADER_OFFSET, extra = 0) {
   if (!el || typeof window === "undefined") return;
-  requestAnimationFrame(() => {
-    const top = window.scrollY + el.getBoundingClientRect().top - offset;
-    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
-  });
+  const top = Math.max(0, getDocOffsetTop(el) - offset - extra);
+  window.scrollTo({ top, behavior: "smooth" });
 }
 
 export function smoothScrollToHash(hash: string, offset = HEADER_OFFSET) {
@@ -34,7 +45,9 @@ export function smoothScrollToHash(hash: string, offset = HEADER_OFFSET) {
     return;
   }
   const el = document.querySelector(hash);
-  if (el instanceof HTMLElement) smoothScrollToEl(el, offset);
+  if (el instanceof HTMLElement) {
+    requestAnimationFrame(() => smoothScrollToEl(el, offset));
+  }
 }
 
 export function scrollToTop() {
