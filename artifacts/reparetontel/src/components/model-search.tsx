@@ -587,9 +587,9 @@ export function ModelSearch() {
                           <Icon className="w-5 h-5 text-primary" />
                         </div>
                         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold shrink-0 ${
-                          repair.priceLabel === "Gratuit"
+                          repair.priceLabel === "15€"
                             ? "bg-green-50 text-green-700 border border-green-200"
-                            : repair.priceLabel === "Sur commande"
+                            : repair.priceLabel === "Sur devis"
                             ? "bg-gray-100 text-muted-foreground"
                             : "bg-primary text-white shadow-sm"
                         }`}>
@@ -597,7 +597,16 @@ export function ModelSearch() {
                         </span>
                       </div>
                       <h4 className="font-bold text-sm text-foreground mb-1">{repair.type}</h4>
-                      <p className="text-xs text-muted-foreground leading-relaxed mb-2 flex-1">{repair.summary}</p>
+                      {(() => {
+                        const [question, ...rest] = repair.summary.split("\n");
+                        const solution = rest.join(" ");
+                        return (
+                          <>
+                            <p className="text-sm font-bold text-primary leading-snug mb-1">{question}</p>
+                            <p className="text-xs text-muted-foreground leading-relaxed mb-2 flex-1">{solution}</p>
+                          </>
+                        );
+                      })()}
                       <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground/60 mb-4">
                         <Clock className="w-3 h-3 shrink-0" />
                         {repair.duration}
@@ -663,7 +672,7 @@ function ProductCard({ product }: { product: Product }) {
         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold shrink-0 ${
           product.price ? "bg-primary text-white shadow-sm" : "bg-gray-100 text-muted-foreground"
         }`}>
-          {product.price ?? "Sur commande"}
+          {product.price ?? "Sur devis"}
         </span>
       </div>
       <h4 className="font-bold text-sm text-foreground mb-1 leading-snug">{product.name}</h4>

@@ -1,0 +1,59 @@
+TASK
+Update the repair card content and rendering in the Réparetontel app so each card shows a two-line description: a short symptom question on top, and a reassuring solution underneath.
+
+FILES TO EDIT
+1. artifacts/reparetontel/src/data/repairCatalog.ts
+2. artifacts/reparetontel/src/components/model-search.tsx
+
+PART 1 — Update the data (repairCatalog.ts)
+
+Replace the `summary` value of every entry in PHONE_REPAIRS, WATCH_REPAIRS, and AIRPODS_REPAIRS so each summary is a single string using "\n" between the two lines:
+  Format:  "Question ?\nSolution."
+  - Line 1: short symptom question, French sentence-case, ends with " ?" (space before "?")
+  - Line 2: reassuring solution sentence ending with a period
+  - Each line: 8–14 words, professional, warm, persuasive, no emojis, no superlatives
+  - Do NOT change the type, duration, or any other field
+  - Do NOT change the type definitions
+
+Use exactly these summaries:
+
+PHONE_REPAIRS
+  Écran:                 "Votre écran ne répond plus correctement ?\nRemplacement rapide pour retrouver un affichage fluide."
+  Batterie:              "Autonomie réduite ou batterie défectueuse ?\nNous remplaçons votre batterie pour une performance optimale."
+  Caméra:                "Photos floues ou objectif endommagé ?\nRéparation ou remplacement du module pour des clichés impeccables."
+  Connecteur de charge:  "Charge instable ou port abîmé ?\nNous remettons à neuf le port pour en finir avec les mauvais contacts."
+  Diagnostic:            "Panne inconnue ?\nOn vérifie et on identifie le problème en quelques minutes."
+
+WATCH_REPAIRS
+  Batterie:              "Montre qui ne tient plus la journée ?\nRemplacement de la batterie pour retrouver une autonomie complète."
+  Diagnostic:            "Comportement étrange ou panne inconnue ?\nAnalyse complète avant toute intervention."
+  Réinitialisation:      "Montre bloquée ou ralentie ?\nRemise à zéro complète et reconfiguration soignée."
+
+AIRPODS_REPAIRS
+  Batterie:              "Écouteurs ou boîtier qui ne tiennent plus la charge ?\nRemplacement de la batterie pour retrouver une autonomie d'origine."
+  Diagnostic:            "Son coupé, micro défaillant ou souci de connexion ?\nAnalyse complète pour identifier le problème."
+
+PART 2 — Update the rendering (model-search.tsx)
+
+Around line 599–600 the card currently renders:
+  <h4 className="font-bold text-sm text-foreground mb-1">{repair.type}</h4>
+  <p className="text-xs text-muted-foreground leading-relaxed mb-2 flex-1">{repair.summary}</p>
+
+Replace the <p> with logic that splits the summary on "\n" and renders the two lines with distinct styling:
+  - Line 1 (question): bold, uppercase visual weight via text-primary color, slightly larger than line 2, leading-snug, mb-1
+  - Line 2 (solution): text-xs text-muted-foreground leading-relaxed, mb-2, flex-1
+
+Example pattern (adapt to the file's existing style):
+  const [question, solution] = repair.summary.split("\n");
+  ...
+  <p className="text-sm font-bold text-primary leading-snug mb-1">{question}</p>
+  <p className="text-xs text-muted-foreground leading-relaxed mb-2 flex-1">{solution}</p>
+
+Keep the type label <h4>, the icon, the price pill, the duration row, and the WhatsApp button untouched.
+
+CONSTRAINTS
+- Only modify the two files listed.
+- Do not change pricing, model lists, accessory products, or any other section.
+- Do not refactor unrelated code.
+- Run typecheck after the change to confirm no TypeScript errors.
+- Verify visually that every repair card shows the question on top and the solution underneath, on every device type (phone, watch, AirPods).

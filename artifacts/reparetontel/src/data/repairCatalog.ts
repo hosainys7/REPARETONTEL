@@ -42,29 +42,28 @@ type PriceMap = Partial<Record<string, string>>;
 
 // ── Repair definitions, scoped per device type ──────────────────────────────
 const PHONE_REPAIRS: RepairDef[] = [
-  { type: "Écran", summary: "Écran fissuré ou tactile défectueux.", duration: "30–60 min" },
-  { type: "Batterie", summary: "Remplacement batterie pour retrouver une bonne autonomie.", duration: "20–30 min" },
-  { type: "Caméra", summary: "Réparation ou remplacement du module caméra.", duration: "30–45 min" },
-  { type: "Connecteur de charge", summary: "Réparation du port de charge et des problèmes de connexion.", duration: "30–45 min" },
-  { type: "Vitre arrière", summary: "Remplacement de la vitre arrière endommagée.", duration: "30–45 min" },
-  { type: "Diagnostic", summary: "Analyse rapide de la panne avant intervention.", duration: "15–20 min" },
+  { type: "Écran", summary: "Votre écran ne répond plus correctement ?\nRemplacement rapide pour retrouver un affichage fluide.", duration: "30–60 min" },
+  { type: "Batterie", summary: "Autonomie réduite ou batterie défectueuse ?\nNous remplaçons votre batterie pour une performance optimale.", duration: "20–30 min" },
+  { type: "Caméra", summary: "Photos floues ou objectif endommagé ?\nRéparation ou remplacement du module pour des clichés impeccables.", duration: "30–45 min" },
+  { type: "Connecteur de charge", summary: "Charge instable ou port abîmé ?\nNous remettons à neuf le port pour en finir avec les mauvais contacts.", duration: "30–45 min" },
+  { type: "Diagnostic", summary: "Panne inconnue ?\nOn vérifie et on identifie le problème en quelques minutes.", duration: "15–20 min" },
 ];
 
 const WATCH_REPAIRS: RepairDef[] = [
-  { type: "Batterie", summary: "Remplacement batterie pour retrouver une bonne autonomie.", duration: "30–45 min" },
-  { type: "Diagnostic", summary: "Analyse complète de la panne avant intervention.", duration: "15–20 min" },
-  { type: "Réinitialisation", summary: "Remise à zéro complète de la montre et reconfiguration.", duration: "15–30 min" },
+  { type: "Batterie", summary: "Montre qui ne tient plus la journée ?\nRemplacement de la batterie pour retrouver une autonomie complète.", duration: "30–45 min" },
+  { type: "Diagnostic", summary: "Comportement étrange ou panne inconnue ?\nAnalyse complète avant toute intervention.", duration: "15–20 min" },
+  { type: "Réinitialisation", summary: "Montre bloquée ou ralentie ?\nRemise à zéro complète et reconfiguration soignée.", duration: "15–30 min" },
 ];
 
 const AIRPODS_REPAIRS: RepairDef[] = [
-  { type: "Batterie", summary: "Autonomie réduite des écouteurs ou du boîtier.", duration: "30–45 min" },
-  { type: "Diagnostic", summary: "Analyse complète de la panne avant intervention.", duration: "15–20 min" },
+  { type: "Batterie", summary: "Écouteurs ou boîtier qui ne tiennent plus la charge ?\nRemplacement de la batterie pour retrouver une autonomie d'origine.", duration: "30–45 min" },
+  { type: "Diagnostic", summary: "Son coupé, micro défaillant ou souci de connexion ?\nAnalyse complète pour identifier le problème.", duration: "15–20 min" },
 ];
 
 function makeRepairs(defs: RepairDef[], prices: PriceMap): Repair[] {
   return defs.map((def) => ({
     ...def,
-    priceLabel: prices[def.type] ?? "Sur commande",
+    priceLabel: prices[def.type] ?? "Sur devis",
   }));
 }
 
@@ -77,18 +76,17 @@ function mkId(prefix: string, name: string): string {
 }
 
 // ── Phones ──────────────────────────────────────────────────────────────────
-function iphone(name: string, screen: string, battery: string, camera = "Sur commande"): ModelDef {
+function iphone(name: string, screen: string, battery: string, camera = "Sur devis"): ModelDef {
   return {
     id: mkId("iphone", name),
     name: `iPhone ${name}`,
     type: "phone",
     repairs: makeRepairs(PHONE_REPAIRS, {
-      "Diagnostic": "Gratuit",
+      "Diagnostic": "15€",
       "Écran": screen,
       "Batterie": battery,
       "Caméra": camera,
-      "Connecteur de charge": "35€",
-      "Vitre arrière": "Sur commande",
+      "Connecteur de charge": "Sur devis"
     }),
   };
 }
@@ -96,10 +94,10 @@ function iphone(name: string, screen: string, battery: string, camera = "Sur com
 type SamsungTier = "budget" | "mid" | "high" | "flagship";
 
 const SAMSUNG_TIER_PRICES: Record<SamsungTier, PriceMap> = {
-  budget: { "Diagnostic": "Gratuit" , "Écran": "39€", "Batterie": "25€", "Caméra": "35€", "Connecteur de charge": "29€", "Vitre arrière": "Sur commande"},
-  mid:    { "Diagnostic": "Gratuit", "Écran": "49€", "Batterie": "29€", "Caméra": "39€", "Connecteur de charge": "30€", "Vitre arrière": "Sur commande"},
-  high:   { "Diagnostic": "Gratuit", "Écran": "59€", "Batterie": "35€", "Caméra": "45€", "Connecteur de charge": "35€", "Vitre arrière": "Sur commande"},
-  flagship: { "Diagnostic": "Gratuit", "Écran": "Sur commande", "Batterie": "39€", "Caméra": "49€", "Connecteur de charge": "35€", "Vitre arrière": "Sur commande",},
+  budget: { "Diagnostic": "15€" , "Écran": "39€", "Batterie": "25€", "Caméra": "Sur devis", "Connecteur de charge": "Sur devis"},
+  mid:    { "Diagnostic": "15€", "Écran": "49€", "Batterie": "29€", "Caméra": "Sur devis", "Connecteur de charge": "Sur devis"},
+  high:   { "Diagnostic": "15€", "Écran": "59€", "Batterie": "35€", "Caméra": "Sur devis", "Connecteur de charge": "Sur devis"},
+  flagship: { "Diagnostic": "15€", "Écran": "Sur devis", "Batterie": "39€", "Caméra": "Sur devis", "Connecteur de charge": "Sur devis",},
 };
 
 function samsung(name: string, tier: SamsungTier, screen?: string): ModelDef {
@@ -115,21 +113,21 @@ function samsung(name: string, tier: SamsungTier, screen?: string): ModelDef {
 }
 
 const IPHONE_MODELS: ModelDef[] = [
-  iphone("7 / 8", "29,90€", "29€", "39€"), iphone("7+ / 8+", "39,90€", "29€", "39€"),
-  iphone("X", "44,90€", "29€", "45€"), iphone("11", "49,90€", "35€", "45€"),
-  iphone("11 Pro", "54,90€", "35€", "49€"), iphone("11 Pro Max", "58,90€", "35€", "49€"),
-  iphone("12", "59,90€", "35€", "49€"), iphone("12 mini", "59,90€", "35€", "45€"),
-  iphone("12 Pro", "59,90€", "35€", "55€"), iphone("12 Pro Max", "79,90€", "35€", "59€"),
-  iphone("13", "69,90€", "39€", "49€"), iphone("13 mini", "69,90€", "39€", "45€"),
-  iphone("13 Pro", "79,90€", "39€", "55€"), iphone("13 Pro Max", "89,90€", "39€", "59€"),
-  iphone("14", "79,90€", "45€", "55€"), iphone("14+", "79,90€", "45€", "55€"),
-  iphone("14 Pro", "89,90€", "45€", "65€"), iphone("14 Pro Max", "99,90€", "45€", "65€"),
-  iphone("15", "89,90€", "49", "Sur commande"), iphone("15+", "89,90€", "49", "Sur commande"),
-  iphone("15 Pro", "99,90€", "49", "Sur commande"), iphone("15 Pro Max", "109,90€", "49", "Sur commande"),
-  iphone("16", "129,90€", "Sur commande"), iphone("16e", "109,90€", "Sur commande"),
-  iphone("16+", "Sur commande", "Sur commande"), iphone("16 Pro Max", "Sur commande", "Sur commande"),
-  iphone("17", "Sur commande", "Sur commande"), iphone("17 Air", "Sur commande", "Sur commande"),
-  iphone("17 Pro Max", "Sur commande", "Sur commande"),
+  iphone("7 / 8", "29,90€", "29€"), iphone("7+ / 8+", "39,90€", "29€"),
+  iphone("X", "44,90€", "29€"), iphone("11", "49,90€", "35€"),
+  iphone("11 Pro", "54,90€", "35€"), iphone("11 Pro Max", "58,90€", "35€",),
+  iphone("12", "59,90€", "35€"), iphone("12 mini", "59,90€", "35€"),
+  iphone("12 Pro", "59,90€", "35€"), iphone("12 Pro Max", "79,90€", "35€"),
+  iphone("13", "69,90€", "39€"), iphone("13 mini", "69,90€", "39€"),
+  iphone("13 Pro", "79,90€", "39€"), iphone("13 Pro Max", "89,90€", "39€"),
+  iphone("14", "79,90€", "45€"), iphone("14+", "79,90€", "45€"),
+  iphone("14 Pro", "89,90€", "45€"), iphone("14 Pro Max", "99,90€", "45€"),
+  iphone("15", "89,90€", "49"), iphone("15+", "89,90€", "49"),
+  iphone("15 Pro", "99,90€", "49"), iphone("15 Pro Max", "109,90€", "49"),
+  iphone("16", "129,90€", "Sur devis"), iphone("16e", "109,90€", "Sur devis"),
+  iphone("16+", "Sur devis", "Sur devis"), iphone("16 Pro Max", "Sur devis", "Sur devis"),
+  iphone("17", "Sur devis", "Sur devis"), iphone("17 Air", "Sur devis", "Sur devis"),
+  iphone("17 Pro Max", "Sur devis", "Sur devis"),
 ];
 
 const SAMSUNG_MODELS: ModelDef[] = [
@@ -171,19 +169,19 @@ const SAMSUNG_MODELS: ModelDef[] = [
     samsung("Samsung A72", "high", "79,90€"),
     samsung("Samsung A73", "high", "79,90€"),
     samsung("Samsung A80", "high", "89,90€"),
-    samsung("Samsung S8 / S9", "high", "Sur commande"),
-    samsung("Samsung S10 / S10e / S10+ / S10 5G", "high", "Sur commande"),
-    samsung("Samsung S20 / S20 FE / S20+ / S20 Ultra", "flagship", "Sur commande"),
-    samsung("Samsung S21 / S21 FE / S21+ / S21 Ultra", "flagship", "Sur commande"),
-    samsung("Samsung S22 / S22+ / S22 Ultra", "flagship", "Sur commande"),
-    samsung("Samsung S23 / S23+ / S23 FE / S23 Ultra", "flagship", "Sur commande"),
-    samsung("Samsung S24 / S24+ / S24 FE / S24 Ultra", "flagship", "Sur commande"),
-    samsung("Samsung S25 / S25+ / S25 FE / S25 Ultra", "flagship", "Sur commande"),
+    samsung("Samsung S8 / S9", "high", "Sur devis"),
+    samsung("Samsung S10 / S10e / S10+ / S10 5G", "high", "Sur devis"),
+    samsung("Samsung S20 / S20 FE / S20+ / S20 Ultra", "flagship", "Sur devis"),
+    samsung("Samsung S21 / S21 FE / S21+ / S21 Ultra", "flagship", "Sur devis"),
+    samsung("Samsung S22 / S22+ / S22 Ultra", "flagship", "Sur devis"),
+    samsung("Samsung S23 / S23+ / S23 FE / S23 Ultra", "flagship", "Sur devis"),
+    samsung("Samsung S24 / S24+ / S24 FE / S24 Ultra", "flagship", "Sur devis"),
+    samsung("Samsung S25 / S25+ / S25 FE / S25 Ultra", "flagship", "Sur devis"),
   ];
 
 // ── Accessories ─────────────────────────────────────────────────────────────
-const WATCH_PRICES: PriceMap = { "Batterie": "Sur commande", "Diagnostic": "Gratuit", "Réinitialisation": "Sur commande" };
-const AIRPODS_PRICES: PriceMap = { "Batterie": "Sur commande", "Diagnostic": "Gratuit" };
+const WATCH_PRICES: PriceMap = { "Batterie": "Sur devis", "Diagnostic": "15€", "Réinitialisation": "Sur devis" };
+const AIRPODS_PRICES: PriceMap = { "Batterie": "Sur devis", "Diagnostic": "15€" };
 
 function watchModel(id: string, name: string): ModelDef {
   return { id, name, type: "accessory", repairs: makeRepairs(WATCH_REPAIRS, WATCH_PRICES) };
@@ -196,10 +194,10 @@ const APPLE_WATCH_MODELS: ModelDef[] = [watchModel("apple-watch", "Apple Watch")
 const GALAXY_WATCH_MODELS: ModelDef[] = [watchModel("galaxy-watch", "Samsung Galaxy Watch")];
 const AIRPODS_MODELS: ModelDef[] = [
   airpodsModel("airpods-1", "AirPods 1"),
+  airpodsModel("airpods-2", "AirPods 2"),
   airpodsModel("airpods-3", "AirPods 3"),
   airpodsModel("airpods-4", "AirPods 4"),
-  airpodsModel("airpods-pro", "AirPods Pro"),
-  airpodsModel("airpods-pro-3", "AirPods Pro 3"),
+  airpodsModel("airpods-pro", "AirPods Pro")
 ];
 
 const CHARGER_PRODUCTS: Product[] = [

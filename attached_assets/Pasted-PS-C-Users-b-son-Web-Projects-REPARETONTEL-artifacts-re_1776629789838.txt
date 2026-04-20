@@ -1,0 +1,69 @@
+PS C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel> artifacts\reparetontel\node_modules -ErrorAction
+artifacts\reparetontel\node_modules : The module 'artifacts' could not be loaded. For more 
+information, run 'Import-Module artifacts'.
+At line:1 char:1
++ artifacts\reparetontel\node_modules -ErrorAction
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (artifacts\reparetontel\node_modules:String) [],   
+   CommandNotFoundException
+    + FullyQualifiedErrorId : CouldNotAutoLoadModule
+
+PS C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel> 
+PS C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel> 
+PS C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel>
+PS C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel>
+PS C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel> cd C:\Users\b-son\Web Projects\REPARETONTEL
+Set-Location : A positional parameter cannot be found that accepts argument
+'Projects\REPARETONTEL'.
+At line:1 char:1
++ cd C:\Users\b-son\Web Projects\REPARETONTEL
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Set-Location], ParameterBindingException     
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLoca  
+   tionCommand
+
+PS C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel> cd C:\Users\b-son\"Web Projects"\REPARETONTEL
+PS C:\Users\b-son\Web Projects\REPARETONTEL> Remove-Item -Recurse -Force node_modules
+PS C:\Users\b-son\Web Projects\REPARETONTEL> Remove-Item -Recurse -Force artifacts\reparetontel\node_modules
+Remove-Item : Cannot find path 'C:\Users\b-son\Web 
+Projects\REPARETONTEL\artifacts\reparetontel\node_modules' because it does not exist.
+At line:1 char:1
++ Remove-Item -Recurse -Force artifacts\reparetontel\node_modules
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\b-son\...el\node_modules:String) [Remov  
+   e-Item], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.RemoveItemCommand       
+
+PS C:\Users\b-son\Web Projects\REPARETONTEL> pnpm install
+Scope: all 9 workspace projects
+ WARN  2 deprecated subdependencies found: @esbuild-kit/core-utils@3.3.2, @esbuild-kit/esm-loader@2.6.5
+Packages: +496
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 612, reused 482, downloaded 14, added 496, done
+node_modules/.pnpm/esbuild@0.25.12/node_modules/esbuild: Running postinstall script, done in 1.2s
+node_modules/.pnpm/esbuild@0.27.3/node_modules/esbuild: Running postinstall script, done in 1.2s
+node_modules/.pnpm/esbuild@0.18.20/node_modules/esbuild: Running postinstall script, done in 1.8s
+ WARN  Issues with peer dependencies found
+artifacts/api-server
+└─┬ esbuild-plugin-pino 2.3.3
+  └── ✕ unmet peer esbuild@">=0.25.0 <=0.25.8": found 0.27.3
+
+devDependencies:
++ prettier 3.8.1 (3.8.3 is available)
++ typescript 5.9.3 (6.0.3 is available)
+
+Done in 49s using pnpm v10.33.0
+PS C:\Users\b-son\Web Projects\REPARETONTEL> cd artifacts\reparetontel
+>> $env:PORT=5173
+>> $env:BASE_PATH="/"
+>> pnpm dev
+
+> @workspace/reparetontel@0.0.0 dev C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel
+> vite --config vite.config.ts --host 0.0.0.0
+
+
+  VITE v7.3.1  ready in 1007 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://172.20.10.2:5173/
+  ➜  press h + enter to show help

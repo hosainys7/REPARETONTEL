@@ -1,0 +1,33 @@
+   Directory: C:\Users\b-son\Web Projects\REPARETONTEL\attached_assets
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----         4/19/2026   9:28 PM          66394 EPCEE8267_1776459610905.JPG
+-a----         4/20/2026   6:17 PM          66394 EPCEE8267_1776460456492.JPG
+-a----         4/19/2026   9:28 PM           6921 Pasted-Create-a-clean-modern-professional-one-page-French-land_1776057779103.txt
+-a----         4/19/2026   9:28 PM           4678 Pasted-Design-and-build-a-premium-modern-Apple-inspired-one-pa_1776171842278.txt
+-a----         4/19/2026   9:28 PM           2031 Pasted-Fix-ONLY-the-social-icons-in-the-Hero-section-Do-NOT-mo_1776461275009.txt
+-a----         4/19/2026   9:28 PM           2017 Pasted-Fix-the-remaining-model-selection-scroll-bug-in-model-s_1776619567919.txt
+-a----         4/19/2026   9:28 PM           2017 Pasted-Fix-the-remaining-model-selection-scroll-bug-in-model-s_1776620165661.txt
+-a----         4/19/2026   9:28 PM           2877 Pasted-Fix-the-selector-logic-and-repair-system-ONLY-Do-NOT-re_1776421244126.txt
+-a----         4/19/2026   9:28 PM           4689 Pasted-modify-and-design-and-build-a-premium-modern-Apple-insp_1776171907029.txt
+-a----         4/19/2026   9:28 PM           3860 Pasted-Modify-ONLY-navigation-behavior-and-selector-state-hand_1776591876254.txt
+-a----         4/19/2026   9:28 PM           4217 Pasted-Modify-ONLY-specific-parts-of-the-current-app-Do-NOT-re_1776460785143.txt
+-a----         4/19/2026   9:28 PM           2730 Pasted-Modify-ONLY-the-existing-product-modal-behavior-Do-NOT-_1776173827820.txt
+-a----         4/19/2026   9:28 PM           3960 Pasted-Modify-ONLY-the-following-parts-of-the-current-website-_1776316877085.txt
+-a----         4/19/2026   9:28 PM           4322 Pasted-Modify-ONLY-the-following-parts-of-the-current-website-_1776459508769.txt
+-a----         4/19/2026   9:28 PM           2698 Pasted-Modify-ONLY-the-following-parts-of-the-existing-React-T_1776173110073.txt
+-a----         4/19/2026   9:28 PM           2759 Pasted-Modify-ONLY-the-Hero-component-responsiveness-and-spaci_1776576792807.txt
+-a----         4/19/2026   9:28 PM           2340 Pasted-Modify-ONLY-the-Hero-section-content-and-layout-Do-NOT-_1776461523543.txt
+-a----         4/19/2026   9:28 PM           8523 Pasted-Modify-ONLY-the-navbar-navigation-structure-the-related_1776581963349.txt
+-a----         4/19/2026   9:28 PM           9228 Pasted-Modify-ONLY-the-relevant-parts-of-the-current-website-D_1776402572923.txt
+-a----         4/19/2026   9:28 PM           5461 Pasted-Modify-ONLY-the-remaining-selector-scroll-bug-Do-NOT-re_1776592943371.txt
+-a----         4/19/2026   9:28 PM           7190 Pasted-Modify-ONLY-the-search-selector-flow-section-naming-but_1776405413019.txt
+-a----         4/19/2026   9:28 PM           4329 Pasted-Modify-ONLY-the-search-state-flow-logic-of-the-current-_1776404247067.txt
+-a----         4/19/2026   9:28 PM           7252 Pasted-Modify-ONLY-the-specific-sections-listed-below-Do-NOT-r_1776185294980.txt
+-a----         4/19/2026   9:28 PM           9915 Pasted-Modify-ONLY-the-specified-sections-of-the-existing-webs_1776186307919.txt
+-a----         4/19/2026   9:28 PM           4287 Pasted-Modify-ONLY-the-website-content-sections-listed-below-D_1776317269024.txt
+-a----         4/19/2026   9:28 PM          79667 reparetontel-logo_1776228426391.jpeg
+-a----         4/19/2026   9:28 PM          60430 UEFUE3661_1776459610905.JPG
+-a----         4/20/2026   6:18 PM          60430 UEFUE3661_1776460456493.JPG
