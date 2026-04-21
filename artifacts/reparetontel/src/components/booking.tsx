@@ -87,11 +87,18 @@ export function Booking() {
                 <FaWhatsapp className="w-10 h-10" />
               </div>
               <h3 className="text-2xl font-bold mb-4">La méthode la plus rapide</h3>
-              <p className="text-muted-foreground mb-8">
+              <p className="text-muted-foreground mb-4">
                 Envoyez-nous une photo de votre appareil ou décrivez le problème. Nous vous répondrons en quelques minutes avec un prix et un créneau.
               </p>
+              <p className="text-xl font-bold text-foreground tracking-wide mb-8">
+                +33 6 05 55 78 12
+              </p>
               <Button asChild size="lg" className="w-full rounded-full h-14 text-base font-semibold bg-[#25D366] hover:bg-[#20bd5a] text-white">
-                <a href="#whatsapp">
+                <a
+                  href="https://wa.me/33605557812?text=Bonjour%2C%20je%20souhaite%20obtenir%20un%20devis%20pour%20la%20r%C3%A9paration%20de%20mon%20appareil.%20Pouvez-vous%20m%27aider%20%3F"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Discuter sur WhatsApp
                 </a>
               </Button>
