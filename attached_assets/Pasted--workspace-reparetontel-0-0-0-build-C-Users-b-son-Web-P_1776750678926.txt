@@ -1,0 +1,144 @@
+
+> @workspace/reparetontel@0.0.0 build C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel
+> vite build --config vite.config.ts
+
+vite v7.3.1 building client environment for production...
+src/components/ui/tooltip.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+src/components/ui/label.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+✓ 2193 modules transformed.
+dist/public/index.html                                     0.76 kB │ gzip:   0.44 kB
+dist/public/assets/UEFUE3661_1776460456493-Cs0IM5EX.JPG   60.43 kB
+dist/public/assets/EPCEE8267_1776460456492-CzW0m4x1.JPG   66.39 kB
+dist/public/assets/index-CyVyVmu9.css                    116.89 kB │ gzip:  18.50 kB
+dist/public/assets/index-Cs3raHg2.js                     514.74 kB │ gzip: 162.98 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 13.92s
+PS C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel> $env:PORT=5173
+>> $env:BASE_PATH="/"
+>> pnpm serve
+
+> @workspace/reparetontel@0.0.0 serve C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel
+> vite preview --config vite.config.ts --host 0.0.0.0
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://172.20.10.2:5173/
+  ➜  press h + enter to show help
+
+ *  History restored 
+
+PS C:\Users\b-son\Web Projects\REPARETONTEL> $env:PORT=5173
+>> $env:BASE_PATH="/"
+>> pnpm serve
+'serve' is not recognized as an internal or external command,
+operable program or batch file.
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command "serve" not found
+
+Did you mean "pnpm tsserver"?
+PS C:\Users\b-son\Web Projects\REPARETONTEL> $env:PORT=5173
+>> $env:BASE_PATH="/"
+>> pnpm build
+
+> workspace@0.0.0 build C:\Users\b-son\Web Projects\REPARETONTEL
+> pnpm run typecheck && pnpm -r --if-present run build
+
+
+> workspace@0.0.0 typecheck C:\Users\b-son\Web Projects\REPARETONTEL
+> pnpm run typecheck:libs && pnpm -r --filter "./artifacts/**" --filter "./scripts" --if-present run typecheck
+
+
+> workspace@0.0.0 typecheck:libs C:\Users\b-son\Web Projects\REPARETONTEL
+> tsc --build
+
+Scope: 4 of 9 workspace projects
+artifacts/api-server typecheck$ tsc -p tsconfig.json --noEmit
+└─ Done in 3.8s
+artifacts/mockup-sandbox typecheck$ tsc -p tsconfig.json --noEmit
+└─ Done in 15.5s
+artifacts/reparetontel typecheck$ tsc -p tsconfig.json --noEmit
+│ src/data/repairCatalog.ts(1,31): error TS2307: Cannot find module '@assets/UEFUE3661_1776460456493.JPG' or its corresponding type decla…
+│ src/data/repairCatalog.ts(2,26): error TS2307: Cannot find module '@assets/EPCEE8267_1776460456492.JPG' or its corresponding type decla…
+└─ Failed in 15.9s at C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel
+scripts typecheck$ tsc -p tsconfig.json --noEmit
+└─ Done in 1.7s
+C:\Users\b-son\Web Projects\REPARETONTEL\artifacts\reparetontel:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/reparetontel@0.0.0 typecheck: `tsc -p tsconfig.json --noEmit`
+Exit status 2
+ ELIFECYCLE  Command failed with exit code 2.
+ ELIFECYCLE  Command failed with exit code 2.
+PS C:\Users\b-son\Web Projects\REPARETONTEL> $env:PORT=5173
+>> $env:BASE_PATH="/"
+>> pnpm serve
+'serve' is not recognized as an internal or external command,
+operable program or batch file.
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command "serve" not found
+
+Did you mean "pnpm tsserver"?
+PS C:\Users\b-son\Web Projects\REPARETONTEL>
+PS C:\Users\b-son\Web Projects\REPARETONTEL> $env:PORT=5173
+>> $env:BASE_PATH="/"
+>> pnpm build
+
+> workspace@0.0.0 build C:\Users\b-son\Web Projects\REPARETONTEL
+> pnpm run typecheck && pnpm -r --if-present run build
+
+
+> workspace@0.0.0 typecheck C:\Users\b-son\Web Projects\REPARETONTEL
+> pnpm run typecheck:libs && pnpm -r --filter "./artifacts/**" --filter "./scripts" --if-present run typecheck
+
+
+> workspace@0.0.0 typecheck:libs C:\Users\b-son\Web Projects\REPARETONTEL
+> tsc --build
+
+Scope: 4 of 9 workspace projects
+artifacts/api-server typecheck$ tsc -p tsconfig.json --noEmit
+└─ Done in 2.7s
+artifacts/mockup-sandbox typecheck$ tsc -p tsconfig.json --noEmit
+└─ Done in 14.4s
+artifacts/reparetontel typecheck$ tsc -p tsconfig.json --noEmit
+└─ Done in 15s
+scripts typecheck$ tsc -p tsconfig.json --noEmit
+└─ Done in 1.6s
+Scope: 8 of 9 workspace projects
+artifacts/mockup-sandbox build$ vite build
+│ vite v7.3.1 building client environment for production...
+│ transforming...
+│ ✓ 30 modules transformed.
+│ rendering chunks...
+│ computing gzip size...
+│ dist/index.html                   4.42 kB │ gzip:  1.23 kB
+│ dist/assets/index-BhVw-XfD.css   89.70 kB │ gzip: 14.88 kB
+│ dist/assets/index-ZTNvmnih.js   187.72 kB │ gzip: 59.51 kB
+│ ✓ built in 2.37s
+└─ Done in 3.9s
+artifacts/api-server build$ node ./build.mjs
+│   dist\index.mjs                   1.4mb
+│   dist\pino-worker.mjs           153.4kb
+│   dist\pino-file.mjs             142.1kb
+│   dist\pino-pretty.mjs           114.6kb                                                                                            
+│   dist\thread-stream-worker.mjs    7.3kb                                                                                            
+│   ...and 5 more output files...                                                                                                     
+│ Done in 1609ms                                                                                                                      
+└─ Done in 1.9s                                                                                                                       
+artifacts/reparetontel build$ vite build --config vite.config.ts
+[8 lines collapsed]                                                                                                                   
+│ dist/public/assets/UEFUE3661_1776460456493-Cs0IM5EX.JPG   60.43 kB
+│
+│ (!) Some chunks are larger than 500 kB after minification. Consider:
+│ - Using dynamic import() to code-split the application
+│ - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks  
+│ - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+│ dist/public/assets/EPCEE8267_1776460456492-CzW0m4x1.JPG   66.39 kB
+│ dist/public/assets/index-CyVyVmu9.css                    116.89 kB │ gzip:  18.50 kB
+│ dist/public/assets/index-Cs3raHg2.js                     514.74 kB │ gzip: 162.98 kB                                                
+│ ✓ built in 8.91s
+└─ Done in 10.1s
+PS C:\Users\b-son\Web Projects\REPARETONTEL> $env:PORT=5173
+>> $env:BASE_PATH="/"
+>> pnpm serve
+'serve' is not recognized as an internal or external command,
+operable program or batch file.
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command "serve" not found
