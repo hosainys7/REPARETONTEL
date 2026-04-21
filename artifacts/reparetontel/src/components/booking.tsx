@@ -7,22 +7,52 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
+const WEB3FORMS_ACCESS_KEY = "89540347-d86c-4288-90a4-c3aa04eb8004";
+
 export function Booking() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setIsSubmitting(true);
-    
-    setTimeout(() => {
-      setIsSubmitting(false);
-      (e.target as HTMLFormElement).reset();
-      toast({
-        title: "Demande envoyée !",
-        description: "Nous vous recontacterons très rapidement.",
+
+    try {
+      const formData = new FormData(form);
+      formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+      formData.append("subject", "Nouvelle demande – Réparetontel13");
+      formData.append("from_name", "Site Réparetontel13");
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
       });
-    }, 1000);
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        form.reset();
+        toast({
+          title: "Demande envoyée !",
+          description: "Nous vous recontacterons très rapidement.",
+        });
+      } else {
+        toast({
+          title: "Une erreur est survenue",
+          description: "Merci de réessayer ou de nous contacter directement sur WhatsApp.",
+          variant: "destructive",
+        });
+      }
+    } catch {
+      toast({
+        title: "Connexion impossible",
+        description: "Vérifiez votre connexion internet, ou contactez-nous sur WhatsApp.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -76,25 +106,40 @@ export function Booking() {
             >
               <h3 className="text-2xl font-bold mb-8 tracking-tight">Formulaire de contact</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Honeypot anti-spam (hidden from users, bots fill it) */}
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden="true"
+                />
+
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-sm font-semibold">Nom complet</Label>
-                  <Input id="name" required placeholder="Jean Dupont" className="h-12 bg-gray-50 border-gray-200 rounded-xl focus-visible:ring-primary/20" />
+                  <Input id="name" name="name" required placeholder="Jean Dupont" autoComplete="name" className="h-12 bg-gray-50 border-gray-200 rounded-xl focus-visible:ring-primary/20" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-sm font-semibold">Email</Label>
+                  <Input id="email" name="email" type="email" required placeholder="jean.dupont@email.com" autoComplete="email" className="h-12 bg-gray-50 border-gray-200 rounded-xl focus-visible:ring-primary/20" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="phone" className="text-sm font-semibold">Téléphone</Label>
-                  <Input id="phone" type="tel" required placeholder="06 12 34 56 78" className="h-12 bg-gray-50 border-gray-200 rounded-xl focus-visible:ring-primary/20" />
+                  <Input id="phone" name="phone" type="tel" required placeholder="06 12 34 56 78" autoComplete="tel" className="h-12 bg-gray-50 border-gray-200 rounded-xl focus-visible:ring-primary/20" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="message" className="text-sm font-semibold">Message ou description</Label>
-                  <Textarea 
-                    id="message" 
-                    required 
-                    placeholder="Bonjour, je souhaite remplacer l'écran de mon..." 
+                  <Textarea
+                    id="message"
+                    name="message"
+                    required
+                    placeholder="Bonjour, je souhaite remplacer l'écran de mon..."
                     className="min-h-[120px] bg-gray-50 border-gray-200 rounded-xl resize-none focus-visible:ring-primary/20 p-4"
                   />
                 </div>
                 <Button type="submit" size="lg" className="w-full h-14 rounded-full text-base font-semibold" disabled={isSubmitting}>
-                  {isSubmitting ? "Envoi..." : "Envoyer la demande"}
+                  {isSubmitting ? "Envoi en cours..." : "Envoyer la demande"}
                 </Button>
               </form>
             </motion.div>
