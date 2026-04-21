@@ -587,11 +587,9 @@ export function ModelSearch() {
                           <Icon className="w-5 h-5 text-primary" />
                         </div>
                         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold shrink-0 ${
-                          repair.priceLabel === "15€"
-                            ? "bg-green-50 text-green-700 border border-green-200"
-                            : repair.priceLabel === "Sur devis"
+                          repair.priceLabel === "Sur devis"
                             ? "bg-gray-100 text-muted-foreground"
-                            : "bg-primary text-white shadow-sm"
+                            : "bg-green-600 text-white shadow-sm"
                         }`}>
                           {repair.priceLabel}
                         </span>
@@ -670,7 +668,7 @@ function ProductCard({ product }: { product: Product }) {
           </div>
         )}
         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold shrink-0 ${
-          product.price ? "bg-primary text-white shadow-sm" : "bg-gray-100 text-muted-foreground"
+          product.price ? "bg-green-600 text-white shadow-sm" : "bg-gray-100 text-muted-foreground"
         }`}>
           {product.price ?? "Sur devis"}
         </span>
