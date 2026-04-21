@@ -589,7 +589,7 @@ export function ModelSearch() {
                         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold shrink-0 ${
                           repair.priceLabel === "Sur devis"
                             ? "bg-gray-100 text-muted-foreground"
-                            : "bg-green-600 text-white shadow-sm"
+                            : "bg-green-50 text-green-700 border border-green-200"
                         }`}>
                           {repair.priceLabel}
                         </span>
@@ -668,7 +668,7 @@ function ProductCard({ product }: { product: Product }) {
           </div>
         )}
         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold shrink-0 ${
-          product.price ? "bg-green-600 text-white shadow-sm" : "bg-gray-100 text-muted-foreground"
+          product.price ? "bg-green-50 text-green-700 border border-green-200" : "bg-gray-100 text-muted-foreground"
         }`}>
           {product.price ?? "Sur devis"}
         </span>
