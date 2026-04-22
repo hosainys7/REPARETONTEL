@@ -60,6 +60,24 @@ const AIRPODS_REPAIRS: RepairDef[] = [
   { type: "Diagnostic", summary: "Son coupé, micro défaillant ou souci de connexion ?\nAnalyse complète pour identifier le problème.", duration: "15–20 min" },
 ];
 
+        const CONSOLE_REPAIRS: RepairDef[] = [
+          {
+            type: "HDMI",
+            summary: "Port HDMI endommagé ou plus d’image à l’écran ?\nRéparation soignée pour retrouver un affichage normal.",
+            duration: "30–45 min",
+          },
+          {
+            type: "Nettoyage",
+            summary: "Console bruyante ou qui chauffe anormalement ?\nNettoyage complet pour améliorer le fonctionnement.",
+            duration: "30–45 min",
+          },
+          {
+            type: "Bloc optique complet",
+            summary: "Jeux non lus ou lecteur défectueux ?\nRemplacement complet sur devis.",
+            duration: "30–45 min",
+          },
+        ];
+    
 function makeRepairs(defs: RepairDef[], prices: PriceMap): Repair[] {
   return defs.map((def) => ({
     ...def,
@@ -182,12 +200,24 @@ const SAMSUNG_MODELS: ModelDef[] = [
 // ── Accessories ─────────────────────────────────────────────────────────────
 const WATCH_PRICES: PriceMap = { "Batterie": "Sur devis", "Diagnostic": "15€", "Réinitialisation": "Sur devis" };
 const AIRPODS_PRICES: PriceMap = { "Batterie": "Sur devis", "Diagnostic": "15€" };
-
+const CONSOLE_PRICES: PriceMap = {
+  "HDMI": "Sur devis",
+  "Nettoyage": "Sur devis",
+  "Bloc optique complet": "Sur devis",
+};
 function watchModel(id: string, name: string): ModelDef {
   return { id, name, type: "accessory", repairs: makeRepairs(WATCH_REPAIRS, WATCH_PRICES) };
 }
 function airpodsModel(id: string, name: string): ModelDef {
   return { id, name, type: "accessory", repairs: makeRepairs(AIRPODS_REPAIRS, AIRPODS_PRICES) };
+}
+function consoleModel(id: string, name: string): ModelDef {
+  return {
+    id,
+    name,
+    type: "accessory",
+    repairs: makeRepairs(CONSOLE_REPAIRS, CONSOLE_PRICES),
+  };
 }
 
 const APPLE_WATCH_MODELS: ModelDef[] = [watchModel("apple-watch", "Apple Watch")];
@@ -199,6 +229,8 @@ const AIRPODS_MODELS: ModelDef[] = [
   airpodsModel("airpods-4", "AirPods 4"),
   airpodsModel("airpods-pro", "AirPods Pro")
 ];
+const PS4_MODELS: ModelDef[] = [consoleModel("ps4", "PS4")];
+const PS5_MODELS: ModelDef[] = [consoleModel("ps5", "PS5")];
 
 const CHARGER_PRODUCTS: Product[] = [
   { id: "ch-20w-iphone", name: "Chargeur rapide 20W USB-C vers iPhone", description: "Charge rapide 20W pour iPhone, connectique USB-C vers Lightning.", iconName: "zap" },
@@ -216,6 +248,8 @@ export const ACCESSORY_CATEGORIES: AccessoryCategoryDef[] = [
   { slug: "apple-watch",  name: "Apple Watch",          iconName: "watch",   kind: "models",   models: APPLE_WATCH_MODELS },
   { slug: "galaxy-watch", name: "Samsung Galaxy Watch", iconName: "watch",   kind: "models",   models: GALAXY_WATCH_MODELS },
   { slug: "airpods",      name: "AirPods",              iconName: "airpods", kind: "models",   models: AIRPODS_MODELS },
+  { slug: "ps4",          name: "PS4",                  iconName: "zap",     kind: "models",   models: PS4_MODELS },
+  { slug: "ps5",          name: "PS5",                  iconName: "zap",     kind: "models",   models: PS5_MODELS },
   { slug: "chargeurs",    name: "Chargeurs",            iconName: "zap",     kind: "products", products: CHARGER_PRODUCTS },
   { slug: "cables",       name: "Câbles",               iconName: "cable",   kind: "products", products: CABLE_PRODUCTS },
 ];

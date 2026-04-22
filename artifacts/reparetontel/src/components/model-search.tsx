@@ -207,9 +207,16 @@ export function ModelSearch() {
   }
 
   function handleCategoryClick(slug: string) {
+    const cat = ACCESSORY_CATEGORIES.find((c) => c.slug === slug);
     setAccessoryCatSlug(slug);
-    setSelectedModel(null);
-    pendingScroll.current = "selector";
+    // Skip the intermediate model grid when there is only one model to choose —
+    // select it automatically so the repair cards appear immediately.
+    if (cat && cat.kind === "models" && cat.models.length === 1) {
+      setSelectedModel(cat.models[0]);
+    } else {
+      setSelectedModel(null);
+      pendingScroll.current = "selector";
+    }
   }
 
   function handleModelClick(model: ModelDef) {

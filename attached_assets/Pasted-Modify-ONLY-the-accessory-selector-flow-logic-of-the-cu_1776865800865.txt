@@ -1,0 +1,97 @@
+Modify ONLY the accessory selector flow logic of the current website.
+
+Context:
+This is the Répare-Tontel13 website.
+The selector already supports:
+
+* phone brands
+* accessory categories
+* accessory models
+* repair options
+* product cards
+
+Current problem:
+For some accessory categories, the visitor has to click twice before seeing the repair options.
+
+Example of the bad current behavior:
+
+* Accessoires → Apple Watch → Apple Watch again → repair options
+* Accessoires → Samsung Galaxy Watch → Samsung Galaxy Watch again → repair options
+* Accessoires → PS4 → PS4 again → repair options
+* Accessoires → PS5 → PS5 again → repair options
+
+This is wrong.
+
+What I want instead:
+
+1. For these categories:
+
+   * Apple Watch
+   * Samsung Galaxy Watch
+   * PS4
+   * PS5
+
+   when the visitor clicks the category card, it should open the repair options DIRECTLY.
+   No extra intermediate model screen.
+   No second click.
+   No duplicate “same name again” screen.
+
+2. For AirPods:
+   keep the current behavior exactly as it is:
+
+   * Accessoires → AirPods → AirPods 1 / 2 / 3 / 4 / Pro → repair options
+
+3. For Chargeurs and Câbles:
+   keep the current behavior exactly as it is:
+
+   * Accessoires → Chargeurs/Câbles → product cards
+
+Important understanding:
+
+* Apple Watch, Samsung Galaxy Watch, PS4, and PS5 are technically stored as categories with only one model.
+* Because of that, the UI currently shows an unnecessary extra model selection step.
+* I want the logic to detect this case and skip the extra step automatically.
+
+Required implementation:
+
+* Modify the selector behavior in the accessory category click logic.
+* If the clicked accessory category is of kind "models" AND contains exactly one model:
+
+  * set that model directly as selected
+  * show its repair cards immediately
+  * do not render the intermediate model grid
+* If the clicked accessory category contains multiple models:
+
+  * keep the normal behavior
+  * example: AirPods
+
+Files likely involved:
+
+* artifacts/reparetontel/src/components/model-search.tsx
+* only touch other files if absolutely necessary
+
+Constraints:
+
+* Do NOT redesign the UI
+* Do NOT change the visual style
+* Do NOT change phone flow
+* Do NOT change AirPods flow
+* Do NOT change chargeurs/câbles flow
+* Do NOT modify prices or text
+* Do NOT add new categories unless necessary
+* Keep the current scroll behavior intact
+* Make the smallest cleanest change possible
+
+Expected final behavior:
+
+* Accessoires → Apple Watch → repair options directly
+* Accessoires → Samsung Galaxy Watch → repair options directly
+* Accessoires → PS4 → repair options directly
+* Accessoires → PS5 → repair options directly
+* Accessoires → AirPods → AirPods models list → repair options
+* Accessoires → Chargeurs/Câbles → product cards
+
+Return:
+
+* a short explanation of what was changed
+* and the exact code changes
