@@ -1,0 +1,128 @@
+Analyze these two files together and implement the Redmi phone series flow correctly and fully:
+
+Files:
+
+* artifacts/reparetontel/src/data/repairCatalog.ts
+* artifacts/reparetontel/src/components/model-search.tsx
+
+Context:
+The project already has:
+
+* iPhone and Samsung working with the flow:
+  brand → models → repair options
+* accessories working separately
+* Redmi data was already added in repairCatalog with this intended flow:
+  Redmi → series → models → repair options
+
+Important:
+Do not just patch one line. First analyze both files together and then implement the feature properly so the flow is functional, stable, and consistent with the current UI.
+
+Current goal:
+Make Redmi work as a phone brand with a 3-level hierarchy:
+
+* User clicks Redmi
+* User sees Redmi series list
+* User clicks a series
+* User sees the models inside that series
+* User clicks a model
+* Repair options appear
+
+Expected Redmi hierarchy:
+brand → series → model → repairs
+
+Examples:
+
+* Redmi → Redmi Note 1 → 8 → Redmi Note 7 → repairs
+* Redmi → Redmi Note 12 → Redmi Note 12 Pro → repairs
+* Redmi → Redmi → Redmi 13C → repairs
+
+Requirements:
+
+1. Keep iPhone and Samsung behavior exactly as it is now:
+
+   * brand → models → repairs
+
+2. Add proper Redmi behavior:
+
+   * brand → series → models → repairs
+
+3. Fix searchAllItems in repairCatalog.ts:
+
+   * it currently assumes every phone brand has brand.models
+   * but Redmi now uses brand.series
+   * search must support both:
+
+     * brands with models
+     * brands with series and models inside series
+
+4. In model-search.tsx:
+
+   * use the existing state already added:
+     selectedPhoneSeriesSlug
+   * wire it properly into the actual selector flow
+
+5. Add a computed selectedPhoneSeries from phoneBrand.series and selectedPhoneSeriesSlug
+
+6. Add proper conditional UI states:
+
+   * showPhoneSeries for brands with series and no selected series yet
+   * showPhoneModels for:
+
+     * standard brands with models
+     * series-selected Redmi flow
+
+7. Add a proper series click handler
+
+8. Update the phone model grid rendering so it works for both:
+
+   * phoneBrand.models
+   * selectedPhoneSeries.models
+
+9. Update breadcrumb/back behavior for the Redmi series flow:
+
+   * Brand level: Redmi
+   * Series level: Redmi Note 12
+   * Model level: Redmi Note 12 Pro
+   * Repairs level should keep consistent back navigation
+
+10. Keep all styling, layout, animations, and current design language unchanged
+
+11. Do NOT break:
+
+* accessories flow
+* AirPods flow
+* watches
+* PS4 / PS5
+* chargeurs / câbles
+* current scroll behavior
+* current logos/images
+
+12. Keep Redmi as a normal phone brand, not quote behavior
+
+* Redmi must not show “Sur devis →” on the top brand card
+* It must enter the selector flow
+
+13. Preserve the current cards and visual structure
+
+* no redesign
+* only functional selector logic changes
+
+Implementation expectations:
+
+* Make the smallest clean architecture change that supports both simple brands and series-based brands
+* Put the new code in the correct places, not as random patches
+* Avoid duplicated logic where possible
+* Keep TypeScript types valid
+
+Also check for obvious data issues while implementing, such as:
+
+* optional models access
+* unsafe loops over undefined arrays
+* breadcrumb references that assume only models exist
+* any runtime issue caused by the new BrandDef shape
+
+Return:
+
+* a short explanation of what was changed
+* the exact code changes
+* note any small data cleanup you made only if necessary for the feature to work

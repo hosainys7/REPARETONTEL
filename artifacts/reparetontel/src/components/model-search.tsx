@@ -9,6 +9,7 @@ import {
   PHONE_BRANDS, ACCESSORY_CATEGORIES,
   whatsAppLink, whatsAppQuote, whatsAppProduct, searchAllItems,
   type ModelDef, type Product, type AccessoryCategoryDef, type SearchHit,
+  type PhoneSeriesDef,
 } from "@/data/repairCatalog";
 import {
   onSelectorNav, smoothScrollToEl, HEADER_OFFSET, type SelectorAction,
@@ -25,7 +26,7 @@ const TOP_BRANDS: {
   { slug: "huawei",      name: "Huawei",       icon: Smartphone, color: "#CF0A2C", bg: "#fff0f2", kind: "quote",       image: "/brands/huawei.jpg"  },
   { slug: "pixel",       name: "Google Pixel", icon: Smartphone, color: "#1a73e8", bg: "#f0f7ff", kind: "quote",       image: "/brands/google.png"  },
   { slug: "xiaomi",      name: "Xiaomi",       icon: Smartphone, color: "#FF6900", bg: "#fff4ee", kind: "quote",       image: "/brands/xiaomi.jpg"  },
-  { slug: "redmi",       name: "Redmi",        icon: Smartphone, color: "#e02020", bg: "#fff0f0", kind: "quote",       image: "/brands/redmi.png"   },
+  { slug: "redmi",       name: "Redmi",        icon: Smartphone, color: "#e02020", bg: "#fff0f0", kind: "phones",       image: "/brands/redmi.png"   },
   { slug: "accessoires", name: "Accessoires",  icon: Watch,      color: "#2563EB", bg: "#eff6ff", kind: "accessoires"                               },
 ];
 
@@ -62,6 +63,7 @@ type ScrollTarget = "selector" | null;
 
 export function ModelSearch() {
   const [brandSlug, setBrandSlug] = useState<string | null>(null);
+   const [selectedPhoneSeriesSlug, setSelectedPhoneSeriesSlug] = useState<string | null>(null);
   const [accessoryCatSlug, setAccessoryCatSlug] = useState<string | null>(null);
   const [selectedModel, setSelectedModel] = useState<ModelDef | null>(null);
   const [query, setQuery] = useState("");
@@ -82,9 +84,13 @@ export function ModelSearch() {
     ? ACCESSORY_CATEGORIES.find((c) => c.slug === accessoryCatSlug) ?? null
     : null;
 
+  const selectedPhoneSeries: PhoneSeriesDef | null =
+    phoneBrand?.series?.find((s) => s.slug === selectedPhoneSeriesSlug) ?? null;
+
   function clearState() {
     setQuery("");
     setBrandSlug(null);
+    setSelectedPhoneSeriesSlug(null);
     setAccessoryCatSlug(null);
     setSelectedModel(null);
   }
@@ -209,6 +215,7 @@ export function ModelSearch() {
     }
     setQuery("");
     setBrandSlug(slug);
+    setSelectedPhoneSeriesSlug(null);
     setAccessoryCatSlug(null);
     setSelectedModel(null);
     pendingScroll.current = "selector";
@@ -239,6 +246,14 @@ export function ModelSearch() {
       setBrandSlug(hit.brand.slug);
       setAccessoryCatSlug(null);
       setSelectedModel(hit.model);
+      // For series-based brands (Redmi), find and restore the containing series
+      // so that the back button in the repair detail view returns to the right model list.
+      if (hit.brand.series) {
+        const series = hit.brand.series.find((s) => s.models.some((m) => m.id === hit.model.id));
+        setSelectedPhoneSeriesSlug(series?.slug ?? null);
+      } else {
+        setSelectedPhoneSeriesSlug(null);
+      }
     } else if (hit.kind === "accessory-model") {
       setBrandSlug("accessoires");
       setAccessoryCatSlug(hit.category.slug);
@@ -254,6 +269,16 @@ export function ModelSearch() {
   function handleBackToBrands()     { clearState(); pendingScroll.current = "selector"; }
   function handleBackToCategories() { setAccessoryCatSlug(null); setSelectedModel(null); pendingScroll.current = "selector"; }
   function handleBackToModels()     { setSelectedModel(null); pendingScroll.current = "selector"; }
+  function handleSeriesClick(seriesSlug: string) {
+    setSelectedPhoneSeriesSlug(seriesSlug);
+    setSelectedModel(null);
+    pendingScroll.current = "selector";
+  }
+  function handleBackToSeries() {
+    setSelectedPhoneSeriesSlug(null);
+    setSelectedModel(null);
+    pendingScroll.current = "selector";
+  }
 
   // ── Step indicator ────────────────────────────────────────────────────────
   const activeStep = selectedModel ? 1 : 0;
@@ -263,7 +288,11 @@ export function ModelSearch() {
   const showTopBrands = !brandSlug && !isSearching;
   const showAccessoryCategories = brandSlug === "accessoires" && !accessoryCatSlug && !isSearching;
   const showProducts = brandSlug === "accessoires" && accessoryCat?.kind === "products" && !isSearching;
-  const showPhoneModels = !!phoneBrand && !selectedModel && !isSearching;
+  // Series grid: brand has series and no series is selected yet
+  const showPhoneSeries = !!phoneBrand && !!phoneBrand.series && !selectedPhoneSeriesSlug && !selectedModel && !isSearching;
+  // Model grid: brand has direct models (iPhone/Samsung) OR a series has been selected (Redmi)
+  const showPhoneModels = !!phoneBrand && !selectedModel && !isSearching
+    && (!!phoneBrand.models || !!selectedPhoneSeries);
   const showAccessoryModels = brandSlug === "accessoires" && accessoryCat?.kind === "models" && !selectedModel && !isSearching;
 
   const searchHits = isSearching ? searchAllItems(query) : [];
@@ -489,9 +518,9 @@ export function ModelSearch() {
             </motion.div>
           )}
 
-          {showPhoneModels && phoneBrand && (
+          {showPhoneSeries && phoneBrand && phoneBrand.series && (
             <motion.div
-              key={`pm-${phoneBrand.slug}`}
+              key={`ps-${phoneBrand.slug}`}
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3 }}
             >
@@ -503,7 +532,48 @@ export function ModelSearch() {
                 <span className="text-sm font-semibold text-primary">{phoneBrand.name}</span>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                {phoneBrand.models.map((m) => (
+                {phoneBrand.series.map((series) => (
+                  <ModelCard
+                    key={series.slug}
+                    name={series.name}
+                    sub={`${series.models.length} modèles`}
+                    icon={Smartphone}
+                    onClick={() => handleSeriesClick(series.slug)}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {showPhoneModels && phoneBrand && (
+            <motion.div
+              key={`pm-${phoneBrand.slug}-${selectedPhoneSeriesSlug ?? "direct"}`}
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}
+            >
+              {selectedPhoneSeries ? (
+                <div className="flex items-center gap-2 mb-5">
+                  <button onClick={handleBackToBrands} className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                    <ChevronLeft className="w-4 h-4" /> Marques
+                  </button>
+                  <span className="text-muted-foreground/40">/</span>
+                  <button onClick={handleBackToSeries} className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                    {phoneBrand.name}
+                  </button>
+                  <span className="text-muted-foreground/40">/</span>
+                  <span className="text-sm font-semibold text-primary">{selectedPhoneSeries.name}</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 mb-5">
+                  <button onClick={handleBackToBrands} className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+                    <ChevronLeft className="w-4 h-4" /> Marques
+                  </button>
+                  <span className="text-muted-foreground/40">/</span>
+                  <span className="text-sm font-semibold text-primary">{phoneBrand.name}</span>
+                </div>
+              )}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {(phoneBrand.models ?? selectedPhoneSeries?.models ?? []).map((m) => (
                   <ModelCard key={m.id} name={m.name} sub={null} icon={Smartphone} onClick={() => handleModelClick(m)} />
                 ))}
               </div>
@@ -597,7 +667,7 @@ export function ModelSearch() {
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                   <button onClick={handleBackToModels} className="flex items-center gap-1 hover:text-primary transition-colors">
                     <ChevronLeft className="w-3.5 h-3.5" />
-                    {accessoryCat?.name ?? brandName ?? "Modèles"}
+                    {accessoryCat?.name ?? selectedPhoneSeries?.name ?? brandName ?? "Modèles"}
                   </button>
                   <span className="text-muted-foreground/40">/</span>
                   <span className="text-primary font-medium">{selectedModel.name}</span>
