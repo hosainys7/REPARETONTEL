@@ -567,14 +567,30 @@ export function ModelSearch() {
               transition={{ duration: 0.4, delay: 0.05 }}
               className="mt-10 pt-8 border-t border-gray-100"
             >
-              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                <button onClick={handleBackToModels} className="flex items-center gap-1 hover:text-primary transition-colors">
-                  <ChevronLeft className="w-3.5 h-3.5" />
-                  {accessoryCat?.name ?? brandName ?? "Modèles"}
-                </button>
-                <span className="text-muted-foreground/40">/</span>
-                <span className="text-primary font-medium">{selectedModel.name}</span>
-              </div>
+              {/* Breadcrumb — single-model direct-open accessory categories
+                  (Apple Watch, Galaxy Watch, PS4, PS5) show
+                  "Marques / Accessoires / Name" and back goes to Accessoires.
+                  All other flows keep the existing breadcrumb. */}
+              {brandSlug === "accessoires" && accessoryCat?.kind === "models" && accessoryCat.models.length === 1 ? (
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                  <button onClick={handleBackToBrands} className="flex items-center gap-1 hover:text-primary transition-colors">
+                    <ChevronLeft className="w-3.5 h-3.5" /> Marques
+                  </button>
+                  <span className="text-muted-foreground/40">/</span>
+                  <button onClick={handleBackToCategories} className="hover:text-primary transition-colors">Accessoires</button>
+                  <span className="text-muted-foreground/40">/</span>
+                  <span className="text-primary font-medium">{selectedModel.name}</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                  <button onClick={handleBackToModels} className="flex items-center gap-1 hover:text-primary transition-colors">
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                    {accessoryCat?.name ?? brandName ?? "Modèles"}
+                  </button>
+                  <span className="text-muted-foreground/40">/</span>
+                  <span className="text-primary font-medium">{selectedModel.name}</span>
+                </div>
+              )}
               <h3 className="text-xl font-bold text-foreground tracking-tight mb-6">Réparations disponibles</h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">

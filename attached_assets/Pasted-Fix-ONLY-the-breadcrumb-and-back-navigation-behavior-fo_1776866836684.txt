@@ -1,0 +1,86 @@
+Fix ONLY the breadcrumb and back-navigation behavior for direct-open single-model accessory categories in model-search.tsx.
+
+Context:
+The accessory selector flow now works correctly:
+
+* Apple Watch opens repair options directly
+* Samsung Galaxy Watch opens repair options directly
+* PS4 opens repair options directly
+* PS5 opens repair options directly
+* AirPods still opens its models list first
+* Chargeurs/Câbles work correctly already
+
+Important:
+Chargeurs is only an example of the correct breadcrumb behavior.
+Do NOT change Chargeurs/Câbles.
+They already behave correctly.
+
+Current problem:
+For these direct-open single-model accessory categories:
+
+* Apple Watch
+* Samsung Galaxy Watch
+* PS4
+* PS5
+
+the repair detail breadcrumb is wrong.
+
+Current wrong behavior examples:
+
+* AppleWatch / AppleWatch
+* PS4 / PS4
+
+Expected behavior:
+When the visitor is inside the repair options for one of these direct-open categories, the breadcrumb must be:
+
+* Marques / Accessoires / Apple Watch
+* Marques / Accessoires / Samsung Galaxy Watch
+* Marques / Accessoires / PS4
+* Marques / Accessoires / PS5
+
+And the back button must return to:
+
+* Accessoires
+
+Do NOT return to an intermediate duplicate model step.
+
+Technical understanding:
+These categories are accessory categories of kind "models", but they contain exactly one model.
+Because the selected model name is the same as the category name, the current breadcrumb logic displays duplicate labels.
+This only affects the single-model direct-open accessory categories.
+It does NOT affect:
+
+* AirPods (multi-model)
+* Chargeurs/Câbles (products)
+* phones
+
+Required implementation:
+
+* Modify only the repair-detail breadcrumb/back logic in model-search.tsx
+* Detect when:
+
+  * brandSlug === "accessoires"
+  * accessoryCat exists
+  * accessoryCat.kind === "models"
+  * accessoryCat.models.length === 1
+  * selectedModel exists
+* In that case:
+
+  * render breadcrumb as Marques / Accessoires / selectedModel.name
+  * the back button should go to Accessoires directly
+  * do not show duplicate category/model names
+
+Constraints:
+
+* Do NOT redesign UI
+* Do NOT change opening behavior
+* Do NOT change AirPods logic
+* Do NOT change Chargeurs/Câbles logic
+* Do NOT change phone flow
+* Do NOT change data structure unless absolutely necessary
+* Keep the smallest, cleanest fix possible
+
+Return:
+
+* short explanation
+* exact code changes only
