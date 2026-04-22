@@ -30,8 +30,11 @@ const TOP_BRANDS: {
 ];
 
 const CATEGORY_IMAGES: Record<string, string> = {
-  "ps4": "/brands/ps4.png",
-  "ps5": "/brands/ps5.png",
+  "ps4":          "/brands/ps4.png",
+  "ps5":          "/brands/ps5.png",
+  "apple-watch":  "/brands/applewatch.png",
+  "galaxy-watch": "/brands/samsungwatch.jpg",
+  "airpods":      "/brands/airpods.png",
 };
 
 const QUOTE_BRANDS = TOP_BRANDS.filter((b) => b.kind === "quote");

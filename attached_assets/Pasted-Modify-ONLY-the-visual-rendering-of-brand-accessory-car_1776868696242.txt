@@ -1,0 +1,81 @@
+Modify ONLY the visual rendering of brand/accessory cards in the current Répare-Tontel13 website so that uploaded logo/product images are used instead of generic icons where appropriate.
+
+Context:
+I already created this folder and uploaded the images:
+artifacts/reparetontel/public/brands
+
+Previously used images remain unchanged.
+
+NEW uploaded files (this prompt focuses on these additions):
+
+* /brands/airpods.png
+* /brands/applewatch.png
+* /brands/samsungwatch.jpg
+
+Goal:
+Update ONLY the accessory category cards to use these new images:
+
+* Apple Watch → /brands/applewatch.png
+* Samsung Galaxy Watch → /brands/samsungwatch.jpg
+* AirPods → /brands/airpods.png
+
+Important:
+
+* Do NOT modify phone brand images (iPhone, Samsung, etc.) — already handled
+* Do NOT change any repair logic
+* Do NOT change any selector flow
+* Do NOT change any pricing
+* Do NOT change any texts
+* Do NOT change breadcrumb behavior
+* Do NOT redesign the cards
+* Do NOT change spacing except minimal adjustments for image fit
+* Keep all hover, click, and navigation behavior exactly the same
+* Keep PS4 / PS5 / Chargeurs / Câbles / Accessoires unchanged
+
+Files involved:
+
+* artifacts/reparetontel/src/components/model-search.tsx
+  Do not modify other files unless absolutely necessary.
+
+Implementation requirements:
+
+1. Update ONLY accessory category rendering logic:
+
+   * Apple Watch → use /brands/applewatch.png
+   * Samsung Galaxy Watch → use /brands/samsungwatch.jpg
+   * AirPods → use /brands/airpods.png
+
+2. Do NOT touch:
+
+   * phone brand rendering
+   * PS4 / PS5 logic
+   * other accessory categories
+
+Technical approach:
+
+* Use public URLs:
+
+  * /brands/applewatch.png
+  * /brands/samsungwatch.jpg
+  * /brands/airpods.png
+* Extend existing accessory image mapping (do NOT duplicate logic)
+* Render <img> when mapping exists
+* Fallback to icon when no image exists
+* Use:
+
+  * object-contain
+  * centered alignment
+  * same container size as current icons
+* Avoid stretching or cropping
+
+Expected result:
+
+* Apple Watch shows Apple Watch image
+* Samsung Galaxy Watch shows Samsung Watch image
+* AirPods shows AirPods image
+* Everything else remains exactly the same
+
+Return:
+
+* short explanation of changes
+* exact code changes only
