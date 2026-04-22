@@ -1,0 +1,96 @@
+Modify ONLY the visual rendering of brand/accessory cards in the current Répare-Tontel13 website so that uploaded logo images are used instead of generic icons where appropriate.
+
+Context:
+I already created this folder and uploaded the images:
+artifacts/reparetontel/public/brands
+
+The uploaded files are:
+
+* /brands/apple.png 
+* /brands/google.png
+* /brands/huawei.jpg
+* /brands/ps4.png
+* /brands/ps5.png
+* /brands/redmi.png
+* /brands/samsung.png
+* /brands/xiaomi.jpg
+
+Goal:
+Replace the generic icon shown inside the selector cards with the corresponding brand/logo image for:
+
+* iPhone → /brands/apple.png 
+* Samsung → /brands/samsung.png
+* Huawei → /brands/huawei.jpg
+* Google Pixel → /brands/google.png
+* Xiaomi → /brands/xiaomi.jpg
+* Redmi → /brands/redmi.png
+* PS4 → /brands/ps4.png
+* PS5 → /brands/ps5.png
+
+Important:
+
+* Do NOT change any repair logic
+* Do NOT change any selector flow
+* Do NOT change any pricing
+* Do NOT change any texts
+* Do NOT change any spacing outside what is strictly necessary for the logos to display well
+* Do NOT redesign the cards
+* Keep all existing hover, click, and navigation behavior exactly the same
+* AirPods, Apple Watch, Samsung Galaxy Watch, Chargeurs, and Câbles should keep their current icons unless an image is explicitly listed above
+
+Files likely involved:
+
+* artifacts/reparetontel/src/components/model-search.tsx
+  Do not modify other files unless absolutely necessary.
+
+Implementation requirements:
+
+1. In the top phone/quote brand grid, use the uploaded image instead of the generic lucide icon for:
+
+   * iPhone
+   * Samsung
+   * Huawei
+   * Google Pixel
+   * Xiaomi
+   * Redmi
+
+2. In the accessory categories grid, use the uploaded image instead of the generic icon for:
+
+   * PS4
+   * PS5
+
+3. Keep Accessoires itself as it is.
+
+4. Keep Apple Watch / Samsung Galaxy Watch / AirPods / Chargeurs / Câbles as they are now.
+
+Technical approach:
+
+* Since the images are already in public/brands, reference them with plain public URLs like:
+
+  * /brands/apple_logo_1.png
+  * /brands/samsung.png
+* Add an optional image field to the local top-brand config if needed
+* Add a small category image map for PS4 and PS5 if needed
+* Render <img> when an image exists
+* Otherwise fall back to the current icon
+* Preserve the current card container, rounded corners, background color, hover, and sizing style
+* Use object-contain so logos fit cleanly inside the icon box
+* Keep the current icon box size or adjust only minimally if needed
+* Ensure the logos remain visually centered and not cropped badly
+
+Expected result:
+
+* iPhone card shows Apple logo
+* Samsung card shows Samsung logo
+* Huawei card shows Huawei logo
+* Google Pixel card shows Google logo
+* Xiaomi card shows Xiaomi logo
+* Redmi card shows Redmi logo
+* PS4 accessory card shows PS4 logo
+* PS5 accessory card shows PS5 logo
+* Everything else remains unchanged
+
+Return:
+
+* a short explanation of what was changed
+* and the exact code changes only

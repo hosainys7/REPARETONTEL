@@ -18,16 +18,21 @@ type BrandKind = "phones" | "accessoires" | "quote";
 
 const TOP_BRANDS: {
   slug: string; name: string; icon: typeof Smartphone;
-  color: string; bg: string; kind: BrandKind;
+  color: string; bg: string; kind: BrandKind; image?: string;
 }[] = [
-  { slug: "iphone",      name: "iPhone",       icon: Smartphone, color: "#1d1d1f", bg: "#f5f5f7", kind: "phones" },
-  { slug: "samsung",     name: "Samsung",      icon: Smartphone, color: "#1428A0", bg: "#f0f2ff", kind: "phones" },
-  { slug: "huawei",      name: "Huawei",       icon: Smartphone, color: "#CF0A2C", bg: "#fff0f2", kind: "quote"  },
-  { slug: "pixel",       name: "Google Pixel", icon: Smartphone, color: "#1a73e8", bg: "#f0f7ff", kind: "quote"  },
-  { slug: "xiaomi",      name: "Xiaomi",       icon: Smartphone, color: "#FF6900", bg: "#fff4ee", kind: "quote"  },
-  { slug: "redmi",       name: "Redmi",        icon: Smartphone, color: "#e02020", bg: "#fff0f0", kind: "quote"  },
-  { slug: "accessoires", name: "Accessoires",  icon: Watch,      color: "#2563EB", bg: "#eff6ff", kind: "accessoires" },
+  { slug: "iphone",      name: "iPhone",       icon: Smartphone, color: "#1d1d1f", bg: "#f5f5f7", kind: "phones",      image: "/brands/apple.png"   },
+  { slug: "samsung",     name: "Samsung",      icon: Smartphone, color: "#1428A0", bg: "#f0f2ff", kind: "phones",      image: "/brands/samsung.png" },
+  { slug: "huawei",      name: "Huawei",       icon: Smartphone, color: "#CF0A2C", bg: "#fff0f2", kind: "quote",       image: "/brands/huawei.jpg"  },
+  { slug: "pixel",       name: "Google Pixel", icon: Smartphone, color: "#1a73e8", bg: "#f0f7ff", kind: "quote",       image: "/brands/google.png"  },
+  { slug: "xiaomi",      name: "Xiaomi",       icon: Smartphone, color: "#FF6900", bg: "#fff4ee", kind: "quote",       image: "/brands/xiaomi.jpg"  },
+  { slug: "redmi",       name: "Redmi",        icon: Smartphone, color: "#e02020", bg: "#fff0f0", kind: "quote",       image: "/brands/redmi.png"   },
+  { slug: "accessoires", name: "Accessoires",  icon: Watch,      color: "#2563EB", bg: "#eff6ff", kind: "accessoires"                               },
 ];
+
+const CATEGORY_IMAGES: Record<string, string> = {
+  "ps4": "/brands/ps4.png",
+  "ps5": "/brands/ps5.png",
+};
 
 const QUOTE_BRANDS = TOP_BRANDS.filter((b) => b.kind === "quote");
 
@@ -425,7 +430,9 @@ export function ModelSearch() {
                     className="group flex flex-col items-center justify-center gap-3 p-5 rounded-2xl border border-gray-100 bg-white shadow-[0_2px_10px_-4px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_20px_-6px_rgba(0,0,0,0.12)] hover:border-gray-200 transition-all duration-200 cursor-pointer"
                   >
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: brand.bg }}>
-                      <Icon className="w-5 h-5" style={{ color: brand.color }} />
+                      {brand.image
+                        ? <img src={brand.image} alt={brand.name} className="w-8 h-8 object-contain" />
+                        : <Icon className="w-5 h-5" style={{ color: brand.color }} />}
                     </div>
                     <div className="text-center">
                       <div className="text-sm font-bold tracking-tight" style={{ color: brand.color }}>
@@ -465,7 +472,9 @@ export function ModelSearch() {
                       className="flex flex-col items-center justify-center gap-3 p-5 rounded-2xl border border-gray-100 bg-white shadow-[0_2px_10px_-4px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_20px_-6px_rgba(0,0,0,0.12)] hover:border-gray-200 transition-all duration-200 cursor-pointer"
                     >
                       <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#eff6ff]">
-                        <Icon className="w-5 h-5 text-primary" />
+                        {CATEGORY_IMAGES[cat.slug]
+                          ? <img src={CATEGORY_IMAGES[cat.slug]} alt={cat.name} className="w-8 h-8 object-contain" />
+                          : <Icon className="w-5 h-5 text-primary" />}
                       </div>
                       <div className="text-center">
                         <div className="text-sm font-bold tracking-tight text-foreground leading-tight">{cat.name}</div>
