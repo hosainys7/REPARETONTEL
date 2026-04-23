@@ -276,6 +276,21 @@ function pixelModel(name: string): ModelDef {
                            };
                          }
 
+function xiaomiModel(name: string): ModelDef {
+  return {
+    id: mkId("xiaomi", name),
+    name,
+    type: "phone",
+    repairs: makeRepairs(PHONE_REPAIRS, {
+      Diagnostic: "15€",
+      Écran: "Sur devis",
+      Batterie: "Sur devis",
+      Caméra: "Sur devis",
+      "Connecteur de charge": "Sur devis",
+    }),
+  };
+}
+
   
 const IPHONE_MODELS: ModelDef[] = [
   iphone("7 / 8", "29,90€", "29€"),
@@ -564,6 +579,42 @@ const REDMI_CLASSIC_MODELS: ModelDef[] = [
   "Redmi 15C 5G",
   ].map(redmiModel);
 
+const XIAOMI_MODELS: ModelDef[] = [
+  "Xiaomi Mi 8",
+  "Xiaomi Mi 9",
+  "Xiaomi Mi 9 SE",
+  "Xiaomi Mi 9 Lite",
+  "Xiaomi Mi 9T",
+  "Xiaomi Mi 9T Pro",
+  "Xiaomi Mi 10",
+  "Xiaomi Mi 10 Pro",
+  "Xiaomi Mi 10 Lite",
+  "Xiaomi Mi 10T",
+  "Xiaomi Mi 10T Pro",
+  "Xiaomi Mi 11",
+  "Xiaomi Mi 11 Lite",
+  "Xiaomi Mi 11 Lite 5G",
+  "Xiaomi Mi 11i",
+  "Xiaomi Mi 11 Ultra",
+  "Xiaomi 12",
+  "Xiaomi 12 Lite",
+  "Xiaomi 12 Pro",
+  "Xiaomi 12T",
+  "Xiaomi 12T Pro",
+  "Xiaomi 13",
+  "Xiaomi 13 Lite",
+  "Xiaomi 13 Pro",
+  "Xiaomi 13T",
+  "Xiaomi 13T Pro",
+  "Xiaomi 14",
+  "Xiaomi 14 Ultra",
+  "Xiaomi 14T",
+  "Xiaomi 14T Pro",
+  "Xiaomi Mi MIX 2",
+  "Xiaomi Mi MIX 2S",
+  "Xiaomi Mi MIX 3",
+].map(xiaomiModel);
+
 const PIXEL_MODELS: ModelDef[] = [  
   "Pixel 3a",
   "Pixel 3a XL",
@@ -624,8 +675,25 @@ function consoleModel(id: string, name: string): ModelDef {
 }
 
 const APPLE_WATCH_MODELS: ModelDef[] = [
-  watchModel("apple-watch", "Apple Watch"),
+  watchModel("apple-watch-1", "Apple Watch (1re gén.) 38 / 42 mm"),
+  watchModel("apple-watch-s1", "Series 1 — 38 / 42 mm"),
+  watchModel("apple-watch-s2", "Series 2 — 38 / 42 mm"),
+  watchModel("apple-watch-s3", "Series 3 — 38 / 42 mm"),
+
+  watchModel("apple-watch-s4", "Series 4 — 40 / 44 mm"),
+  watchModel("apple-watch-s5", "Series 5 — 40 / 44 mm"),
+  watchModel("apple-watch-s6", "Series 6 — 40 / 44 mm"),
+  watchModel("apple-watch-se-1", "SE (1re gén.) — 40 / 44 mm"),
+
+  watchModel("apple-watch-s7", "Series 7 — 41 / 45 mm"),
+  watchModel("apple-watch-s8", "Series 8 — 41 / 45 mm"),
+  watchModel("apple-watch-s9", "Series 9 — 41 / 45 mm"),
+  watchModel("apple-watch-se-2", "SE (2e gén.) — 40 / 44 mm"),
+
+  watchModel("apple-watch-ultra", "Ultra — 49 mm"),
+  watchModel("apple-watch-ultra-2", "Ultra 2 — 49 mm"),
 ];
+
 const GALAXY_WATCH_MODELS: ModelDef[] = [
   watchModel("galaxy-watch", "Samsung Galaxy Watch"),
 ];
@@ -742,6 +810,7 @@ export const ACCESSORY_CATEGORIES: AccessoryCategoryDef[] = [
 export const PHONE_BRANDS: BrandDef[] = [
   { id: "iphone", name: "iPhone", slug: "iphone", models: IPHONE_MODELS },
   { id: "samsung", name: "Samsung", slug: "samsung", models: SAMSUNG_MODELS },
+  { id: "xiaomi", name: "Xiaomi", slug: "xiaomi", models: XIAOMI_MODELS },
   {id: "huawei", name: "Huawei", slug: "huawei", series: [
       { slug: "huawei-p", name: "Huawei P", models: HUAWEI_P_MODELS },
       { slug: "huawei-mate", name: "Huawei Mate", models: HUAWEI_MATE_MODELS },

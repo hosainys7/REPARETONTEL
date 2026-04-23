@@ -1,0 +1,106 @@
+Analyze the current navbar / header / dropdown menu logic in this project and update it so it matches the new selector behavior and current data sources.
+
+Context:
+The main selector in `model-search.tsx` has already been updated and now supports:
+
+* phones from `PHONE_BRANDS`
+* accessories from `ACCESSORY_CATEGORIES`
+* series-based phone brands like Redmi and Huawei
+* updated accessory behavior
+* logos/images in the selector cards
+
+But the navbar dropdowns are still using old hardcoded logic.
+
+Current problems visible in the navbar:
+
+1. Apple Watch and Samsung Galaxy Watch still open the old flow instead of the updated accessory flow
+2. Phone brands like Huawei / Redmi / Google Pixel / Xiaomi still appear as “DEVIS” or behave like quote-only items even though some are now interactive brands
+3. The navbar still shows generic icons instead of the logos already used in the selector
+4. The navbar and the main selector are out of sync
+
+Goal:
+Make the navbar / header dropdowns use the same up-to-date logic as the main selector.
+
+Important:
+
+* Do NOT redesign the navbar
+* Do NOT change spacing or visual style except what is needed to display images/logos correctly
+* Do NOT break existing navigation
+* Do NOT touch pricing or repair data
+* Do NOT duplicate data logic
+* Reuse the central data sources already present in `repairCatalog.ts` whenever possible
+
+Required behavior:
+
+### Repairs / phone dropdown
+
+The navbar repair dropdown must reflect the current phone brand behavior:
+
+* iPhone → interactive phone brand
+* Samsung → interactive phone brand
+* Huawei → interactive phone brand
+* Redmi → interactive phone brand
+* Google Pixel → interactive phone brand
+* Xiaomi → interactive phone brand
+
+That means:
+
+* these should NOT display “DEVIS” if they now exist as interactive selector brands
+* clicking them should trigger the selector flow, not quote-only WhatsApp behavior
+* if they are intended to be interactive in `TOP_BRANDS`, the navbar must match that
+
+### Accessories dropdown
+
+The navbar accessories dropdown must reflect the current accessory behavior:
+
+* Apple Watch → current accessory flow
+* Samsung Galaxy Watch → current accessory flow
+* AirPods → current accessory flow
+* Chargeurs → current accessory flow
+* Câbles → current accessory flow
+* PS4 / PS5 if they are meant to appear there too, include them consistently with the current accessory configuration
+
+Specifically:
+
+* Apple Watch must no longer use the old one-model direct flow if the data now contains multiple watch models
+* Samsung Galaxy Watch must also follow the updated flow
+* The navbar should open the same selector state that the main selector uses
+
+### Logos / images
+
+Where logos/images already exist and are used in the selector:
+
+* iPhone → Apple logo
+* Samsung → Samsung logo
+* Huawei → Huawei logo
+* Google Pixel → Google logo
+* Xiaomi → Xiaomi logo
+* Redmi → Redmi logo
+* Apple Watch / Samsung Galaxy Watch / AirPods / PS4 / PS5 if applicable should use the same image strategy already used elsewhere
+
+If the navbar currently uses its own static icon definitions, update it to support optional image rendering while preserving fallback icons.
+
+Implementation instructions:
+
+1. Find the actual navbar/header/dropdown component(s) responsible for:
+
+   * “Réparations”
+   * “Accessoires”
+2. Remove old hardcoded logic where it conflicts with current selector behavior
+3. Reconnect those menus to the same up-to-date behavior used by `model-search.tsx`
+4. Reuse:
+
+   * `selectorNav(...)`
+   * `PHONE_BRANDS`
+   * `ACCESSORY_CATEGORIES`
+   * any existing image mappings if possible
+5. Ensure that clicking a navbar item sends the user into the correct selector flow, not the old one
+6. Keep the UI style unchanged, only fix behavior/data consistency
+
+Also check for any other old hardcoded lists outside the navbar that may still point to outdated logic.
+
+Return:
+
+* short explanation of which files were outdated
+* exact code changes
+* note whether the navbar is now fully synced with the selector

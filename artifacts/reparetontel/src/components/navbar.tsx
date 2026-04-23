@@ -5,29 +5,61 @@ import {
   Cable as CableIcon, Zap as ZapIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { whatsAppQuote } from "@/data/repairCatalog";
+import { PHONE_BRANDS, ACCESSORY_CATEGORIES } from "@/data/repairCatalog";
 import { selectorNav, smoothScrollToHash, scrollToTop } from "@/lib/selectorBus";
 
-type RepairLink =
-  | { name: string; type: "select"; brandSlug: string; color: string; icon: typeof Smartphone }
-  | { name: string; type: "wa"; waBrand: string; color: string; icon: typeof Smartphone };
+// ── Brand logo map (same images used in model-search.tsx) ───────────────────
+const BRAND_IMAGES: Record<string, string> = {
+  iphone:  "/brands/apple.png",
+  samsung: "/brands/samsung.png",
+  huawei:  "/brands/huawei.jpg",
+  pixel:   "/brands/google.png",
+  xiaomi:  "/brands/xiaomi.jpg",
+  redmi:   "/brands/redmi.png",
+};
+const BRAND_COLORS: Record<string, string> = {
+  iphone:  "#1d1d1f",
+  samsung: "#1428A0",
+  huawei:  "#CF0A2C",
+  pixel:   "#1a73e8",
+  xiaomi:  "#FF6900",
+  redmi:   "#e02020",
+};
 
-const REPAIR_LINKS: RepairLink[] = [
-  { name: "iPhone",       type: "select", brandSlug: "iphone",     color: "#1d1d1f", icon: Smartphone },
-  { name: "Samsung",      type: "select", brandSlug: "samsung",    color: "#1428A0", icon: Smartphone },
-  { name: "Huawei",       type: "wa",     waBrand: "Huawei",       color: "#CF0A2C", icon: Smartphone },
-  { name: "Redmi",        type: "wa",     waBrand: "Redmi",        color: "#e02020", icon: Smartphone },
-  { name: "Google Pixel", type: "wa",     waBrand: "Google Pixel", color: "#1a73e8", icon: Smartphone },
-  { name: "Xiaomi",       type: "wa",     waBrand: "Xiaomi",       color: "#FF6900", icon: Smartphone },
-];
+// Category logo map (same as CATEGORY_IMAGES in model-search.tsx)
+const CATEGORY_IMAGES: Record<string, string> = {
+  "apple-watch":  "/brands/applewatch.png",
+  "galaxy-watch": "/brands/samsungwatch.jpg",
+  "airpods":      "/brands/airpods.png",
+  "ps4":          "/brands/ps4.png",
+  "ps5":          "/brands/ps5.png",
+};
+const CATEGORY_ICONS: Record<string, React.ElementType> = {
+  "apple-watch":  Watch,
+  "galaxy-watch": Watch,
+  "airpods":      Headphones,
+  "chargeurs":    ZapIcon,
+  "cables":       CableIcon,
+  "ps4":          ZapIcon,
+  "ps5":          ZapIcon,
+};
 
-const ACCESSORY_LINKS = [
-  { name: "Apple Watch",          categorySlug: "apple-watch",  icon: Watch       },
-  { name: "Samsung Galaxy Watch", categorySlug: "galaxy-watch", icon: Watch       },
-  { name: "AirPods",              categorySlug: "airpods",      icon: Headphones  },
-  { name: "Chargeurs",            categorySlug: "chargeurs",    icon: ZapIcon     },
-  { name: "Câbles",               categorySlug: "cables",       icon: CableIcon   },
-];
+// ── Derived lists from central data sources ──────────────────────────────────
+// All phone brands that exist in PHONE_BRANDS → always "select" behavior
+const REPAIR_LINKS = PHONE_BRANDS.map((b) => ({
+  name:      b.name,
+  brandSlug: b.slug,
+  color:     BRAND_COLORS[b.slug] ?? "#1d1d1f",
+  image:     BRAND_IMAGES[b.slug],
+}));
+
+// All accessory categories
+const ACCESSORY_LINKS = ACCESSORY_CATEGORIES.map((cat) => ({
+  name:         cat.name,
+  categorySlug: cat.slug,
+  image:        CATEGORY_IMAGES[cat.slug],
+  icon:         CATEGORY_ICONS[cat.slug] ?? ZapIcon,
+}));
 
 const TOP_LINKS = [
   { name: "Services",    href: "#services" },
@@ -35,13 +67,10 @@ const TOP_LINKS = [
   { name: "Réservation", href: "#booking"  },
 ];
 
-// Behavior B: standard navigation — reset selector + scroll to target.
 function navStandard(hash: string) {
   selectorNav({ kind: "reset" });
   setTimeout(() => smoothScrollToHash(hash), 30);
 }
-
-// Behavior E: home/logo
 function navHome() {
   selectorNav({ kind: "reset" });
   setTimeout(() => scrollToTop(), 30);
@@ -72,42 +101,28 @@ export function Navbar() {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     closeTimer.current = setTimeout(() => setOpenDropdown(null), 150);
   }
-
   function closeAll() { setOpenDropdown(null); setIsOpen(false); }
 
-  // Behavior C: a Réparations submenu item
-  function handleRepairLink(e: React.MouseEvent, link: RepairLink) {
+  function handleRepairLink(e: React.MouseEvent, brandSlug: string) {
     e.preventDefault();
     closeAll();
-    if (link.type === "wa") {
-      // Reset selector state too, then open WhatsApp.
-      selectorNav({ kind: "reset" });
-      window.open(whatsAppQuote(link.waBrand), "_blank", "noopener,noreferrer");
-    } else {
-      selectorNav({ kind: "open-brand", brandSlug: link.brandSlug });
-    }
+    selectorNav({ kind: "open-brand", brandSlug });
   }
-
-  // Behavior D: an Accessoires submenu item
   function handleAccessoryLink(e: React.MouseEvent, categorySlug: string) {
     e.preventDefault();
     closeAll();
     selectorNav({ kind: "open-accessory", categorySlug });
   }
-
-  // Behavior B: a top-level standard link (Services / À propos / Réservation)
   function handleStandardLink(e: React.MouseEvent, hash: string) {
     e.preventDefault();
     closeAll();
     navStandard(hash);
   }
-
   function handleHomeLink(e: React.MouseEvent) {
     e.preventDefault();
     closeAll();
     navHome();
   }
-
   function handleReserveCta(e: React.MouseEvent) {
     e.preventDefault();
     closeAll();
@@ -177,28 +192,28 @@ export function Navbar() {
                           <div className="text-xs text-muted-foreground mt-0.5">Choisissez votre marque</div>
                         </div>
                         <ul className="flex flex-col">
-                          {REPAIR_LINKS.map((link) => {
-                            const Icon = link.icon;
-                            return (
-                              <li key={link.name}>
-                                <a
-                                  href="#"
-                                  onClick={(e) => handleRepairLink(e, link)}
-                                  className="group flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-primary/5 transition-colors duration-150 cursor-pointer"
+                          {REPAIR_LINKS.map((link) => (
+                            <li key={link.brandSlug}>
+                              <a
+                                href="#"
+                                onClick={(e) => handleRepairLink(e, link.brandSlug)}
+                                className="group flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-primary/5 transition-colors duration-150 cursor-pointer"
+                              >
+                                <span
+                                  className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                                  style={{ backgroundColor: `${link.color}12` }}
                                 >
-                                  <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${link.color}10` }}>
-                                    <Icon className="w-4 h-4" style={{ color: link.color }} />
-                                  </span>
-                                  <span className="flex-1 text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
-                                    {link.name}
-                                  </span>
-                                  {link.type === "wa" && (
-                                    <span className="text-[10px] font-bold text-primary uppercase tracking-wide">Devis</span>
-                                  )}
-                                </a>
-                              </li>
-                            );
-                          })}
+                                  {link.image
+                                    ? <img src={link.image} alt={link.name} className="w-6 h-6 object-contain" />
+                                    : <Smartphone className="w-4 h-4" style={{ color: link.color }} />
+                                  }
+                                </span>
+                                <span className="flex-1 text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                                  {link.name}
+                                </span>
+                              </a>
+                            </li>
+                          ))}
                         </ul>
                       </div>
                     </motion.div>
@@ -241,14 +256,17 @@ export function Navbar() {
                           {ACCESSORY_LINKS.map((link) => {
                             const Icon = link.icon;
                             return (
-                              <li key={link.name}>
+                              <li key={link.categorySlug}>
                                 <a
                                   href="#"
                                   onClick={(e) => handleAccessoryLink(e, link.categorySlug)}
                                   className="group flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-primary/5 transition-colors duration-150 cursor-pointer"
                                 >
-                                  <span className="w-8 h-8 rounded-lg bg-[#eff6ff] flex items-center justify-center">
-                                    <Icon className="w-4 h-4 text-primary" />
+                                  <span className="w-8 h-8 rounded-lg bg-[#eff6ff] flex items-center justify-center shrink-0">
+                                    {link.image
+                                      ? <img src={link.image} alt={link.name} className="w-6 h-6 object-contain" />
+                                      : <Icon className="w-4 h-4 text-primary" />
+                                    }
                                   </span>
                                   <span className="flex-1 text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
                                     {link.name}
@@ -312,25 +330,25 @@ export function Navbar() {
                 isOpen={mobileSection === "repairs"}
                 onToggle={() => setMobileSection(mobileSection === "repairs" ? null : "repairs")}
               >
-                {REPAIR_LINKS.map((link) => {
-                  const Icon = link.icon;
-                  return (
-                    <a
-                      key={link.name}
-                      href="#"
-                      onClick={(e) => handleRepairLink(e, link)}
-                      className="flex items-center gap-3 py-2.5 pl-3 pr-2 rounded-lg hover:bg-primary/5 transition-colors"
+                {REPAIR_LINKS.map((link) => (
+                  <a
+                    key={link.brandSlug}
+                    href="#"
+                    onClick={(e) => handleRepairLink(e, link.brandSlug)}
+                    className="flex items-center gap-3 py-2.5 pl-3 pr-2 rounded-lg hover:bg-primary/5 transition-colors"
+                  >
+                    <span
+                      className="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: `${link.color}12` }}
                     >
-                      <span className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${link.color}10` }}>
-                        <Icon className="w-3.5 h-3.5" style={{ color: link.color }} />
-                      </span>
-                      <span className="text-base font-medium text-foreground">{link.name}</span>
-                      {link.type === "wa" && (
-                        <span className="ml-auto text-[10px] font-bold text-primary uppercase tracking-wide">Devis</span>
-                      )}
-                    </a>
-                  );
-                })}
+                      {link.image
+                        ? <img src={link.image} alt={link.name} className="w-5 h-5 object-contain" />
+                        : <Smartphone className="w-3.5 h-3.5" style={{ color: link.color }} />
+                      }
+                    </span>
+                    <span className="text-base font-medium text-foreground">{link.name}</span>
+                  </a>
+                ))}
               </MobileAccordion>
 
               <MobileAccordion
@@ -342,13 +360,16 @@ export function Navbar() {
                   const Icon = link.icon;
                   return (
                     <a
-                      key={link.name}
+                      key={link.categorySlug}
                       href="#"
                       onClick={(e) => handleAccessoryLink(e, link.categorySlug)}
                       className="flex items-center gap-3 py-2.5 pl-3 pr-2 rounded-lg hover:bg-primary/5 transition-colors"
                     >
-                      <span className="w-7 h-7 rounded-md bg-[#eff6ff] flex items-center justify-center">
-                        <Icon className="w-3.5 h-3.5 text-primary" />
+                      <span className="w-7 h-7 rounded-md bg-[#eff6ff] flex items-center justify-center shrink-0">
+                        {link.image
+                          ? <img src={link.image} alt={link.name} className="w-5 h-5 object-contain" />
+                          : <Icon className="w-3.5 h-3.5 text-primary" />
+                        }
                       </span>
                       <span className="text-base font-medium text-foreground">{link.name}</span>
                     </a>

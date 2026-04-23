@@ -25,7 +25,7 @@ const TOP_BRANDS: {
   { slug: "samsung",     name: "Samsung",      icon: Smartphone, color: "#1428A0", bg: "#f0f2ff", kind: "phones",      image: "/brands/samsung.png" },
   { slug: "huawei",      name: "Huawei",       icon: Smartphone, color: "#CF0A2C", bg: "#fff0f2", kind: "phones",       image: "/brands/huawei.jpg"  },
   { slug: "pixel", name: "Google Pixel", icon: Smartphone, color: "#1a73e8", bg: "#f0f7ff", kind: "phones", image: "/brands/google.png" },
-  { slug: "xiaomi",      name: "Xiaomi",       icon: Smartphone, color: "#FF6900", bg: "#fff4ee", kind: "quote",       image: "/brands/xiaomi.jpg"  },
+  { slug: "xiaomi",      name: "Xiaomi",       icon: Smartphone, color: "#FF6900", bg: "#fff4ee", kind: "phones",       image: "/brands/xiaomi.jpg"  },
   { slug: "redmi",       name: "Redmi",        icon: Smartphone, color: "#e02020", bg: "#fff0f0", kind: "phones",       image: "/brands/redmi.png"   },
   { slug: "accessoires", name: "Accessoires",  icon: Watch,      color: "#2563EB", bg: "#eff6ff", kind: "accessoires"                               },
 ];
@@ -673,14 +673,33 @@ export function ModelSearch() {
                   <span className="text-primary font-medium">{selectedModel.name}</span>
                 </div>
               ) : (
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                  <button onClick={handleBackToModels} className="flex items-center gap-1 hover:text-primary transition-colors">
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                    {accessoryCat?.name ?? selectedPhoneSeries?.name ?? brandName ?? "Modèles"}
-                  </button>
-                  <span className="text-muted-foreground/40">/</span>
-                  <span className="text-primary font-medium">{selectedModel.name}</span>
-                </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                {selectedPhoneSeries && selectedPhoneSeries.models.length === 1 ? (
+                  <>
+                    <button
+                      onClick={handleBackToSeries}
+                      className="flex items-center gap-1 hover:text-primary transition-colors"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                      {brandName ?? "Modèles"}
+                    </button>
+                    <span className="text-muted-foreground/40">/</span>
+                    <span className="text-primary font-medium">{selectedModel.name}</span>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={handleBackToModels}
+                      className="flex items-center gap-1 hover:text-primary transition-colors"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                      {accessoryCat?.name ?? selectedPhoneSeries?.name ?? brandName ?? "Modèles"}
+                    </button>
+                    <span className="text-muted-foreground/40">/</span>
+                    <span className="text-primary font-medium">{selectedModel.name}</span>
+                  </>
+                )}
+              </div>
               )}
               <h3 className="text-xl font-bold text-foreground tracking-tight mb-6">Réparations disponibles</h3>
 
@@ -746,6 +765,11 @@ export function ModelSearch() {
 function ModelCard({
   name, sub, icon: Icon, onClick,
 }: { name: string; sub: string | null; icon: React.ElementType; onClick: () => void }) {
+  const parts = name.split("—");
+  const title = parts[0]?.trim() ?? name;
+  const autoSub = parts[1]?.trim() ?? null;
+  const finalSub = sub ?? autoSub;
+
   return (
     <motion.button
       whileHover={{ y: -3, scale: 1.02 }} whileTap={{ scale: 0.97 }}
@@ -756,8 +780,12 @@ function ModelCard({
         <Icon className="w-5 h-5 text-muted-foreground" />
       </div>
       <div>
-        <span className="text-xs font-semibold leading-tight block text-foreground">{name}</span>
-        {sub && <span className="text-[10px] text-muted-foreground/70 mt-0.5 block">{sub}</span>}
+        <span className="text-xs font-semibold leading-tight block text-foreground">{title}</span>
+        {finalSub && (
+          <span className="text-[10px] text-muted-foreground/70 mt-0.5 block">
+            {finalSub}
+          </span>
+        )}
       </div>
     </motion.button>
   );
