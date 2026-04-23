@@ -231,6 +231,21 @@ function samsung(name: string, tier: SamsungTier, screen?: string): ModelDef {
   };
 }
 
+function huaweiModel(name: string): ModelDef {
+  return {
+    id: mkId("huawei", name),
+    name,
+    type: "phone",
+    repairs: makeRepairs(PHONE_REPAIRS, {
+      Diagnostic: "15€",
+      Écran: "Sur devis",
+      Batterie: "Sur devis",
+      Caméra: "Sur devis",
+      "Connecteur de charge": "Sur devis",
+    }),
+  };
+}
+
 function redmiModel(name: string): ModelDef {
     return {
       id: mkId("redmi", name),
@@ -245,6 +260,21 @@ function redmiModel(name: string): ModelDef {
                               }),
                                 };
                               }
+
+function pixelModel(name: string): ModelDef {
+  return {
+    id: mkId("pixel", name),
+    name,
+    type: "phone",
+    repairs: makeRepairs(PHONE_REPAIRS,{
+                               Diagnostic: "15€",
+                               Écran: "Sur devis",
+                               Batterie: "Sur devis",
+                               Caméra: "Sur devis",
+                               "Connecteur de charge": "Sur devis",
+                             }),
+                           };
+                         }
 
   
 const IPHONE_MODELS: ModelDef[] = [
@@ -326,6 +356,96 @@ const SAMSUNG_MODELS: ModelDef[] = [
   samsung("Samsung S23 / S23+ / S23 FE / S23 Ultra", "flagship", "Sur devis"),
   samsung("Samsung S24 / S24+ / S24 FE / S24 Ultra", "flagship", "Sur devis"),
   samsung("Samsung S25 / S25+ / S25 FE / S25 Ultra", "flagship", "Sur devis"),
+];
+
+const HUAWEI_P_MODELS: ModelDef[] = [
+  "Huawei P8",
+  "Huawei P8 Lite",
+  "Huawei P9",
+  "Huawei P9 Lite",
+  "Huawei P9 Plus",
+  "Huawei P10",
+  "Huawei P10 Lite",
+  "Huawei P10 Plus",
+  "Huawei P20",
+  "Huawei P20 Lite",
+  "Huawei P20 Pro",
+  "Huawei P30",
+  "Huawei P30 Lite",
+  "Huawei P30 Pro",
+  "Huawei P40",
+  "Huawei P40 Lite",
+  "Huawei P40 Lite E",
+  "Huawei P40 Pro",
+  "Huawei P40 Pro+",
+  "Huawei P50",
+  "Huawei P50 Pro",
+  "Huawei P50 Pocket",
+].map(huaweiModel);
+
+const HUAWEI_MATE_MODELS: ModelDef[] = [
+  "Huawei Mate 10",
+  "Huawei Mate 10 Pro",
+  "Huawei Mate 10 Lite",
+  "Huawei Mate 20",
+  "Huawei Mate 20 Lite",
+  "Huawei Mate 20 Pro",
+  "Huawei Mate 20 X",
+  "Huawei Mate 30",
+  "Huawei Mate 30 Pro",
+  "Huawei Mate 40",
+  "Huawei Mate 40 Pro",
+  "Huawei Mate 40 Pro+",
+  "Huawei Mate 50",
+  "Huawei Mate 50 Pro",
+  "Huawei Mate X",
+  "Huawei Mate Xs",
+  "Huawei Mate X2",
+  "Huawei Mate X3",
+].map(huaweiModel);
+
+const HUAWEI_NOVA_MODELS: ModelDef[] = [
+  "Huawei nova",
+  "Huawei nova Plus",
+  "Huawei nova 2",
+  "Huawei nova 2i",
+  "Huawei nova 3",
+  "Huawei nova 3i",
+  "Huawei nova 4",
+  "Huawei nova 5T",
+  "Huawei nova 7",
+  "Huawei nova 7i",
+  "Huawei nova 8",
+  "Huawei nova 9",
+  "Huawei nova 9 SE",
+  "Huawei nova 10",
+  "Huawei nova 10 Pro",
+  "Huawei nova 11",
+  "Huawei nova 11 Pro",
+].map(huaweiModel);
+
+const HUAWEI_Y_MODELS: ModelDef[] = [
+  "Huawei Y3",
+  "Huawei Y5",
+  "Huawei Y5 (2018 / 2019)",
+  "Huawei Y6",
+  "Huawei Y6 (2018 / 2019)",
+  "Huawei Y7",
+  "Huawei Y7 (2018 / 2019)",
+  "Huawei Y7 Prime",
+  "Huawei Y7 Pro",
+  "Huawei Y9",
+  "Huawei Y9 Prime",
+].map(huaweiModel);
+
+const HUAWEI_P_SMART_MODELS: ModelDef[] = [
+  "Huawei P Smart",
+  "Huawei P Smart 2019",
+  "Huawei P Smart 2021",
+].map(huaweiModel);
+
+const HUAWEI_ENJOY_MODELS: ModelDef[] = [
+  huaweiModel("Huawei Enjoy"),
 ];
 
 const REDMI_NOTE_1_8_MODELS: ModelDef[] = [
@@ -412,8 +532,9 @@ const REDMI_NOTE_15_MODELS: ModelDef[] = [
   ].map(redmiModel);
 
 const REDMI_CLASSIC_MODELS: ModelDef[] = [
+  "Redmi 5",
   "Redmi 5A",
-  "Redmi 5Plus",
+  "Redmi 5 Plus",
   "Redmi 6",
   "Redmi 6A",
   "Redmi 6 Pro",
@@ -427,7 +548,7 @@ const REDMI_CLASSIC_MODELS: ModelDef[] = [
   "Redmi 9C",
   "Redmi 9T",
   "Redmi 10",
-  "Redmi 10 A",
+  "Redmi 10A",
   "Redmi 10C",
   "Redmi 11",
   "Redmi 12",
@@ -442,7 +563,27 @@ const REDMI_CLASSIC_MODELS: ModelDef[] = [
   "Redmi 15 5G",
   "Redmi 15C 5G",
   ].map(redmiModel);
-  
+
+const PIXEL_MODELS: ModelDef[] = [  
+  "Pixel 3a",
+  "Pixel 3a XL",
+  "Pixel 4a",
+  "Pixel 4a 5G",
+  "Pixel 5a 5G",
+  "Pixel 6a",
+  "Pixel 6 Pro",
+  "Pixel 7a",
+  "Pixel 7 Pro",
+  "Pixel 8a",
+  "Pixel 8 Pro",
+  "Pixel 9 Pro",
+  "Pixel 9 Pro XL",
+  "Pixel 9 Pro Fold",
+  "Pixel 10a",
+  "Pixel 10 Pro",
+  "Pixel 10 Pro XL",
+  "Pixel 10 Pro Fold",
+].map(pixelModel);
   
   
 // ── Accessories ─────────────────────────────────────────────────────────────
@@ -601,8 +742,17 @@ export const ACCESSORY_CATEGORIES: AccessoryCategoryDef[] = [
 export const PHONE_BRANDS: BrandDef[] = [
   { id: "iphone", name: "iPhone", slug: "iphone", models: IPHONE_MODELS },
   { id: "samsung", name: "Samsung", slug: "samsung", models: SAMSUNG_MODELS },
-  {
-    id: "redmi", name: "Redmi", slug: "redmi", series: [
+  {id: "huawei", name: "Huawei", slug: "huawei", series: [
+      { slug: "huawei-p", name: "Huawei P", models: HUAWEI_P_MODELS },
+      { slug: "huawei-mate", name: "Huawei Mate", models: HUAWEI_MATE_MODELS },
+      { slug: "huawei-nova", name: "Huawei Nova", models: HUAWEI_NOVA_MODELS },
+      { slug: "huawei-y", name: "Huawei Y", models: HUAWEI_Y_MODELS },
+      { slug: "huawei-p-smart", name: "Huawei P Smart", models: HUAWEI_P_SMART_MODELS },
+      { slug: "huawei-enjoy", name: "Huawei Enjoy", models: HUAWEI_ENJOY_MODELS },
+    ],
+  },
+  { id: "pixel", name: "Google Pixel", slug: "pixel", models: PIXEL_MODELS },
+  { id: "redmi", name: "Redmi", slug: "redmi", series: [
       { slug: "redmi-note-1-8", name: "Redmi Note 1 → 8", models: REDMI_NOTE_1_8_MODELS },
       { slug: "redmi-note-9", name: "Redmi Note 9", models: REDMI_NOTE_9_MODELS },
       { slug: "redmi-note-10", name: "Redmi Note 10", models: REDMI_NOTE_10_MODELS },
@@ -653,29 +803,30 @@ export function searchAllItems(query: string): SearchHit[] {
   const q = query.toLowerCase();
   const hits: SearchHit[] = [];
 
-  for (const brand of PHONE_BRANDS) {
-    if (brand.models) {
-      for (const model of brand.models) {
-        if (
-          model.name.toLowerCase().includes(q) ||
-          brand.name.toLowerCase().includes(q)
-        ) {
-          hits.push({ kind: "phone-model", brand, model });
-        }
-      }
-    }
-
-    if (brand.series) {
-      for (const series of brand.series) {
-        for (const model of series.models) {
-          const haystack = `${model.name} ${series.name} ${brand.name}`.toLowerCase();
-          if (haystack.includes(q)) {
+    for (const brand of PHONE_BRANDS) {
+      if (brand.models) {
+        for (const model of brand.models) {
+          if (
+            model.name.toLowerCase().includes(q) ||
+            brand.name.toLowerCase().includes(q)
+          ) {
             hits.push({ kind: "phone-model", brand, model });
           }
         }
       }
+
+      if (brand.series) {
+        for (const series of brand.series) {
+          for (const model of series.models) {
+            const haystack = `${model.name} ${series.name} ${brand.name}`.toLowerCase();
+            if (haystack.includes(q)) {
+              hits.push({ kind: "phone-model", brand, model });
+            }
+          }
+        }
+      }
     }
-  }
+
   for (const cat of ACCESSORY_CATEGORIES) {
     if (cat.kind === "models") {
       for (const model of cat.models) {

@@ -23,8 +23,8 @@ const TOP_BRANDS: {
 }[] = [
   { slug: "iphone",      name: "iPhone",       icon: Smartphone, color: "#1d1d1f", bg: "#f5f5f7", kind: "phones",      image: "/brands/apple.png"   },
   { slug: "samsung",     name: "Samsung",      icon: Smartphone, color: "#1428A0", bg: "#f0f2ff", kind: "phones",      image: "/brands/samsung.png" },
-  { slug: "huawei",      name: "Huawei",       icon: Smartphone, color: "#CF0A2C", bg: "#fff0f2", kind: "quote",       image: "/brands/huawei.jpg"  },
-  { slug: "pixel",       name: "Google Pixel", icon: Smartphone, color: "#1a73e8", bg: "#f0f7ff", kind: "quote",       image: "/brands/google.png"  },
+  { slug: "huawei",      name: "Huawei",       icon: Smartphone, color: "#CF0A2C", bg: "#fff0f2", kind: "phones",       image: "/brands/huawei.jpg"  },
+  { slug: "pixel", name: "Google Pixel", icon: Smartphone, color: "#1a73e8", bg: "#f0f7ff", kind: "phones", image: "/brands/google.png" },
   { slug: "xiaomi",      name: "Xiaomi",       icon: Smartphone, color: "#FF6900", bg: "#fff4ee", kind: "quote",       image: "/brands/xiaomi.jpg"  },
   { slug: "redmi",       name: "Redmi",        icon: Smartphone, color: "#e02020", bg: "#fff0f0", kind: "phones",       image: "/brands/redmi.png"   },
   { slug: "accessoires", name: "Accessoires",  icon: Watch,      color: "#2563EB", bg: "#eff6ff", kind: "accessoires"                               },
@@ -202,6 +202,7 @@ export function ModelSearch() {
   function handleQueryChange(val: string) {
     setQuery(val);
     setBrandSlug(null);
+    setSelectedPhoneSeriesSlug(null);
     setAccessoryCatSlug(null);
     setSelectedModel(null);
   }
@@ -270,9 +271,17 @@ export function ModelSearch() {
   function handleBackToCategories() { setAccessoryCatSlug(null); setSelectedModel(null); pendingScroll.current = "selector"; }
   function handleBackToModels()     { setSelectedModel(null); pendingScroll.current = "selector"; }
   function handleSeriesClick(seriesSlug: string) {
+    const series = phoneBrand?.series?.find((s) => s.slug === seriesSlug) ?? null;
+
     setSelectedPhoneSeriesSlug(seriesSlug);
-    setSelectedModel(null);
-    pendingScroll.current = "selector";
+
+    // Auto-open repairs when the selected phone series has exactly one model
+    if (series && series.models.length === 1) {
+      setSelectedModel(series.models[0]);
+    } else {
+      setSelectedModel(null);
+      pendingScroll.current = "selector";
+    }
   }
   function handleBackToSeries() {
     setSelectedPhoneSeriesSlug(null);
